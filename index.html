@@ -23,21 +23,24 @@
             <h1>👑 Jeu des Couronnes</h1>
             <p class="rules">Place les couronnes : une par ligne, colonne et couleur (ou deux en mode ×2).<br>Les couronnes ne doivent jamais être adjacentes (même en diagonale).</p>
 
-            <div id="crown-mode">
-                <button class="mode-btn active" data-crowns="1">👑 ×1</button>
-                <button class="mode-btn" data-crowns="2">👑 ×2</button>
-            </div>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="crown-mode">
+                    <button class="mode-btn active" data-crowns="1">👑 ×1</button>
+                    <button class="mode-btn" data-crowns="2">👑 ×2</button>
+                </div>
 
-            <div id="difficulty">
-                <button class="diff-btn active" data-size="5">Débutant (5×5)</button>
-                <button class="diff-btn" data-size="7">Intermédiaire (7×7)</button>
-                <button class="diff-btn" data-size="9">Difficile (9×9)</button>
-            </div>
+                <div id="difficulty">
+                    <button class="diff-btn active" data-size="5">Débutant (5×5)</button>
+                    <button class="diff-btn" data-size="7">Intermédiaire (7×7)</button>
+                    <button class="diff-btn" data-size="9">Difficile (9×9)</button>
+                </div>
 
-            <div id="toolbar">
-                <button id="new-game">🔄 Nouvelle partie</button>
-                <button id="hint-btn">🔍 Indice <span id="hint-badge">1</span></button>
-                <button id="draft-btn">✏️ Brouillon</button>
+                <div id="toolbar">
+                    <button id="new-game">🔄 Nouvelle partie</button>
+                    <button id="hint-btn">🔍 Indice <span id="hint-badge">1</span></button>
+                    <button id="draft-btn">✏️ Brouillon</button>
+                </div>
             </div>
 
             <div id="grid-container">
@@ -52,16 +55,19 @@
             <h1>🔢 Sudoku</h1>
             <p class="rules">Remplis la grille : chaque ligne, colonne et bloc 3×3 doit contenir les chiffres de 1 à 9.</p>
 
-            <div id="sudoku-difficulty">
-                <button class="sdiff-btn active" data-level="easy">Facile</button>
-                <button class="sdiff-btn" data-level="medium">Moyen</button>
-                <button class="sdiff-btn" data-level="hard">Difficile</button>
-            </div>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="sudoku-difficulty">
+                    <button class="sdiff-btn active" data-level="easy">Facile</button>
+                    <button class="sdiff-btn" data-level="medium">Moyen</button>
+                    <button class="sdiff-btn" data-level="hard">Difficile</button>
+                </div>
 
-            <div id="sudoku-toolbar">
-                <button id="sudoku-new-game">🔄 Nouvelle partie</button>
-                <button id="sudoku-hint-btn">🔍 Indice</button>
-                <button id="sudoku-draft-btn">✏️ Brouillon</button>
+                <div id="sudoku-toolbar">
+                    <button id="sudoku-new-game">🔄 Nouvelle partie</button>
+                    <button id="sudoku-hint-btn">🔍 Indice</button>
+                    <button id="sudoku-draft-btn">✏️ Brouillon</button>
+                </div>
             </div>
 
             <div id="sudoku-grid-container">
@@ -78,16 +84,24 @@
             <h1>🖼️ Picross</h1>
             <p class="rules">Noircis les cases selon les indices : chaque nombre indique un groupe de cases consécutives remplies.<br>Entre deux groupes, il y a au moins une case vide.</p>
 
-            <div id="picross-difficulty">
-                <button class="pdiff-btn active" data-level="easy">Facile (5×5)</button>
-                <button class="pdiff-btn" data-level="medium">Moyen (10×10)</button>
-                <button class="pdiff-btn" data-level="hard">Difficile (15×15)</button>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="picross-difficulty">
+                    <button class="pdiff-btn active" data-level="easy">Facile (5×5)</button>
+                    <button class="pdiff-btn" data-level="medium">Moyen (10×10)</button>
+                    <button class="pdiff-btn" data-level="hard">Difficile (15×15)</button>
+                </div>
+
+                <div id="picross-toolbar">
+                    <button id="picross-new-game">🔄 Nouvelle partie</button>
+                    <button id="picross-hint-btn">🔍 Indice</button>
+                    <button id="picross-draft-btn">✏️ Brouillon</button>
+                </div>
             </div>
 
-            <div id="picross-toolbar">
-                <button id="picross-new-game">🔄 Nouvelle partie</button>
-                <button id="picross-hint-btn">🔍 Indice</button>
-                <button id="picross-draft-btn">✏️ Brouillon</button>
+            <div id="picross-mode-toggle">
+                <button id="picross-fill-btn" class="picross-toggle-btn active" data-mode="fill">⬛ Remplir</button>
+                <button id="picross-cross-btn" class="picross-toggle-btn" data-mode="cross">✕ Croix</button>
             </div>
 
             <div id="picross-grid-container">

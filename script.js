@@ -364,7 +364,7 @@ function generatePuzzle() {
 // --- Mode 1 crown ---
 
 function generatePuzzle1() {
-    for (let attempt = 0; attempt < 100; attempt++) {
+    for (let attempt = 0; attempt < 200; attempt++) {
         const sol = generateSolution1();
         if (!sol) continue;
 
@@ -372,11 +372,14 @@ function generatePuzzle1() {
         if (!colors) continue;
 
         const refined = refineRegions1(colors, sol);
-        if (refined) {
-            const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
-            for (let r = 0; r < gridSize; r++) crownMap[r][sol[r]] = true;
-            return { crownMap, colors: refined };
-        }
+        if (!refined) continue;
+
+        // Verify uniqueness one more time
+        if (findAllSolutions1(refined, 2).length !== 1) continue;
+
+        const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
+        for (let r = 0; r < gridSize; r++) crownMap[r][sol[r]] = true;
+        return { crownMap, colors: refined };
     }
     const fb = FALLBACK_PUZZLES[gridSize];
     const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
@@ -469,7 +472,7 @@ function refineRegions1(colors, sol) {
         if (solutions.length === 1) return workColors;
 
         const alt = solutions.find(s => s.join(',') !== sol.join(','));
-        if (!alt) return workColors;
+        if (!alt) break;
 
         let fixed = false;
         const rows = shuffle([...Array(gridSize).keys()]);
@@ -541,7 +544,7 @@ function findAllSolutions1(colors, maxCount) {
 // --- Mode 2 crowns ---
 
 function generatePuzzle2() {
-    for (let attempt = 0; attempt < 100; attempt++) {
+    for (let attempt = 0; attempt < 200; attempt++) {
         const sol = generateSolution2();
         if (!sol) continue;
 
@@ -549,11 +552,14 @@ function generatePuzzle2() {
         if (!colors) continue;
 
         const refined = refineRegions2(colors, sol);
-        if (refined) {
-            const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
-            for (let r = 0; r < gridSize; r++) for (const c of sol[r]) crownMap[r][c] = true;
-            return { crownMap, colors: refined };
-        }
+        if (!refined) continue;
+
+        // Verify uniqueness one more time
+        if (findAllSolutions2(refined, 2).length !== 1) continue;
+
+        const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
+        for (let r = 0; r < gridSize; r++) for (const c of sol[r]) crownMap[r][c] = true;
+        return { crownMap, colors: refined };
     }
     // Fallback for 2-crown mode
     const fb = FALLBACK_PUZZLES_2[gridSize];
@@ -562,12 +568,19 @@ function generatePuzzle2() {
         for (let r = 0; r < gridSize; r++) for (const c of fb.solution[r]) crownMap[r][c] = true;
         return { crownMap, colors: fb.colors.map(r => [...r]) };
     }
-    // Emergency: generate without uniqueness
-    const sol = generateSolution2();
-    const colors = generateRegions2(sol);
-    const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
-    for (let r = 0; r < gridSize; r++) for (const c of sol[r]) crownMap[r][c] = true;
-    return { crownMap, colors };
+    // Fallback: keep trying until we get a unique puzzle
+    while (true) {
+        const sol = generateSolution2();
+        if (!sol) continue;
+        const colors = generateRegions2(sol);
+        if (!colors) continue;
+        const refined = refineRegions2(colors, sol);
+        if (!refined) continue;
+        if (findAllSolutions2(refined, 2).length !== 1) continue;
+        const crownMap = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
+        for (let r = 0; r < gridSize; r++) for (const c of sol[r]) crownMap[r][c] = true;
+        return { crownMap, colors: refined };
+    }
 }
 
 function generateSolution2() {
@@ -792,7 +805,7 @@ function refineRegions2(colors, sol) {
         if (solutions.length === 1) return workColors;
 
         const alt = solutions.find(s => solKey2(s) !== sk);
-        if (!alt) return workColors;
+        if (!alt) break;
 
         let fixed = false;
         const rows = shuffle([...Array(gridSize).keys()]);
@@ -1378,6 +1391,25 @@ function closeOverlay() {
 
 // ===== Start =====
 
+// ===== Collapsible Menu (mobile) =====
+function setupMenuToggles() {
+    document.querySelectorAll('.menu-toggle').forEach(btn => {
+        const collapsible = btn.nextElementSibling;
+
+        // Collapse by default on mobile
+        if (window.innerWidth <= 480) {
+            collapsible.classList.add('collapsed');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+
+        btn.addEventListener('click', () => {
+            const isCollapsed = collapsible.classList.toggle('collapsed');
+            btn.setAttribute('aria-expanded', !isCollapsed);
+        });
+    });
+}
+setupMenuToggles();
+
 // ===== Game Switcher =====
 const gameTabs = document.querySelectorAll('.game-tab');
 const gamePanels = {
@@ -1950,6 +1982,7 @@ let picrossRowClues = [];
 let picrossColClues = [];
 let picrossGameOver = false;
 let picrossDraftMode = false;
+let picrossCrossMode = false;
 let picrossLevel = 'easy';
 let picrossLocked = [];      // locked[r][c] = true if hinted
 
@@ -1959,6 +1992,7 @@ let picrossDragAction = null;   // 'fill' | 'unfill' | 'cross' | 'uncross'
 let picrossDragVisited = new Set();
 let picrossPointerDown = null;  // { r, c }
 let picrossPointerIsRight = false;
+
 
 const PICROSS_SIZES = { easy: 5, medium: 10, hard: 15 };
 
@@ -1993,6 +2027,16 @@ function picrossInit() {
 
     document.getElementById('picross-hint-btn').addEventListener('click', picrossUseHint);
 
+    document.querySelectorAll('.picross-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (picrossGameOver) return;
+            const mode = btn.dataset.mode;
+            picrossCrossMode = (mode === 'cross');
+            document.querySelectorAll('.picross-toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
     picrossNewGame();
 }
 
@@ -2000,11 +2044,21 @@ function picrossNewGame() {
     picrossSize = PICROSS_SIZES[picrossLevel];
     picrossGameOver = false;
     picrossDraftMode = false;
+    picrossCrossMode = false;
+    document.querySelectorAll('.picross-toggle-btn').forEach(b => b.classList.remove('active'));
+    const fillBtn = document.getElementById('picross-fill-btn');
+    if (fillBtn) fillBtn.classList.add('active');
     const draftBtn = document.getElementById('picross-draft-btn');
     if (draftBtn) draftBtn.classList.remove('draft-active');
     const msgEl = document.getElementById('picross-message');
     msgEl.className = 'hidden';
     msgEl.textContent = '';
+
+    // Apply size class for responsive CSS
+    const container = document.getElementById('picross-grid-container');
+    container.classList.remove('picross-medium', 'picross-hard');
+    if (picrossLevel === 'medium') container.classList.add('picross-medium');
+    else if (picrossLevel === 'hard') container.classList.add('picross-hard');
 
     picrossGenerate();
     picrossBoard = Array.from({ length: picrossSize }, () => Array(picrossSize).fill('empty'));
@@ -2320,7 +2374,8 @@ function picrossSetupPointerHandlers() {
 
         // Simple click (no drag)
         if (downCell) {
-            picrossHandleClick(downCell.r, downCell.c, picrossPointerIsRight);
+            const effectiveRight = picrossPointerIsRight || picrossCrossMode;
+            picrossHandleClick(downCell.r, downCell.c, effectiveRight);
         }
     });
 
@@ -2333,14 +2388,15 @@ function picrossSetupPointerHandlers() {
 }
 
 function picrossResolveDragAction(r, c, isRightClick) {
+    const effectiveRight = isRightClick || picrossCrossMode;
     const st = picrossBoard[r][c];
     if (picrossDraftMode) {
-        if (isRightClick) {
+        if (effectiveRight) {
             return (st === 'draft-crossed') ? 'uncross' : 'cross';
         }
         return (st === 'draft-filled') ? 'unfill' : 'fill';
     }
-    if (isRightClick) {
+    if (effectiveRight) {
         return (st === 'crossed') ? 'uncross' : 'cross';
     }
     return (st === 'filled') ? 'unfill' : 'fill';
