@@ -37,6 +37,54 @@ h1 {
     line-height: 1.4;
 }
 
+/* ===== Game Switcher ===== */
+#game-switcher {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.game-tab {
+    padding: 10px 24px;
+    border: 2px solid #cbd5e0;
+    background: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.game-tab:first-child {
+    border-radius: 10px 0 0 10px;
+    border-right: 1px solid #cbd5e0;
+}
+
+.game-tab:last-child {
+    border-radius: 0 10px 10px 0;
+    border-left: 1px solid #cbd5e0;
+}
+
+.game-tab:not(:first-child):not(:last-child) {
+    border-left: 1px solid #cbd5e0;
+    border-right: 1px solid #cbd5e0;
+}
+
+.game-tab:hover {
+    background: #edf2f7;
+}
+
+.game-tab.active {
+    background: #2d3748;
+    color: #fff;
+    border-color: #2d3748;
+}
+
+.game-panel.hidden {
+    display: none;
+}
+
 /* ===== Crown Mode Buttons ===== */
 #crown-mode {
     display: flex;
@@ -219,10 +267,20 @@ h1 {
     color: #000;
     font-size: 1.5em;
     font-weight: 900;
+    text-shadow:
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff;
 }
 
 .cell .icon.crown {
     font-size: 1.3em;
+    text-shadow:
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff;
 }
 
 .cell.locked {
@@ -310,6 +368,11 @@ h1 {
 
 .cell .icon.crown.draft {
     opacity: 0.4;
+    text-shadow:
+        -1px -1px 0 #805ad5,
+         1px -1px 0 #805ad5,
+        -1px  1px 0 #805ad5,
+         1px  1px 0 #805ad5;
 }
 
 .cell .draft-badge {
@@ -400,15 +463,548 @@ h1 {
 .color-8 { background-color: #F4A8D8; } /* Rose bonbon    — 320° */
 .color-9 { background-color: #D4C8A8; } /* Beige sable    — 40° neutre */
 
+/* ===== Sudoku ===== */
+#sudoku-difficulty {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.sdiff-btn {
+    padding: 8px 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.sdiff-btn:hover {
+    border-color: #3182ce;
+    color: #3182ce;
+}
+
+.sdiff-btn.active {
+    background: #3182ce;
+    color: #fff;
+    border-color: #3182ce;
+}
+
+#sudoku-toolbar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+#sudoku-new-game, #sudoku-draft-btn, #sudoku-hint-btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#sudoku-new-game {
+    background: #4299e1;
+    color: #fff;
+}
+
+#sudoku-new-game:hover {
+    background: #3182ce;
+}
+
+#sudoku-hint-btn {
+    background: #ed8936;
+    color: #fff;
+}
+
+#sudoku-hint-btn:hover {
+    background: #dd6b20;
+}
+
+#sudoku-draft-btn {
+    background: #a0aec0;
+    color: #fff;
+}
+
+#sudoku-draft-btn:hover {
+    background: #718096;
+}
+
+#sudoku-draft-btn.draft-active {
+    background: #9f7aea;
+    animation: pulse-draft 1s infinite;
+}
+
+#sudoku-grid-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+#sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 0;
+    width: min(85vw, 450px);
+    height: min(85vw, 450px);
+    background: #2d3748;
+    border: 3px solid #2d3748;
+}
+
+.sudoku-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+    color: #2d3748;
+    border: 1px solid #cbd5e0;
+    user-select: none;
+}
+
+.sudoku-cell:hover {
+    background: #edf2f7;
+}
+
+.sudoku-cell.given {
+    background: #f7fafc;
+    color: #2d3748;
+    cursor: default;
+}
+
+.sudoku-cell.hinted {
+    background: #f0fff4;
+    color: #276749;
+    cursor: default;
+    font-weight: 700;
+}
+
+.sudoku-cell.selected {
+    background: #bee3f8;
+}
+
+.sudoku-cell.user-input {
+    color: #3182ce;
+}
+
+/* Sudoku draft notes */
+.sudoku-cell .sudoku-notes {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0;
+    max-width: 80%;
+    pointer-events: none;
+}
+
+.sudoku-cell .sudoku-note {
+    font-size: 0.45em;
+    font-weight: 700;
+    color: #805ad5;
+    line-height: 1.1;
+    width: 0.9em;
+    text-align: center;
+}
+
+/* Thick borders for 3×3 blocks */
+.sudoku-cell.block-border-top { border-top: 2px solid #2d3748; }
+.sudoku-cell.block-border-bottom { border-bottom: 2px solid #2d3748; }
+.sudoku-cell.block-border-left { border-left: 2px solid #2d3748; }
+.sudoku-cell.block-border-right { border-right: 2px solid #2d3748; }
+
+/* Sudoku number pad */
+#sudoku-numpad {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.numpad-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #2d3748;
+}
+
+.numpad-btn:hover {
+    background: #bee3f8;
+    border-color: #3182ce;
+}
+
+.numpad-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: #edf2f7;
+    border-color: #e2e8f0;
+}
+
+.numpad-btn.disabled:hover {
+    background: #edf2f7;
+    border-color: #e2e8f0;
+}
+
+.numpad-btn.completed {
+    opacity: 0.35;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    background: #edf2f7;
+    border-color: #e2e8f0;
+}
+
+.numpad-btn.completed:hover {
+    background: #edf2f7;
+    border-color: #e2e8f0;
+}
+
+.numpad-btn.erase {
+    width: auto;
+    padding: 0 14px;
+    font-size: 0.9rem;
+}
+
+#sudoku-message {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+#sudoku-message.hidden {
+    display: none;
+}
+
+#sudoku-message.win {
+    background: #c6f6d5;
+    color: #276749;
+}
+
+/* ===== Sudoku Error (wrong number) ===== */
+@keyframes sudoku-error-blink {
+    0%, 100% { color: #e53e3e; }
+    25% { color: #fff; }
+    50% { color: #e53e3e; }
+    75% { color: #fff; }
+}
+
+.sudoku-cell.sudoku-error {
+    animation: sudoku-error-blink 1s ease infinite;
+    color: #e53e3e !important;
+    font-weight: 900;
+}
+
+/* Explosion particles */
+@keyframes sudoku-explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.2);
+        opacity: 0;
+    }
+}
+
+.sudoku-explosion-particle {
+    position: absolute;
+    font-size: 1.2rem;
+    pointer-events: none;
+    z-index: 50;
+    animation: sudoku-explode 0.7s ease-out forwards;
+    transform-origin: center;
+}
+
+@keyframes sudoku-flash {
+    0% { transform: scale(0.3); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.sudoku-explosion-flash {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,100,0,0.8) 0%, rgba(255,50,0,0.4) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 49;
+    animation: sudoku-flash 0.5s ease-out forwards;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 480px) {
     h1 { font-size: 1.4rem; }
     .rules { font-size: 0.75rem; }
     .diff-btn { padding: 6px 12px; font-size: 0.78rem; }
+    .sdiff-btn { padding: 6px 12px; font-size: 0.78rem; }
+    .pdiff-btn { padding: 6px 12px; font-size: 0.78rem; }
     #new-game, #hint-btn { padding: 7px 14px; font-size: 0.82rem; }
     .cell { font-size: 1.1rem; }
     #grid {
         width: min(92vw, 400px);
         height: min(92vw, 400px);
     }
+    #sudoku-grid {
+        width: min(92vw, 400px);
+        height: min(92vw, 400px);
+    }
+    .sudoku-cell { font-size: 1.1rem; }
+    .numpad-btn { width: 36px; height: 36px; font-size: 1rem; }
+    #picross-table { font-size: 0.55rem; }
+    .picross-cell { width: 28px; height: 28px; min-width: 28px; min-height: 28px; }
+    .picross-clue-col { font-size: 0.75rem; }
+    .picross-clue-row { font-size: 0.75rem; }
+}
+
+/* ===== Picross ===== */
+#picross-difficulty {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.pdiff-btn {
+    padding: 8px 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.pdiff-btn:hover {
+    border-color: #38a169;
+    color: #38a169;
+}
+
+.pdiff-btn.active {
+    background: #38a169;
+    color: #fff;
+    border-color: #38a169;
+}
+
+#picross-toolbar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+#picross-new-game, #picross-draft-btn, #picross-hint-btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#picross-new-game {
+    background: #4299e1;
+    color: #fff;
+}
+
+#picross-new-game:hover {
+    background: #3182ce;
+}
+
+#picross-hint-btn {
+    background: #ed8936;
+    color: #fff;
+}
+
+#picross-hint-btn:hover {
+    background: #dd6b20;
+}
+
+#picross-draft-btn {
+    background: #a0aec0;
+    color: #fff;
+}
+
+#picross-draft-btn:hover {
+    background: #718096;
+}
+
+#picross-draft-btn.draft-active {
+    background: #9f7aea;
+    animation: pulse-draft 1s infinite;
+}
+
+#picross-grid-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+    overflow-x: auto;
+}
+
+#picross-table {
+    border-collapse: collapse;
+    user-select: none;
+    touch-action: none;
+}
+
+.picross-clue-col {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #4a5568;
+    text-align: center;
+    vertical-align: bottom;
+    padding: 3px 2px;
+    line-height: 1.3;
+}
+
+.picross-clue-row {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #4a5568;
+    text-align: right;
+    padding: 0 8px 0 2px;
+    white-space: nowrap;
+}
+
+.picross-cell {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    border: 1px solid #cbd5e0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background 0.1s;
+    font-size: 1.1rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.picross-cell:hover {
+    background: #edf2f7;
+}
+
+.picross-cell.filled {
+    background: #2d3748;
+}
+
+.picross-cell.filled:hover {
+    background: #4a5568;
+}
+
+.picross-cell.crossed {
+    color: #e53e3e;
+    font-size: 1rem;
+    background: #fff;
+}
+
+.picross-cell.draft-filled {
+    background: #a0aec0;
+}
+
+.picross-cell.draft-filled:hover {
+    background: #8a9ab5;
+}
+
+.picross-cell.draft-crossed {
+    color: #b794f4;
+    font-size: 1rem;
+    background: #fff;
+}
+
+.picross-cell.locked {
+    cursor: default;
+}
+
+.picross-cell.hinted {
+    background: #276749;
+}
+
+.picross-cell.hinted:hover {
+    background: #276749;
+}
+
+/* Thick borders every 5 cells */
+.picross-cell.block-border-right {
+    border-right: 2px solid #2d3748;
+}
+
+.picross-cell.block-border-bottom {
+    border-bottom: 2px solid #2d3748;
+}
+
+.picross-clue-row.block-border-bottom {
+    border-bottom: 2px solid #2d3748;
+}
+
+.picross-clue-col.block-border-right {
+    border-right: 2px solid #2d3748;
+}
+
+/* Row/col completion */
+.picross-clue-row.completed {
+    color: #38a169;
+}
+
+.picross-clue-col.completed {
+    color: #38a169;
+}
+
+@keyframes picross-error-flash {
+    0%, 100% { background-color: inherit; }
+    25%, 75% { background-color: #fc8181; }
+}
+
+.picross-cell.picross-error {
+    animation: picross-error-flash 0.6s ease;
+}
+
+#picross-message {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+#picross-message.hidden {
+    display: none;
+}
+
+#picross-message.win {
+    background: #c6f6d5;
+    color: #276749;
+}
+
+#picross-message.hint {
+    background: #e2e8f0;
+    color: #2d3748;
+    font-weight: 600;
 }

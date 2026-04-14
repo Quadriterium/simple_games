@@ -1377,4 +1377,1202 @@ function closeOverlay() {
 }
 
 // ===== Start =====
+
+// ===== Game Switcher =====
+const gameTabs = document.querySelectorAll('.game-tab');
+const gamePanels = {
+    crowns: document.getElementById('game-crowns'),
+    sudoku: document.getElementById('game-sudoku'),
+    picross: document.getElementById('game-picross'),
+};
+
+gameTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const game = tab.dataset.game;
+        gameTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        Object.values(gamePanels).forEach(p => p.classList.add('hidden'));
+        gamePanels[game].classList.remove('hidden');
+        if (game === 'sudoku' && !sudokuInitialized) {
+            sudokuInit();
+        }
+        if (game === 'picross' && !picrossInitialized) {
+            picrossInit();
+        }
+    });
+});
+
+// ===== Sudoku Module =====
+let sudokuInitialized = false;
+let sudokuBoard = [];       // 9×9, current player board
+let sudokuSolution = [];    // 9×9, full solution
+let sudokuGiven = [];       // 9×9, true = pre-filled
+let sudokuSelected = null;  // { r, c }
+let sudokuLevel = 'easy';
+let sudokuGameOver = false;
+let sudokuFilterMode = false; // true after double-click on a cell
+let sudokuDraftMode = false;
+let sudokuNotes = [];  // 9×9 array of Set<number>
+let sudokuErrors = []; // 9×9, true if wrong number placed
+let sudokuHinted = []; // 9×9, true if revealed by hint
+
+const SUDOKU_CLUES = { easy: 38, medium: 30, hard: 24 };
+
+function sudokuInit() {
+    sudokuInitialized = true;
+
+    // Difficulty buttons
+    document.querySelectorAll('.sdiff-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.sdiff-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            sudokuLevel = btn.dataset.level;
+            sudokuNewGame();
+        });
+    });
+
+    document.getElementById('sudoku-new-game').addEventListener('click', sudokuNewGame);
+
+    // Draft mode button
+    const sudokuDraftBtn = document.getElementById('sudoku-draft-btn');
+    sudokuDraftBtn.addEventListener('click', () => {
+        if (sudokuGameOver) return;
+        sudokuDraftMode = !sudokuDraftMode;
+        sudokuDraftBtn.classList.toggle('draft-active', sudokuDraftMode);
+    });
+
+    // Hint button
+    document.getElementById('sudoku-hint-btn').addEventListener('click', sudokuUseHint);
+
+    // Build numpad
+    const numpad = document.getElementById('sudoku-numpad');
+    for (let n = 1; n <= 9; n++) {
+        const btn = document.createElement('button');
+        btn.className = 'numpad-btn';
+        btn.textContent = n;
+        btn.addEventListener('click', () => sudokuPlaceNumber(n));
+        numpad.appendChild(btn);
+    }
+    const eraseBtn = document.createElement('button');
+    eraseBtn.className = 'numpad-btn erase';
+    eraseBtn.textContent = '⌫';
+    eraseBtn.addEventListener('click', () => sudokuPlaceNumber(0));
+    numpad.appendChild(eraseBtn);
+
+    // Keyboard input
+    document.addEventListener('keydown', (e) => {
+        if (gamePanels.sudoku.classList.contains('hidden')) return;
+        if (!sudokuSelected || sudokuGameOver) return;
+        const { r, c } = sudokuSelected;
+        if (sudokuGiven[r][c]) return;
+        const n = parseInt(e.key);
+        if (n >= 1 && n <= 9) {
+            if (sudokuFilterMode) {
+                const valid = sudokuGetValidNumbers(r, c);
+                if (valid.has(n)) sudokuPlaceNumber(n);
+            } else {
+                sudokuPlaceNumber(n);
+            }
+        }
+        if (e.key === 'Backspace' || e.key === 'Delete') sudokuPlaceNumber(0);
+    });
+
+    // Grid click (single = select, double = select + filter numpad)
+    let sudokuClickTimer = null;
+    const SUDOKU_DBLCLICK_DELAY = 300;
+
+    document.getElementById('sudoku-grid').addEventListener('click', (e) => {
+        const cell = e.target.closest('.sudoku-cell');
+        if (!cell) return;
+        const r = parseInt(cell.dataset.row);
+        const c = parseInt(cell.dataset.col);
+
+        if (sudokuClickTimer && sudokuSelected && sudokuSelected.r === r && sudokuSelected.c === c) {
+            // Double click on same cell
+            clearTimeout(sudokuClickTimer);
+            sudokuClickTimer = null;
+            sudokuFilterMode = true;
+            sudokuRenderGrid();
+        } else {
+            // Single click — wait to confirm it's not a double
+            if (sudokuClickTimer) clearTimeout(sudokuClickTimer);
+            sudokuSelected = { r, c };
+            sudokuFilterMode = false;
+            sudokuRenderGrid();
+            sudokuClickTimer = setTimeout(() => { sudokuClickTimer = null; }, SUDOKU_DBLCLICK_DELAY);
+        }
+    });
+
+    sudokuNewGame();
+}
+
+function sudokuNewGame() {
+    sudokuGameOver = false;
+    sudokuSelected = null;
+    sudokuDraftMode = false;
+    const draftBtn = document.getElementById('sudoku-draft-btn');
+    if (draftBtn) draftBtn.classList.remove('draft-active');
+    const msgEl = document.getElementById('sudoku-message');
+    msgEl.className = 'hidden';
+    msgEl.textContent = '';
+
+    const clueCount = SUDOKU_CLUES[sudokuLevel];
+    const { solution, board, given } = sudokuGenerate(clueCount);
+    sudokuSolution = solution;
+    sudokuBoard = board;
+    sudokuGiven = given;
+    sudokuNotes = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => new Set()));
+    sudokuErrors = Array.from({ length: 9 }, () => Array(9).fill(false));
+    sudokuHinted = Array.from({ length: 9 }, () => Array(9).fill(false));
+    sudokuRenderGrid();
+}
+
+// ===== Sudoku Generation =====
+
+function sudokuGenerate(clueCount) {
+    const solution = sudokuGenerateFullGrid();
+    const board = solution.map(r => [...r]);
+    const given = Array.from({ length: 9 }, () => Array(9).fill(true));
+
+    // Collect all cell positions and shuffle
+    const cells = [];
+    for (let r = 0; r < 9; r++)
+        for (let c = 0; c < 9; c++)
+            cells.push({ r, c });
+    shuffle(cells);
+
+    let filled = 81;
+    for (const { r, c } of cells) {
+        if (filled <= clueCount) break;
+        const backup = board[r][c];
+        board[r][c] = 0;
+        given[r][c] = false;
+
+        if (sudokuCountSolutions(board, 2) !== 1) {
+            // Removing this cell creates ambiguity — put it back
+            board[r][c] = backup;
+            given[r][c] = true;
+        } else {
+            filled--;
+        }
+    }
+
+    return { solution, board, given };
+}
+
+function sudokuGenerateFullGrid() {
+    const grid = Array.from({ length: 9 }, () => Array(9).fill(0));
+
+    function isValid(grid, r, c, num) {
+        for (let i = 0; i < 9; i++) {
+            if (grid[r][i] === num) return false;
+            if (grid[i][c] === num) return false;
+        }
+        const br = Math.floor(r / 3) * 3;
+        const bc = Math.floor(c / 3) * 3;
+        for (let dr = 0; dr < 3; dr++)
+            for (let dc = 0; dc < 3; dc++)
+                if (grid[br + dr][bc + dc] === num) return false;
+        return true;
+    }
+
+    function fill(pos) {
+        if (pos === 81) return true;
+        const r = Math.floor(pos / 9);
+        const c = pos % 9;
+        const nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        for (const n of nums) {
+            if (isValid(grid, r, c, n)) {
+                grid[r][c] = n;
+                if (fill(pos + 1)) return true;
+                grid[r][c] = 0;
+            }
+        }
+        return false;
+    }
+
+    fill(0);
+    return grid;
+}
+
+function sudokuCountSolutions(board, maxCount) {
+    let count = 0;
+
+    function isValid(r, c, num) {
+        for (let i = 0; i < 9; i++) {
+            if (board[r][i] === num) return false;
+            if (board[i][c] === num) return false;
+        }
+        const br = Math.floor(r / 3) * 3;
+        const bc = Math.floor(c / 3) * 3;
+        for (let dr = 0; dr < 3; dr++)
+            for (let dc = 0; dc < 3; dc++)
+                if (board[br + dr][bc + dc] === num) return false;
+        return true;
+    }
+
+    function solve(pos) {
+        if (count >= maxCount) return;
+        while (pos < 81 && board[Math.floor(pos / 9)][pos % 9] !== 0) pos++;
+        if (pos === 81) { count++; return; }
+        const r = Math.floor(pos / 9);
+        const c = pos % 9;
+        for (let n = 1; n <= 9; n++) {
+            if (isValid(r, c, n)) {
+                board[r][c] = n;
+                solve(pos + 1);
+                board[r][c] = 0;
+            }
+        }
+    }
+
+    solve(0);
+    return count;
+}
+
+// ===== Sudoku Helpers =====
+
+function sudokuGetValidNumbers(r, c) {
+    const valid = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    for (let i = 0; i < 9; i++) {
+        valid.delete(sudokuBoard[r][i]);
+        valid.delete(sudokuBoard[i][c]);
+    }
+    const br = Math.floor(r / 3) * 3;
+    const bc = Math.floor(c / 3) * 3;
+    for (let dr = 0; dr < 3; dr++)
+        for (let dc = 0; dc < 3; dc++)
+            valid.delete(sudokuBoard[br + dr][bc + dc]);
+    return valid;
+}
+
+function sudokuGetCompletedNumbers() {
+    const counts = Array(10).fill(0);
+    for (let r = 0; r < 9; r++)
+        for (let c = 0; c < 9; c++)
+            if (sudokuBoard[r][c] !== 0) counts[sudokuBoard[r][c]]++;
+    const completed = new Set();
+    for (let n = 1; n <= 9; n++)
+        if (counts[n] >= 9) completed.add(n);
+    return completed;
+}
+
+function sudokuUpdateNumpad() {
+    const numpad = document.getElementById('sudoku-numpad');
+    const buttons = numpad.querySelectorAll('.numpad-btn:not(.erase)');
+    const eraseBtn = numpad.querySelector('.numpad-btn.erase');
+    const completed = sudokuGetCompletedNumbers();
+
+    if (!sudokuSelected || sudokuGameOver || sudokuGiven[sudokuSelected.r][sudokuSelected.c]) {
+        buttons.forEach(btn => {
+            const n = parseInt(btn.textContent);
+            btn.disabled = true;
+            btn.className = 'numpad-btn' + (completed.has(n) ? ' completed' : ' disabled');
+        });
+        if (eraseBtn) { eraseBtn.disabled = true; eraseBtn.classList.add('disabled'); }
+        return;
+    }
+
+    const { r, c } = sudokuSelected;
+
+    buttons.forEach(btn => {
+        const n = parseInt(btn.textContent);
+        if (completed.has(n)) {
+            btn.disabled = true;
+            btn.className = 'numpad-btn completed';
+            return;
+        }
+        if (sudokuFilterMode) {
+            const valid = sudokuGetValidNumbers(r, c);
+            const isValid = valid.has(n);
+            btn.disabled = !isValid;
+            btn.className = 'numpad-btn' + (!isValid ? ' disabled' : '');
+        } else {
+            btn.disabled = false;
+            btn.className = 'numpad-btn';
+        }
+    });
+
+    if (eraseBtn) {
+        const hasValue = sudokuBoard[r][c] !== 0 || sudokuNotes[r][c].size > 0;
+        eraseBtn.disabled = !hasValue;
+        eraseBtn.classList.toggle('disabled', !hasValue);
+    }
+}
+
+// ===== Sudoku Rendering =====
+
+function sudokuRenderGrid() {
+    const gridEl = document.getElementById('sudoku-grid');
+    gridEl.innerHTML = '';
+
+    for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+            const cell = document.createElement('div');
+            cell.className = 'sudoku-cell';
+            cell.dataset.row = r;
+            cell.dataset.col = c;
+
+            // Block borders
+            if (r % 3 === 0) cell.classList.add('block-border-top');
+            if (r % 3 === 2) cell.classList.add('block-border-bottom');
+            if (c % 3 === 0) cell.classList.add('block-border-left');
+            if (c % 3 === 2) cell.classList.add('block-border-right');
+
+            if (sudokuGiven[r][c]) {
+                if (sudokuHinted[r][c]) {
+                    cell.classList.add('hinted');
+                } else {
+                    cell.classList.add('given');
+                }
+            } else if (sudokuBoard[r][c] !== 0) {
+                cell.classList.add('user-input');
+            }
+
+            if (sudokuErrors[r] && sudokuErrors[r][c]) {
+                cell.classList.add('sudoku-error');
+            }
+
+            if (sudokuSelected && sudokuSelected.r === r && sudokuSelected.c === c) {
+                cell.classList.add('selected');
+            }
+
+            if (sudokuBoard[r][c] !== 0) {
+                cell.textContent = sudokuBoard[r][c];
+            } else if (sudokuNotes[r] && sudokuNotes[r][c] && sudokuNotes[r][c].size > 0) {
+                cell.textContent = '';
+                const notesDiv = document.createElement('div');
+                notesDiv.className = 'sudoku-notes';
+                for (let n = 1; n <= 9; n++) {
+                    if (sudokuNotes[r][c].has(n)) {
+                        const span = document.createElement('span');
+                        span.className = 'sudoku-note';
+                        span.textContent = n;
+                        notesDiv.appendChild(span);
+                    }
+                }
+                cell.appendChild(notesDiv);
+            } else {
+                cell.textContent = '';
+            }
+            gridEl.appendChild(cell);
+        }
+    }
+    sudokuUpdateNumpad();
+}
+
+const SUDOKU_VICTORY_MESSAGES = [
+    "🎉 Bravo Jeanne ! Ce sudoku ne faisait pas le poids face à toi !",
+    "🔢 Jeanne a dompté les chiffres — comme elle dompte tout le reste !",
+    "🌟 Chaque case remplie est une étoile de plus dans le ciel de Jeanne !",
+    "💛 Olivier savait que tu allais y arriver, Jeanne. Tu ne déçois jamais !",
+    "🧠 Un cerveau aussi brillant que ton sourire — bravo Jeanne !",
+    "🎊 Arthur, Victoire, Martin et Antoine : votre maman est une reine du sudoku !",
+    "✨ Même les chiffres se mettent en ordre quand Jeanne le décide !",
+    "🌸 Douce et méthodique — le combo parfait pour le sudoku, et c'est Jeanne !",
+    "🏆 Médaille d'or du sudoku décernée à Jeanne de Clisson !",
+    "💫 81 cases, 0 erreur, 1 Jeanne. L'équation parfaite !",
+    "🕊️ Jeanne résout les grilles comme elle résout les problèmes : avec grâce et patience !",
+    "🥰 Olivier t'aime encore plus à chaque grille terminée — si c'était possible !",
+    "🎯 Ligne par ligne, colonne par colonne, bloc par bloc : Jeanne ne laisse rien au hasard !",
+    "🌺 Aussi méthodique au sudoku qu'à la pastorale — c'est le talent de Jeanne !",
+    "💝 Les chiffres t'obéissent, les enfants t'adorent, le mari t'admire. Que demander de plus ?",
+    "🎈 Sudoku terminé ! Jeanne fait exploser les compteurs de fierté d'Olivier !",
+    "🌈 Tu mets de l'ordre dans les chiffres comme tu mets de la lumière dans les vies !",
+    "🦋 Légère comme un papillon, précise comme un laser — Jeanne face au sudoku !",
+    "💐 Pour chaque chiffre bien placé, Jeanne mérite une fleur. Voilà un bouquet de 81 !",
+    "🎶 Jeanne joue du sudoku comme Mozart jouait du piano : avec une aisance naturelle !",
+    "🤗 Les élèves de Clisson seraient fiers de voir leur responsable pastorale en action !",
+    "🌻 Tournesol parmi les chiffres, Jeanne illumine chaque grille qu'elle touche !",
+    "🥂 Trinquons à la victoire de Jeanne — une grille de plus dans sa collection !",
+    "💡 Là où certains voient des cases vides, Jeanne voit des certitudes !",
+    "🌙 Jeanne, tu es aussi logique que bienveillante — un mélange rare et précieux !",
+    "🎁 Ce sudoku résolu est un cadeau que tu t'offres à toi-même, Jeanne !",
+    "🦁 Féroce sur la grille, tendre dans la vie — c'est notre Jeanne !",
+    "🎗️ De 1 à 9, chaque chiffre a trouvé sa place. Comme Jeanne a trouvé la sienne : au sommet !",
+    "🏅 Si le sudoku était un sport olympique, Jeanne représenterait la France !",
+    "✝️ Patience, persévérance et logique — des vertus que Jeanne cultive au quotidien !",
+    "😄 Martin parie déjà que tu vas enchaîner avec une grille plus dure. Il a raison ?",
+    "🌿 La sérénité de Jeanne face à une grille difficile est un spectacle apaisant !",
+    "💞 Derrière ces 81 chiffres, il y a une femme extraordinaire. Bravo Jeanne !",
+    "🎪 Le plus beau tour de magie ? Jeanne qui transforme une grille vide en chef-d'œuvre !",
+    "🌊 Aussi fluide qu'une vague, aussi précise qu'une horloge — Jeanne au sudoku !",
+    "📿 Jeanne, ta patience est infinie — ces chiffres en sont la preuve !",
+    "🍀 Ce n'est pas de la chance, c'est du talent pur. Bravo Jeanne !",
+    "💪 4 enfants, 1 pastorale, 81 cases : Jeanne gère tout sans sourciller !",
+    "🕯️ Chaque chiffre posé par Jeanne est une petite lumière dans la grille !",
+    "🦅 Vue d'ensemble et sens du détail — Jeanne maîtrise les deux comme personne !",
+    "🎠 La vie à Clisson est un joli manège, et Jeanne en est le centre radieux !",
+    "🌅 Ce sudoku terminé annonce un beau coucher de soleil — celui de la victoire !",
+    "💬 Olivier murmure : bravo ma Jeanne, tu es décidément imbattable !",
+    "🤍 Chaque ligne complète est une déclaration d'amour aux mathématiques signée Jeanne !",
+    "🎀 Élégante jusque dans sa façon de remplir un sudoku — c'est tout Jeanne !",
+    "🌸 Victoire serait fière de porter si bien son prénom grâce à sa maman aujourd'hui !",
+    "🙌 Incroyable : Jeanne a encore vaincu ! Le sudoku n'avait aucune chance !",
+    "💖 Grille parfaite, famille parfaite, femme parfaite — tout est dit !",
+    "🎵 Si chaque chiffre était une note, Jeanne viendrait de composer une symphonie !",
+    "🌟 Clisson peut dormir tranquille : Jeanne veille sur les élèves ET sur les sudokus !",
+];
+
+function sudokuPlaceNumber(n) {
+    if (!sudokuSelected || sudokuGameOver) return;
+    const { r, c } = sudokuSelected;
+    if (sudokuGiven[r][c]) return;
+
+    if (sudokuDraftMode) {
+        if (n === 0) {
+            sudokuNotes[r][c].clear();
+        } else {
+            if (sudokuNotes[r][c].has(n)) {
+                sudokuNotes[r][c].delete(n);
+            } else {
+                sudokuNotes[r][c].add(n);
+            }
+        }
+        sudokuRenderGrid();
+        return;
+    }
+
+    sudokuBoard[r][c] = n;
+    if (n !== 0) sudokuNotes[r][c].clear();
+
+    // Clear error when erasing
+    if (n === 0) {
+        sudokuErrors[r][c] = false;
+    }
+
+    sudokuRenderGrid();
+
+    // Wrong number: explosion + persistent red blink
+    if (n !== 0 && n !== sudokuSolution[r][c]) {
+        sudokuErrors[r][c] = true;
+        const cellEl = document.getElementById('sudoku-grid')
+            .querySelector(`[data-row="${r}"][data-col="${c}"]`);
+        if (cellEl) {
+            sudokuSpawnExplosion(cellEl);
+            cellEl.classList.add('sudoku-error');
+        }
+    }
+
+    // Check win
+    if (n !== 0) {
+        let filled = true;
+        for (let i = 0; i < 9 && filled; i++)
+            for (let j = 0; j < 9 && filled; j++)
+                if (sudokuBoard[i][j] === 0) filled = false;
+        if (filled) {
+            let correct = true;
+            for (let i = 0; i < 9 && correct; i++)
+                for (let j = 0; j < 9 && correct; j++)
+                    if (sudokuBoard[i][j] !== sudokuSolution[i][j]) correct = false;
+            if (correct) {
+                sudokuGameOver = true;
+                const msg = SUDOKU_VICTORY_MESSAGES[Math.floor(Math.random() * SUDOKU_VICTORY_MESSAGES.length)];
+                const msgEl = document.getElementById('sudoku-message');
+                msgEl.className = 'win';
+                msgEl.textContent = msg;
+            }
+        }
+    }
+}
+
+function sudokuUseHint() {
+    if (sudokuGameOver) return;
+    const candidates = [];
+    for (let r = 0; r < 9; r++)
+        for (let c = 0; c < 9; c++)
+            if (!sudokuGiven[r][c] && sudokuBoard[r][c] !== sudokuSolution[r][c])
+                candidates.push({ r, c });
+    if (candidates.length === 0) return;
+    shuffle(candidates);
+    const { r, c } = candidates[0];
+    sudokuBoard[r][c] = sudokuSolution[r][c];
+    sudokuErrors[r][c] = false;
+    sudokuNotes[r][c].clear();
+    sudokuGiven[r][c] = true;
+    sudokuHinted[r][c] = true;
+    sudokuRenderGrid();
+
+    // Check win
+    let filled = true;
+    for (let i = 0; i < 9 && filled; i++)
+        for (let j = 0; j < 9 && filled; j++)
+            if (sudokuBoard[i][j] === 0 || sudokuBoard[i][j] !== sudokuSolution[i][j]) filled = false;
+    if (filled) {
+        sudokuGameOver = true;
+        const msg = SUDOKU_VICTORY_MESSAGES[Math.floor(Math.random() * SUDOKU_VICTORY_MESSAGES.length)];
+        const msgEl = document.getElementById('sudoku-message');
+        msgEl.className = 'win';
+        msgEl.textContent = msg;
+    }
+}
+
+function sudokuSpawnExplosion(cellEl) {
+    const rect = cellEl.getBoundingClientRect();
+    const gridContainer = document.getElementById('sudoku-grid-container');
+    const containerRect = gridContainer.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2 - containerRect.left;
+    const cy = rect.top + rect.height / 2 - containerRect.top;
+    gridContainer.style.position = 'relative';
+
+    const particles = '💥🔥✦⚡💢';
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+        const el = document.createElement('div');
+        el.className = 'sudoku-explosion-particle';
+        el.textContent = particles[Math.floor(Math.random() * particles.length)];
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+        const dist = 30 + Math.random() * 50;
+        el.style.left = cx + 'px';
+        el.style.top = cy + 'px';
+        el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+        el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+        el.style.animationDuration = (0.5 + Math.random() * 0.4) + 's';
+        gridContainer.appendChild(el);
+        setTimeout(() => el.remove(), 1000);
+    }
+
+    // Central flash
+    const flash = document.createElement('div');
+    flash.className = 'sudoku-explosion-flash';
+    flash.style.left = (cx - 30) + 'px';
+    flash.style.top = (cy - 30) + 'px';
+    gridContainer.appendChild(flash);
+    setTimeout(() => flash.remove(), 500);
+}
+
+// ===== Picross Module =====
+let picrossInitialized = false;
+let picrossSize = 5;
+let picrossSolution = [];    // picrossSolution[r][c] = true/false
+let picrossBoard = [];       // 'empty' | 'filled' | 'crossed' | 'draft-filled' | 'draft-crossed'
+let picrossRowClues = [];
+let picrossColClues = [];
+let picrossGameOver = false;
+let picrossDraftMode = false;
+let picrossLevel = 'easy';
+let picrossLocked = [];      // locked[r][c] = true if hinted
+
+// Drag state for picross
+let picrossDragging = false;
+let picrossDragAction = null;   // 'fill' | 'unfill' | 'cross' | 'uncross'
+let picrossDragVisited = new Set();
+let picrossPointerDown = null;  // { r, c }
+let picrossPointerIsRight = false;
+
+const PICROSS_SIZES = { easy: 5, medium: 10, hard: 15 };
+
+function picrossInit() {
+    picrossInitialized = true;
+
+    document.querySelectorAll('.pdiff-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.pdiff-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            picrossLevel = btn.dataset.level;
+            picrossNewGame();
+        });
+    });
+
+    document.getElementById('picross-new-game').addEventListener('click', picrossNewGame);
+
+    const draftBtn = document.getElementById('picross-draft-btn');
+    draftBtn.addEventListener('click', () => {
+        if (picrossGameOver) return;
+        picrossDraftMode = !picrossDraftMode;
+        draftBtn.classList.toggle('draft-active', picrossDraftMode);
+        const msgEl = document.getElementById('picross-message');
+        if (picrossDraftMode) {
+            msgEl.className = 'hint';
+            msgEl.textContent = '✏️ Mode brouillon — tes coups sont provisoires';
+        } else {
+            msgEl.className = 'hidden';
+            msgEl.textContent = '';
+        }
+    });
+
+    document.getElementById('picross-hint-btn').addEventListener('click', picrossUseHint);
+
+    picrossNewGame();
+}
+
+function picrossNewGame() {
+    picrossSize = PICROSS_SIZES[picrossLevel];
+    picrossGameOver = false;
+    picrossDraftMode = false;
+    const draftBtn = document.getElementById('picross-draft-btn');
+    if (draftBtn) draftBtn.classList.remove('draft-active');
+    const msgEl = document.getElementById('picross-message');
+    msgEl.className = 'hidden';
+    msgEl.textContent = '';
+
+    picrossGenerate();
+    picrossBoard = Array.from({ length: picrossSize }, () => Array(picrossSize).fill('empty'));
+    picrossLocked = Array.from({ length: picrossSize }, () => Array(picrossSize).fill(false));
+    picrossRenderGrid();
+}
+
+function picrossGenerate() {
+    const size = picrossSize;
+    // Density: how full is the grid (40-60% for nice puzzles)
+    const density = 0.45 + Math.random() * 0.15;
+
+    for (let attempt = 0; attempt < 50; attempt++) {
+        const sol = Array.from({ length: size }, () =>
+            Array.from({ length: size }, () => Math.random() < density)
+        );
+
+        // Ensure no completely empty row or column
+        for (let r = 0; r < size; r++) {
+            if (sol[r].every(v => !v)) sol[r][Math.floor(Math.random() * size)] = true;
+        }
+        for (let c = 0; c < size; c++) {
+            if (sol.every(row => !row[c])) sol[Math.floor(Math.random() * size)][c] = true;
+        }
+
+        const rowClues = sol.map(row => picrossComputeClue(row));
+        const colClues = [];
+        for (let c = 0; c < size; c++) {
+            const col = sol.map(row => row[c]);
+            colClues.push(picrossComputeClue(col));
+        }
+
+        // For small grids, verify uniqueness
+        if (size <= 10) {
+            if (picrossSolve(rowClues, colClues, size)) {
+                picrossSolution = sol;
+                picrossRowClues = rowClues;
+                picrossColClues = colClues;
+                return;
+            }
+        } else {
+            // For 15×15, skip uniqueness check (too expensive), just use the puzzle
+            picrossSolution = sol;
+            picrossRowClues = rowClues;
+            picrossColClues = colClues;
+            return;
+        }
+    }
+
+    // Fallback: use last generated
+    picrossRowClues = picrossSolution.map(row => picrossComputeClue(row));
+    const colClues = [];
+    for (let c = 0; c < picrossSize; c++) {
+        colClues.push(picrossComputeClue(picrossSolution.map(row => row[c])));
+    }
+    picrossColClues = colClues;
+}
+
+function picrossComputeClue(line) {
+    const groups = [];
+    let count = 0;
+    for (const v of line) {
+        if (v) {
+            count++;
+        } else if (count > 0) {
+            groups.push(count);
+            count = 0;
+        }
+    }
+    if (count > 0) groups.push(count);
+    return groups.length > 0 ? groups : [0];
+}
+
+// Solver using line-by-line constraint propagation (for uniqueness check)
+function picrossSolve(rowClues, colClues, size) {
+    // State: 0 = unknown, 1 = filled, -1 = empty
+    const state = Array.from({ length: size }, () => Array(size).fill(0));
+
+    function getLinePossibilities(clue, length) {
+        const results = [];
+        const groups = clue[0] === 0 ? [] : clue;
+        const numGroups = groups.length;
+
+        if (numGroups === 0) {
+            results.push(Array(length).fill(false));
+            return results;
+        }
+
+        const minLength = groups.reduce((a, b) => a + b, 0) + numGroups - 1;
+        if (minLength > length) return results;
+
+        function backtrack(gi, pos, line) {
+            if (gi === numGroups) {
+                results.push([...line]);
+                return;
+            }
+            const remaining = groups.slice(gi).reduce((a, b) => a + b, 0) + (numGroups - gi - 1);
+            const maxStart = length - remaining;
+            for (let start = pos; start <= maxStart; start++) {
+                const newLine = [...line];
+                for (let i = start; i < start + groups[gi]; i++) newLine[i] = true;
+                if (start + groups[gi] < length) newLine[start + groups[gi]] = false;
+                backtrack(gi + 1, start + groups[gi] + 1, newLine);
+            }
+        }
+
+        const emptyLine = Array(length).fill(false);
+        backtrack(0, 0, emptyLine);
+        return results;
+    }
+
+    function filterPossibilities(possibilities, known) {
+        return possibilities.filter(p => {
+            for (let i = 0; i < known.length; i++) {
+                if (known[i] === 1 && !p[i]) return false;
+                if (known[i] === -1 && p[i]) return false;
+            }
+            return true;
+        });
+    }
+
+    function intersect(possibilities, length) {
+        const result = Array(length).fill(0);
+        if (possibilities.length === 0) return null;
+        for (let i = 0; i < length; i++) {
+            const allFilled = possibilities.every(p => p[i]);
+            const allEmpty = possibilities.every(p => !p[i]);
+            if (allFilled) result[i] = 1;
+            else if (allEmpty) result[i] = -1;
+        }
+        return result;
+    }
+
+    // Pre-compute all possibilities
+    let rowPoss = rowClues.map(clue => getLinePossibilities(clue, size));
+    let colPoss = colClues.map(clue => getLinePossibilities(clue, size));
+
+    let changed = true;
+    let iterations = 0;
+    while (changed && iterations < 100) {
+        changed = false;
+        iterations++;
+
+        // Process rows
+        for (let r = 0; r < size; r++) {
+            const known = state[r];
+            rowPoss[r] = filterPossibilities(rowPoss[r], known);
+            if (rowPoss[r].length === 0) return false;
+            const result = intersect(rowPoss[r], size);
+            if (!result) return false;
+            for (let c = 0; c < size; c++) {
+                if (state[r][c] === 0 && result[c] !== 0) {
+                    state[r][c] = result[c];
+                    changed = true;
+                }
+            }
+        }
+
+        // Process columns
+        for (let c = 0; c < size; c++) {
+            const known = state.map(row => row[c]);
+            colPoss[c] = filterPossibilities(colPoss[c], known);
+            if (colPoss[c].length === 0) return false;
+            const result = intersect(colPoss[c], size);
+            if (!result) return false;
+            for (let r = 0; r < size; r++) {
+                if (state[r][c] === 0 && result[r] !== 0) {
+                    state[r][c] = result[r];
+                    changed = true;
+                }
+            }
+        }
+    }
+
+    // Check if fully solved
+    for (let r = 0; r < size; r++)
+        for (let c = 0; c < size; c++)
+            if (state[r][c] === 0) return false; // Not uniquely determined
+
+    return true;
+}
+
+function picrossRenderGrid() {
+    const size = picrossSize;
+    const maxRowClueLen = Math.max(...picrossRowClues.map(c => c.length));
+    const maxColClueLen = Math.max(...picrossColClues.map(c => c.length));
+
+    const colCluesHead = document.getElementById('picross-col-clues');
+    colCluesHead.innerHTML = '';
+
+    // Column clue rows (one row per clue depth)
+    for (let d = 0; d < maxColClueLen; d++) {
+        const tr = document.createElement('tr');
+        // Empty cell for row clue column
+        const spacer = document.createElement('th');
+        spacer.className = 'picross-clue-col';
+        tr.appendChild(spacer);
+
+        for (let c = 0; c < size; c++) {
+            const th = document.createElement('th');
+            th.className = 'picross-clue-col';
+            const clue = picrossColClues[c];
+            const offset = maxColClueLen - clue.length;
+            if (d >= offset) {
+                th.textContent = clue[d - offset];
+            }
+            if ((c + 1) % 5 === 0 && c < size - 1) th.classList.add('block-border-right');
+            if (picrossIsColComplete(c)) th.classList.add('completed');
+            tr.appendChild(th);
+        }
+        colCluesHead.appendChild(tr);
+    }
+
+    const body = document.getElementById('picross-body');
+    body.innerHTML = '';
+
+    for (let r = 0; r < size; r++) {
+        const tr = document.createElement('tr');
+
+        // Row clue cell
+        const clueCell = document.createElement('td');
+        clueCell.className = 'picross-clue-row';
+        clueCell.textContent = picrossRowClues[r].join(' ');
+        if ((r + 1) % 5 === 0 && r < size - 1) clueCell.classList.add('block-border-bottom');
+        if (picrossIsRowComplete(r)) clueCell.classList.add('completed');
+        tr.appendChild(clueCell);
+
+        for (let c = 0; c < size; c++) {
+            const td = document.createElement('td');
+            td.className = 'picross-cell';
+            td.dataset.row = r;
+            td.dataset.col = c;
+
+            const st = picrossBoard[r][c];
+            if (st === 'filled') {
+                td.classList.add('filled');
+                if (picrossLocked[r][c]) td.classList.add('hinted');
+            } else if (st === 'crossed') {
+                td.classList.add('crossed');
+                td.textContent = '✕';
+            } else if (st === 'draft-filled') {
+                td.classList.add('draft-filled');
+            } else if (st === 'draft-crossed') {
+                td.classList.add('draft-crossed');
+                td.textContent = '✕';
+            }
+
+            if (picrossLocked[r][c]) td.classList.add('locked');
+            if ((c + 1) % 5 === 0 && c < size - 1) td.classList.add('block-border-right');
+            if ((r + 1) % 5 === 0 && r < size - 1) td.classList.add('block-border-bottom');
+
+            tr.appendChild(td);
+        }
+        body.appendChild(tr);
+    }
+
+    picrossSetupPointerHandlers();
+}
+
+function picrossSetupPointerHandlers() {
+    const table = document.getElementById('picross-table');
+
+    // Prevent context menu on the grid
+    table.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    table.addEventListener('pointerdown', (e) => {
+        const cell = e.target.closest('.picross-cell');
+        if (!cell) return;
+        e.preventDefault();
+        const r = parseInt(cell.dataset.row);
+        const c = parseInt(cell.dataset.col);
+        picrossPointerIsRight = (e.button === 2);
+        picrossDragging = false;
+        picrossDragAction = null;
+        picrossDragVisited = new Set();
+        picrossPointerDown = { r, c };
+        table.setPointerCapture(e.pointerId);
+    });
+
+    table.addEventListener('pointermove', (e) => {
+        if (!picrossPointerDown || picrossGameOver) return;
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        const cell = el && el.closest('.picross-cell');
+        if (!cell) return;
+        const r = parseInt(cell.dataset.row);
+        const c = parseInt(cell.dataset.col);
+
+        if (r === picrossPointerDown.r && c === picrossPointerDown.c && !picrossDragging) return;
+
+        if (!picrossDragging) {
+            // Start dragging: determine the action from the first cell
+            picrossDragging = true;
+            picrossDragAction = picrossResolveDragAction(picrossPointerDown.r, picrossPointerDown.c, picrossPointerIsRight);
+            picrossApplyDragCell(picrossPointerDown.r, picrossPointerDown.c);
+        }
+        picrossApplyDragCell(r, c);
+    });
+
+    table.addEventListener('pointerup', (e) => {
+        const wasDragging = picrossDragging;
+        const downCell = picrossPointerDown;
+        picrossDragging = false;
+        picrossDragAction = null;
+        picrossDragVisited = new Set();
+        picrossPointerDown = null;
+
+        if (wasDragging) {
+            // Drag ended — update clues & check win
+            picrossRefreshClues();
+            picrossCheckWin();
+            return;
+        }
+
+        // Simple click (no drag)
+        if (downCell) {
+            picrossHandleClick(downCell.r, downCell.c, picrossPointerIsRight);
+        }
+    });
+
+    table.addEventListener('pointercancel', () => {
+        picrossDragging = false;
+        picrossDragAction = null;
+        picrossDragVisited = new Set();
+        picrossPointerDown = null;
+    });
+}
+
+function picrossResolveDragAction(r, c, isRightClick) {
+    const st = picrossBoard[r][c];
+    if (picrossDraftMode) {
+        if (isRightClick) {
+            return (st === 'draft-crossed') ? 'uncross' : 'cross';
+        }
+        return (st === 'draft-filled') ? 'unfill' : 'fill';
+    }
+    if (isRightClick) {
+        return (st === 'crossed') ? 'uncross' : 'cross';
+    }
+    return (st === 'filled') ? 'unfill' : 'fill';
+}
+
+function picrossApplyDragCell(r, c) {
+    const key = `${r},${c}`;
+    if (picrossDragVisited.has(key)) return;
+    picrossDragVisited.add(key);
+    if (picrossGameOver || picrossLocked[r][c]) return;
+
+    const st = picrossBoard[r][c];
+
+    if (picrossDraftMode) {
+        if (picrossDragAction === 'fill' && st !== 'draft-filled') {
+            picrossBoard[r][c] = 'draft-filled';
+        } else if (picrossDragAction === 'unfill' && (st === 'draft-filled')) {
+            picrossBoard[r][c] = 'empty';
+        } else if (picrossDragAction === 'cross' && st !== 'draft-crossed') {
+            picrossBoard[r][c] = 'draft-crossed';
+        } else if (picrossDragAction === 'uncross' && (st === 'draft-crossed')) {
+            picrossBoard[r][c] = 'empty';
+        } else {
+            return;
+        }
+    } else {
+        if (picrossDragAction === 'fill' && st !== 'filled') {
+            picrossBoard[r][c] = 'filled';
+        } else if (picrossDragAction === 'unfill' && st === 'filled') {
+            picrossBoard[r][c] = 'empty';
+        } else if (picrossDragAction === 'cross' && st !== 'crossed') {
+            picrossBoard[r][c] = 'crossed';
+        } else if (picrossDragAction === 'uncross' && st === 'crossed') {
+            picrossBoard[r][c] = 'empty';
+        } else {
+            return;
+        }
+    }
+
+    picrossUpdateCellAppearance(r, c);
+}
+
+function picrossUpdateCellAppearance(r, c) {
+    const td = document.querySelector(`#picross-body .picross-cell[data-row="${r}"][data-col="${c}"]`);
+    if (!td) return;
+    const st = picrossBoard[r][c];
+
+    td.classList.remove('filled', 'crossed', 'draft-filled', 'draft-crossed', 'hinted');
+    td.textContent = '';
+
+    if (st === 'filled') {
+        td.classList.add('filled');
+        if (picrossLocked[r][c]) td.classList.add('hinted');
+    } else if (st === 'crossed') {
+        td.classList.add('crossed');
+        td.textContent = '✕';
+    } else if (st === 'draft-filled') {
+        td.classList.add('draft-filled');
+    } else if (st === 'draft-crossed') {
+        td.classList.add('draft-crossed');
+        td.textContent = '✕';
+    }
+}
+
+function picrossRefreshClues() {
+    // Update row clue completion
+    document.querySelectorAll('#picross-body .picross-clue-row').forEach((el, r) => {
+        el.classList.toggle('completed', picrossIsRowComplete(r));
+    });
+    // Update col clue completion across all header rows
+    const headerRows = document.querySelectorAll('#picross-col-clues tr');
+    headerRows.forEach(tr => {
+        const cells = tr.querySelectorAll('th');
+        // First th is the spacer, rest are columns 0..size-1
+        for (let i = 1; i < cells.length; i++) {
+            cells[i].classList.toggle('completed', picrossIsColComplete(i - 1));
+        }
+    });
+}
+
+function picrossHandleClick(r, c, isRightClick) {
+    if (picrossGameOver) return;
+    if (picrossLocked[r][c]) return;
+
+    const st = picrossBoard[r][c];
+
+    if (picrossDraftMode) {
+        if (isRightClick) {
+            if (st === 'draft-crossed') picrossBoard[r][c] = 'empty';
+            else picrossBoard[r][c] = 'draft-crossed';
+        } else {
+            if (st === 'draft-filled') picrossBoard[r][c] = 'empty';
+            else picrossBoard[r][c] = 'draft-filled';
+        }
+    } else {
+        if (isRightClick) {
+            if (st === 'crossed') picrossBoard[r][c] = 'empty';
+            else if (st === 'empty' || st === 'draft-filled' || st === 'draft-crossed') picrossBoard[r][c] = 'crossed';
+        } else {
+            if (st === 'filled') picrossBoard[r][c] = 'empty';
+            else if (st === 'empty' || st === 'draft-filled' || st === 'draft-crossed' || st === 'crossed') picrossBoard[r][c] = 'filled';
+        }
+    }
+
+    picrossUpdateCellAppearance(r, c);
+    picrossRefreshClues();
+    picrossCheckWin();
+}
+
+function picrossIsRowComplete(r) {
+    const line = [];
+    for (let c = 0; c < picrossSize; c++) {
+        const st = picrossBoard[r][c];
+        line.push(st === 'filled');
+    }
+    const clue = picrossComputeClue(line);
+    return JSON.stringify(clue) === JSON.stringify(picrossRowClues[r]);
+}
+
+function picrossIsColComplete(c) {
+    const line = [];
+    for (let r = 0; r < picrossSize; r++) {
+        const st = picrossBoard[r][c];
+        line.push(st === 'filled');
+    }
+    const clue = picrossComputeClue(line);
+    return JSON.stringify(clue) === JSON.stringify(picrossColClues[c]);
+}
+
+function picrossCheckWin() {
+    // Check if all cells match the solution
+    for (let r = 0; r < picrossSize; r++) {
+        for (let c = 0; c < picrossSize; c++) {
+            const isFilled = picrossBoard[r][c] === 'filled';
+            if (isFilled !== picrossSolution[r][c]) return;
+        }
+    }
+
+    picrossGameOver = true;
+    const msg = PICROSS_VICTORY_MESSAGES[Math.floor(Math.random() * PICROSS_VICTORY_MESSAGES.length)];
+    const msgEl = document.getElementById('picross-message');
+    msgEl.className = 'win';
+    msgEl.textContent = msg;
+
+    // Spawn confetti in picross container
+    const container = document.getElementById('picross-grid-container');
+    const rect = container.getBoundingClientRect();
+    const colors = ['#FFB3BA', '#BAE1FF', '#B5EAD7', '#FFDAC1', '#D5AAFF',
+                    '#FF9AA2', '#FFFFD1', '#E2B6CF', '#B5F5EC'];
+    for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * rect.width + 'px';
+        confetti.style.top = Math.random() * 40 + 'px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+        container.style.position = 'relative';
+        container.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2000);
+    }
+}
+
+function picrossUseHint() {
+    if (picrossGameOver) return;
+    const candidates = [];
+    for (let r = 0; r < picrossSize; r++)
+        for (let c = 0; c < picrossSize; c++)
+            if (!picrossLocked[r][c] && (picrossBoard[r][c] !== 'filled' || !picrossSolution[r][c]))
+                if (picrossSolution[r][c] && picrossBoard[r][c] !== 'filled')
+                    candidates.push({ r, c });
+
+    if (candidates.length === 0) return;
+    shuffle(candidates);
+    const { r, c } = candidates[0];
+    picrossBoard[r][c] = 'filled';
+    picrossLocked[r][c] = true;
+    picrossRenderGrid();
+    picrossCheckWin();
+}
+
+const PICROSS_VICTORY_MESSAGES = [
+    "🎉 Bravo Jeanne ! Ce picross est un chef-d'œuvre grâce à toi !",
+    "🖼️ Jeanne révèle des images cachées — comme elle révèle le meilleur chez les autres !",
+    "🌟 Pixel par pixel, Jeanne construit la perfection !",
+    "💛 Olivier est ébloui : Jeanne domine même les nonogrammes !",
+    "🧩 Chaque case noircie est une pièce du puzzle de ton génie, Jeanne !",
+    "🎊 Arthur, Victoire, Martin et Antoine : maman est une artiste du picross !",
+    "✨ Là où les autres voient des chiffres, Jeanne voit des images. Quelle vision !",
+    "🌸 Patience et précision — les qualités de Jeanne brillent encore dans ce picross !",
+    "🏆 Médaille d'or de la logique visuelle décernée à Jeanne de Clisson !",
+    "💫 Des indices à l'image finale : Jeanne a tout déchiffré avec brio !",
+    "🕊️ Jeanne résout les picross comme elle guide les élèves : avec clarté et douceur !",
+    "🥰 Olivier t'aime, et ce picross résolu rend ça encore plus grand — si c'était possible !",
+    "🎯 Case par case, ligne par ligne : Jeanne ne laisse rien au hasard !",
+    "🌺 Aussi méticuleuse au picross qu'à la pastorale — c'est la magie de Jeanne !",
+    "💝 Les pixels t'obéissent, les enfants t'adorent, le mari t'admire. Perfection !",
+    "🎈 Picross terminé ! Jeanne fait exploser les records de fierté d'Olivier !",
+    "🌈 Tu fais apparaître des images cachées comme tu fais apparaître la joie autour de toi !",
+    "🦋 Œil de lynx et cœur tendre — Jeanne face au picross !",
+    "💐 Pour chaque case bien remplie, un pétale de plus dans le bouquet de Jeanne !",
+    "🎶 Jeanne peint au picross comme Mozart composait : avec une aisance naturelle !",
+    "🤗 Les élèves de Clisson seraient fiers de voir leur responsable pastorale en action !",
+    "🌻 Image révélée, sourire garanti : c'est l'effet Jeanne sur le picross !",
+    "🥂 Trinquons à l'artiste logicienne la plus brillante de Clisson !",
+    "💡 Là où certains voient des grilles vides, Jeanne voit des œuvres d'art !",
+    "🌙 Jeanne, tu es aussi créative que méthodique — une combinaison rare !",
+    "🎁 Ce picross résolu est un tableau que tu t'offres à toi-même, Jeanne !",
+    "🦁 Féroce sur la grille, douce dans la vie — c'est notre Jeanne !",
+    "🎗️ Des indices aux pixels, chaque étape porte la signature de Jeanne !",
+    "🏅 Si le picross était un art, Jeanne serait exposée au Louvre !",
+    "✝️ Patience, observation et persévérance — les vertus de Jeanne au quotidien !",
+    "😄 Martin parie déjà que tu vas enchaîner avec une grille plus dure. Il a raison ?",
+    "🌿 La sérénité de Jeanne face à une grille complexe est un spectacle apaisant !",
+    "💞 Derrière ces pixels, il y a une femme extraordinaire. Bravo Jeanne !",
+    "🎪 Le plus beau tour ? Jeanne qui transforme des chiffres en image !",
+    "🌊 Aussi fluide qu'une vague, aussi précise qu'un pinceau — Jeanne au picross !",
+    "📿 Jeanne, ta patience est infinie — ces grilles en sont la preuve !",
+    "🍀 Ce n'est pas de la chance, c'est du talent pur. Bravo Jeanne !",
+    "💪 4 enfants, 1 pastorale, 1 picross : Jeanne gère tout sans sourciller !",
+    "🕯️ Chaque case posée par Jeanne est une petite lumière dans l'image !",
+    "🦅 Vue d'ensemble et sens du détail — Jeanne maîtrise les deux comme personne !",
+    "🎠 La vie à Clisson est un joli tableau, et Jeanne en est l'artiste !",
+    "🌅 Ce picross terminé révèle le plus beau paysage — celui de la victoire !",
+    "💬 Olivier murmure : bravo ma Jeanne, tu es décidément imbattable !",
+    "🤍 Chaque pixel est une déclaration d'amour à la logique signée Jeanne !",
+    "🎀 Élégante jusque dans sa façon de résoudre un picross — c'est tout Jeanne !",
+    "🌸 Victoire serait fière de porter si bien son prénom grâce à sa maman !",
+    "🙌 Incroyable : Jeanne a encore vaincu ! Le picross n'avait aucune chance !",
+    "💖 Grille parfaite, famille parfaite, femme parfaite — tout est dit !",
+    "🎵 Si chaque case était une note, Jeanne viendrait de peindre une symphonie !",
+    "🌟 Clisson peut dormir tranquille : Jeanne veille sur les élèves ET sur les picross !",
+];
+
 init();
