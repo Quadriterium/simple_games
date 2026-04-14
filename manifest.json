@@ -1,0 +1,22 @@
+{
+    "name": "Jeu des Couronnes",
+    "short_name": "Couronnes",
+    "description": "Puzzle de couronnes à placer sur une grille colorée",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#d69e2e",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
