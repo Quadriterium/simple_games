@@ -1327,23 +1327,24 @@ function useHint(r, c) {
 // ===== Victory =====
 
 const VICTORY_MESSAGES = [
+    "TOUKOU TOUKOU, OUK OUK!",
     "🎉 Bravo Jeanne ! Tu es absolument brillante !",
     "👑 La reine des couronnes, c'est toi Jeanne ! Olivier est trop fier de toi !",
     "🌟 Jeanne, tu illumines tout ce que tu touches — même les puzzles !",
     "💛 Arthur, Victoire, Martin et Antoine ont la meilleure maman du monde !",
-    "🎊 Gérer la pastorale d'un collège ET battre ce puzzle ? Jeanne est surhumaine !",
-    "✨ Clisson a bien de la chance de t'avoir, Jeanne !",
+    "🎊 Gérer 4 enfants ET battre ce puzzle ? Jeanne est surhumaine !",
+    "✨ Sa famille a bien de la chance de l'avoir — et elle le prouve encore !",
     "🥰 Olivier t'aime, et il sait depuis longtemps que tu es la plus forte !",
-    "🌸 Jeanne, tu jondles entre 4 enfants, un collège et les couronnes — quelle femme !",
-    "🏆 Championne toutes catégories : maman, épouse, pastorale ET jeux de logique !",
-    "💫 Pas étonnant que tu guides les élèves : tu vois toujours la bonne voie !",
+    "🌸 Jeanne, tu jongles entre 4 enfants, un mari et les couronnes — quelle femme !",
+    "🏆 Championne toutes catégories : maman, épouse, cuisinière ET joueuse de logique !",
+    "💫 Pas étonnant que tes enfants t'admirent : tu vois toujours la bonne voie !",
     "🕊️ Jeanne, ton âme douce et ta tête bien faite forment une combinaison imbattable !",
     "🎈 Victoire ! (Et pas seulement celle de ta fille 😉) Bravo Jeanne !",
     "💝 Olivier te le dit souvent, mais là c'est le jeu qui te le confirme : tu es exceptionnelle !",
     "🌺 Aussi belle dans sa tête que dans son cœur — c'est notre Jeanne !",
     "🦋 Tu as trouvé toutes les couronnes… comme tu trouves toujours les bons mots pour les autres !",
     "🎯 En plein dans le mille, Jeanne ! Arthur, Victoire, Martin et Antoine applaudissent !",
-    "⭐ La pastorale, les enfants, le mari, le puzzle… Tu gères tout avec grâce !",
+    "⭐ Les devoirs, les repas, le mari, le puzzle… Tu gères tout avec grâce !",
     "🌈 Jeanne, si la bienveillance avait un visage, ce serait le tien !",
     "💐 Pour toi Jeanne, un bouquet virtuel de félicitations — tu le mérites cent fois !",
     "🙌 Incroyable mais vrai : Jeanne a encore réussi ! (On n'est plus vraiment surpris, hein !)",
@@ -1352,8 +1353,8 @@ const VICTORY_MESSAGES = [
     "🤍 Jeanne, chaque jour tu prouves qu'on peut être douce ET redoutable !",
     "🌻 Comme un tournesol, tu tournes toujours vers la lumière — et tu l'apportes aux autres !",
     "🎁 Olivier a tiré le gros lot le jour où il t'a rencontrée, Jeanne !",
-    "💪 4 enfants, 1 mari, des dizaines d'élèves à accompagner ET elle gagne au puzzle. Chapeau !",
-    "🕯️ Tu allumes des lumières dans les cœurs à Clisson tous les jours — et maintenant dans ce jeu !",
+    "💪 4 enfants, 1 mari, mille câlins par jour ET elle gagne au puzzle. Chapeau !",
+    "🕯️ Tu allumes des lumières dans les cœurs de ta famille tous les jours — et maintenant dans ce jeu !",
     "🌙 Jeanne, tu es la personne la plus lumineuse qu'Olivier connaisse !",
     "😄 Arthur avait parié que tu allais trouver. Martin aussi. Victoire et Antoine t'ont soutenue du début !",
     "🥳 Fêtons ça ! Jeanne a gagné, et toute la famille est fière d'elle !",
@@ -1363,21 +1364,21 @@ const VICTORY_MESSAGES = [
     "🌊 Aussi apaisante qu'une marée douce, aussi puissante qu'une vague — c'est Jeanne !",
     "📿 Avec tout l'amour d'Olivier et des enfants : Bravo, notre Jeanne adorée !",
     "🏅 Médaille d'or pour Jeanne : maman formidable, femme éblouissante, joueuse redoutable !",
-    "🤗 Les élèves du collège de Clisson ne savent pas à quel point ils ont de la chance de t'avoir !",
+    "🤗 Arthur, Victoire, Martin et Antoine ne savent pas à quel point ils ont de la chance de t'avoir !",
     "💡 Jeanne voit des solutions là où les autres ne voient que des problèmes. Preuve en court !",
     "🌿 Ton calme, ta foi, ta générosité — et maintenant ta victoire au puzzle. Rien ne t'arrête !",
     "🎀 Enveloppée de douceur, armée de logique : c'est le secret de Jeanne !",
-    "🌅 Chaque matin à Clisson est plus beau parce que tu y es, Jeanne !",
+    "🌅 Chaque matin est plus beau parce que tu es là, Jeanne !",
     "💬 Olivier te le murmure ce soir : tu es la meilleure chose qui me soit arrivée !",
     "🍀 Arthur, Victoire, Martin et Antoine ont une chance inouïe — leur maman est la meilleure !",
-    "🎗️ Pastorale, famille, puzzle — tout ce que tu touches devient précieux, Jeanne !",
+    "🎗️ Famille, amour, puzzle — tout ce que tu touches devient précieux, Jeanne !",
     "🦁 Lion pour défendre sa famille, agneau pour accueillir les autres. Voilà Jeanne !",
     "🌸 Ce n'est pas que les couronnes qui te vont bien — toutes les couronnes sont pour toi !",
     "✝️ Avec tout ce que tu donnes aux autres, tu mérites bien cette petite victoire pour toi !",
-    "🥂 Trinquons (en jus d'orange si tu veux) à Jeanne, la femme la plus merveilleuse de Clisson !",
+    "🥂 Trinquons (en jus d'orange si tu veux) à Jeanne, la femme la plus merveilleuse du monde !",
     "🎪 Le plus beau spectacle qu'Olivier connaisse ? Jeanne, simplement en train de vivre !",
     "💖 Puzzle terminé, sourire garanti : voilà l'effet Jeanne sur tout ce qu'elle entreprend !",
-    "🌟 Jeanne — maman, épouse, pastorale, amie, joueuse. Décidément, tu excelles partout !",
+    "🌟 Jeanne — maman, épouse, confidente, amie, joueuse. Décidément, tu excelles partout !",
     "🕊️ Paix, amour et victoire au puzzle — c'est le programme de Jeanne pour aujourd'hui !",
 ];
 
@@ -1849,19 +1850,19 @@ const SUDOKU_VICTORY_MESSAGES = [
     "🎊 Arthur, Victoire, Martin et Antoine : votre maman est une reine du sudoku !",
     "✨ Même les chiffres se mettent en ordre quand Jeanne le décide !",
     "🌸 Douce et méthodique — le combo parfait pour le sudoku, et c'est Jeanne !",
-    "🏆 Médaille d'or du sudoku décernée à Jeanne de Clisson !",
+    "🏆 Médaille d'or du sudoku décernée à Jeanne, maman extraordinaire !",
     "💫 81 cases, 0 erreur, 1 Jeanne. L'équation parfaite !",
     "🕊️ Jeanne résout les grilles comme elle résout les problèmes : avec grâce et patience !",
     "🥰 Olivier t'aime encore plus à chaque grille terminée — si c'était possible !",
     "🎯 Ligne par ligne, colonne par colonne, bloc par bloc : Jeanne ne laisse rien au hasard !",
-    "🌺 Aussi méthodique au sudoku qu'à la pastorale — c'est le talent de Jeanne !",
+    "🌺 Aussi méthodique au sudoku qu'en cuisine — c'est le talent de Jeanne !",
     "💝 Les chiffres t'obéissent, les enfants t'adorent, le mari t'admire. Que demander de plus ?",
     "🎈 Sudoku terminé ! Jeanne fait exploser les compteurs de fierté d'Olivier !",
     "🌈 Tu mets de l'ordre dans les chiffres comme tu mets de la lumière dans les vies !",
     "🦋 Légère comme un papillon, précise comme un laser — Jeanne face au sudoku !",
     "💐 Pour chaque chiffre bien placé, Jeanne mérite une fleur. Voilà un bouquet de 81 !",
     "🎶 Jeanne joue du sudoku comme Mozart jouait du piano : avec une aisance naturelle !",
-    "🤗 Les élèves de Clisson seraient fiers de voir leur responsable pastorale en action !",
+    "🤗 Toute la famille serait fière de voir maman en pleine action !",
     "🌻 Tournesol parmi les chiffres, Jeanne illumine chaque grille qu'elle touche !",
     "🥂 Trinquons à la victoire de Jeanne — une grille de plus dans sa collection !",
     "💡 Là où certains voient des cases vides, Jeanne voit des certitudes !",
@@ -1878,10 +1879,10 @@ const SUDOKU_VICTORY_MESSAGES = [
     "🌊 Aussi fluide qu'une vague, aussi précise qu'une horloge — Jeanne au sudoku !",
     "📿 Jeanne, ta patience est infinie — ces chiffres en sont la preuve !",
     "🍀 Ce n'est pas de la chance, c'est du talent pur. Bravo Jeanne !",
-    "💪 4 enfants, 1 pastorale, 81 cases : Jeanne gère tout sans sourciller !",
+    "💪 4 enfants, 1 mari comblé, 81 cases : Jeanne gère tout sans sourciller !",
     "🕯️ Chaque chiffre posé par Jeanne est une petite lumière dans la grille !",
     "🦅 Vue d'ensemble et sens du détail — Jeanne maîtrise les deux comme personne !",
-    "🎠 La vie à Clisson est un joli manège, et Jeanne en est le centre radieux !",
+    "🎠 La vie de famille est un joli manège, et Jeanne en est le centre radieux !",
     "🌅 Ce sudoku terminé annonce un beau coucher de soleil — celui de la victoire !",
     "💬 Olivier murmure : bravo ma Jeanne, tu es décidément imbattable !",
     "🤍 Chaque ligne complète est une déclaration d'amour aux mathématiques signée Jeanne !",
@@ -1890,7 +1891,7 @@ const SUDOKU_VICTORY_MESSAGES = [
     "🙌 Incroyable : Jeanne a encore vaincu ! Le sudoku n'avait aucune chance !",
     "💖 Grille parfaite, famille parfaite, femme parfaite — tout est dit !",
     "🎵 Si chaque chiffre était une note, Jeanne viendrait de composer une symphonie !",
-    "🌟 Clisson peut dormir tranquille : Jeanne veille sur les élèves ET sur les sudokus !",
+    "🌟 Toute la famille peut dormir tranquille : Jeanne veille sur tout le monde ET sur les sudokus !",
 ];
 
 // ===== Sudoku Undo System =====
@@ -2113,6 +2114,9 @@ function picrossInit() {
 
     // Undo button
     document.getElementById('picross-undo-btn').addEventListener('click', picrossUndo);
+
+    // Verify button
+    document.getElementById('picross-verify-btn').addEventListener('click', picrossVerify);
 
     document.querySelectorAll('.picross-toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2353,9 +2357,10 @@ function picrossRenderGrid() {
             const offset = maxColClueLen - clue.length;
             if (d >= offset) {
                 th.textContent = clue[d - offset];
+                th.dataset.col = c;
+                th.dataset.clueIdx = d - offset;
             }
             if ((c + 1) % 5 === 0 && c < size - 1) th.classList.add('block-border-right');
-            if (picrossIsColComplete(c)) th.classList.add('completed');
             tr.appendChild(th);
         }
         colCluesHead.appendChild(tr);
@@ -2367,12 +2372,21 @@ function picrossRenderGrid() {
     for (let r = 0; r < size; r++) {
         const tr = document.createElement('tr');
 
-        // Row clue cell
+        // Row clue cell — use individual spans per number
         const clueCell = document.createElement('td');
         clueCell.className = 'picross-clue-row';
-        clueCell.textContent = picrossRowClues[r].join(' ');
+        clueCell.dataset.row = r;
+        picrossRowClues[r].forEach((num, idx) => {
+            const span = document.createElement('span');
+            span.className = 'picross-clue-num';
+            span.dataset.clueIdx = idx;
+            span.textContent = num;
+            clueCell.appendChild(span);
+            if (idx < picrossRowClues[r].length - 1) {
+                clueCell.appendChild(document.createTextNode(' '));
+            }
+        });
         if ((r + 1) % 5 === 0 && r < size - 1) clueCell.classList.add('block-border-bottom');
-        if (picrossIsRowComplete(r)) clueCell.classList.add('completed');
         tr.appendChild(clueCell);
 
         for (let c = 0; c < size; c++) {
@@ -2405,6 +2419,7 @@ function picrossRenderGrid() {
     }
 
     picrossSetupPointerHandlers();
+    picrossRefreshClues();
 }
 
 // ===== Picross Undo System =====
@@ -2441,6 +2456,20 @@ function picrossSetupPointerHandlers() {
 
     // Prevent context menu on the grid
     table.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Double-click on clue to fill crosses on completed row/col
+    table.addEventListener('dblclick', (e) => {
+        const rowClue = e.target.closest('.picross-clue-row');
+        if (rowClue && rowClue.dataset.row !== undefined) {
+            picrossFillCrossesRow(parseInt(rowClue.dataset.row));
+            return;
+        }
+        const colClue = e.target.closest('.picross-clue-col');
+        if (colClue && colClue.dataset.col !== undefined) {
+            picrossFillCrossesCol(parseInt(colClue.dataset.col));
+            return;
+        }
+    });
 
     table.addEventListener('pointerdown', (e) => {
         const cell = e.target.closest('.picross-cell');
@@ -2581,19 +2610,79 @@ function picrossUpdateCellAppearance(r, c) {
 }
 
 function picrossRefreshClues() {
-    // Update row clue completion
+    // Row clues: per-span coloring
     document.querySelectorAll('#picross-body .picross-clue-row').forEach((el, r) => {
-        el.classList.toggle('completed', picrossIsRowComplete(r));
+        const complete = picrossIsRowComplete(r);
+        el.classList.toggle('completed', complete);
+        const matchedCount = complete ? picrossRowClues[r].length : picrossMatchedClueCount(picrossGetRowLine(r), picrossRowClues[r]);
+        el.querySelectorAll('.picross-clue-num').forEach(span => {
+            const idx = parseInt(span.dataset.clueIdx);
+            span.classList.toggle('clue-complete', complete);
+            span.classList.toggle('clue-matched', !complete && idx < matchedCount);
+        });
     });
-    // Update col clue completion across all header rows
+    // Col clues: per-th coloring
+    const colMatched = [];
+    const colComplete = [];
+    for (let c = 0; c < picrossSize; c++) {
+        const complete = picrossIsColComplete(c);
+        colComplete[c] = complete;
+        colMatched[c] = complete ? picrossColClues[c].length : picrossMatchedClueCount(picrossGetColLine(c), picrossColClues[c]);
+    }
     const headerRows = document.querySelectorAll('#picross-col-clues tr');
     headerRows.forEach(tr => {
         const cells = tr.querySelectorAll('th');
-        // First th is the spacer, rest are columns 0..size-1
         for (let i = 1; i < cells.length; i++) {
-            cells[i].classList.toggle('completed', picrossIsColComplete(i - 1));
+            const th = cells[i];
+            if (th.dataset.col === undefined) continue;
+            const c = parseInt(th.dataset.col);
+            const idx = parseInt(th.dataset.clueIdx);
+            if (isNaN(idx)) continue;
+            th.classList.toggle('clue-complete', colComplete[c]);
+            th.classList.toggle('clue-matched', !colComplete[c] && idx < colMatched[c]);
         }
     });
+}
+
+// Returns how many clue groups (from the start) are confirmed by filled cells from the left/top.
+// A group is confirmed when there's a filled block of the exact size followed by an empty/crossed cell (or end of line for the last group).
+function picrossMatchedClueCount(line, clues) {
+    if (clues.length === 1 && clues[0] === 0) return line.every(v => !v) ? 1 : 0;
+    let pos = 0;
+    for (let g = 0; g < clues.length; g++) {
+        const groupSize = clues[g];
+        // Skip non-filled cells at the start
+        while (pos < line.length && !line[pos]) pos++;
+        // Check if there's a filled block of exactly groupSize
+        if (pos >= line.length) return g; // ran out of cells, no more groups
+        let count = 0;
+        const blockStart = pos;
+        while (pos < line.length && line[pos]) { count++; pos++; }
+        // The filled block must be exactly groupSize
+        if (count !== groupSize) return g;
+        // After the block, there must be a gap (non-filled) or end of line
+        // If not last group, need at least one non-filled cell
+        if (g < clues.length - 1) {
+            if (pos < line.length && line[pos]) return g; // no gap → not confirmed
+        }
+    }
+    return clues.length;
+}
+
+function picrossGetRowLine(r) {
+    const line = [];
+    for (let c = 0; c < picrossSize; c++) {
+        line.push(picrossBoard[r][c] === 'filled');
+    }
+    return line;
+}
+
+function picrossGetColLine(c) {
+    const line = [];
+    for (let r = 0; r < picrossSize; r++) {
+        line.push(picrossBoard[r][c] === 'filled');
+    }
+    return line;
 }
 
 function picrossHandleClick(r, c, isRightClick) {
@@ -2700,6 +2789,64 @@ function picrossUseHint() {
     picrossCheckWin();
 }
 
+function picrossVerify() {
+    if (picrossGameOver) return;
+    let hasError = false;
+    for (let r = 0; r < picrossSize; r++) {
+        for (let c = 0; c < picrossSize; c++) {
+            const st = picrossBoard[r][c];
+            const shouldBeFilled = picrossSolution[r][c];
+            // Error: filled but shouldn't be, or crossed but should be filled
+            const isWrong = (st === 'filled' && !shouldBeFilled) || (st === 'crossed' && shouldBeFilled);
+            if (isWrong) {
+                hasError = true;
+                const td = document.querySelector(`#picross-body .picross-cell[data-row="${r}"][data-col="${c}"]`);
+                if (td) {
+                    td.classList.add('picross-verify-error');
+                    setTimeout(() => td.classList.remove('picross-verify-error'), 3000);
+                }
+            }
+        }
+    }
+    if (!hasError) {
+        const msgEl = document.getElementById('picross-message');
+        msgEl.className = 'hint';
+        msgEl.textContent = '✅ Tout est correct pour le moment !';
+        setTimeout(() => {
+            if (!picrossGameOver) {
+                msgEl.className = 'hidden';
+                msgEl.textContent = '';
+            }
+        }, 2500);
+    }
+}
+
+function picrossFillCrossesRow(r) {
+    if (picrossGameOver) return;
+    if (!picrossIsRowComplete(r)) return;
+    picrossSaveState();
+    for (let c = 0; c < picrossSize; c++) {
+        if (picrossBoard[r][c] === 'empty' || picrossBoard[r][c] === 'draft-filled' || picrossBoard[r][c] === 'draft-crossed') {
+            picrossBoard[r][c] = 'crossed';
+            picrossUpdateCellAppearance(r, c);
+        }
+    }
+    picrossRefreshClues();
+}
+
+function picrossFillCrossesCol(c) {
+    if (picrossGameOver) return;
+    if (!picrossIsColComplete(c)) return;
+    picrossSaveState();
+    for (let r = 0; r < picrossSize; r++) {
+        if (picrossBoard[r][c] === 'empty' || picrossBoard[r][c] === 'draft-filled' || picrossBoard[r][c] === 'draft-crossed') {
+            picrossBoard[r][c] = 'crossed';
+            picrossUpdateCellAppearance(r, c);
+        }
+    }
+    picrossRefreshClues();
+}
+
 const PICROSS_VICTORY_MESSAGES = [
     "🎉 Bravo Jeanne ! Ce picross est un chef-d'œuvre grâce à toi !",
     "🖼️ Jeanne révèle des images cachées — comme elle révèle le meilleur chez les autres !",
@@ -2709,21 +2856,21 @@ const PICROSS_VICTORY_MESSAGES = [
     "🎊 Arthur, Victoire, Martin et Antoine : maman est une artiste du picross !",
     "✨ Là où les autres voient des chiffres, Jeanne voit des images. Quelle vision !",
     "🌸 Patience et précision — les qualités de Jeanne brillent encore dans ce picross !",
-    "🏆 Médaille d'or de la logique visuelle décernée à Jeanne de Clisson !",
+    "🏆 Médaille d'or de la logique visuelle décernée à Jeanne, super maman !",
     "💫 Des indices à l'image finale : Jeanne a tout déchiffré avec brio !",
-    "🕊️ Jeanne résout les picross comme elle guide les élèves : avec clarté et douceur !",
+    "🕊️ Jeanne résout les picross comme elle guide ses enfants : avec clarté et douceur !",
     "🥰 Olivier t'aime, et ce picross résolu rend ça encore plus grand — si c'était possible !",
     "🎯 Case par case, ligne par ligne : Jeanne ne laisse rien au hasard !",
-    "🌺 Aussi méticuleuse au picross qu'à la pastorale — c'est la magie de Jeanne !",
+    "🌺 Aussi méticuleuse au picross qu'avec ses enfants — c'est la magie de Jeanne !",
     "💝 Les pixels t'obéissent, les enfants t'adorent, le mari t'admire. Perfection !",
     "🎈 Picross terminé ! Jeanne fait exploser les records de fierté d'Olivier !",
     "🌈 Tu fais apparaître des images cachées comme tu fais apparaître la joie autour de toi !",
     "🦋 Œil de lynx et cœur tendre — Jeanne face au picross !",
     "💐 Pour chaque case bien remplie, un pétale de plus dans le bouquet de Jeanne !",
     "🎶 Jeanne peint au picross comme Mozart composait : avec une aisance naturelle !",
-    "🤗 Les élèves de Clisson seraient fiers de voir leur responsable pastorale en action !",
+    "🤗 Toute la famille serait fière de voir maman en pleine action !",
     "🌻 Image révélée, sourire garanti : c'est l'effet Jeanne sur le picross !",
-    "🥂 Trinquons à l'artiste logicienne la plus brillante de Clisson !",
+    "🥂 Trinquons à l'artiste logicienne la plus brillante de la famille !",
     "💡 Là où certains voient des grilles vides, Jeanne voit des œuvres d'art !",
     "🌙 Jeanne, tu es aussi créative que méthodique — une combinaison rare !",
     "🎁 Ce picross résolu est un tableau que tu t'offres à toi-même, Jeanne !",
@@ -2738,10 +2885,10 @@ const PICROSS_VICTORY_MESSAGES = [
     "🌊 Aussi fluide qu'une vague, aussi précise qu'un pinceau — Jeanne au picross !",
     "📿 Jeanne, ta patience est infinie — ces grilles en sont la preuve !",
     "🍀 Ce n'est pas de la chance, c'est du talent pur. Bravo Jeanne !",
-    "💪 4 enfants, 1 pastorale, 1 picross : Jeanne gère tout sans sourciller !",
+    "💪 4 enfants, 1 mari amoureux, 1 picross : Jeanne gère tout sans sourciller !",
     "🕯️ Chaque case posée par Jeanne est une petite lumière dans l'image !",
     "🦅 Vue d'ensemble et sens du détail — Jeanne maîtrise les deux comme personne !",
-    "🎠 La vie à Clisson est un joli tableau, et Jeanne en est l'artiste !",
+    "🎠 La vie de famille est un joli tableau, et Jeanne en est l'artiste !",
     "🌅 Ce picross terminé révèle le plus beau paysage — celui de la victoire !",
     "💬 Olivier murmure : bravo ma Jeanne, tu es décidément imbattable !",
     "🤍 Chaque pixel est une déclaration d'amour à la logique signée Jeanne !",
@@ -2750,7 +2897,7 @@ const PICROSS_VICTORY_MESSAGES = [
     "🙌 Incroyable : Jeanne a encore vaincu ! Le picross n'avait aucune chance !",
     "💖 Grille parfaite, famille parfaite, femme parfaite — tout est dit !",
     "🎵 Si chaque case était une note, Jeanne viendrait de peindre une symphonie !",
-    "🌟 Clisson peut dormir tranquille : Jeanne veille sur les élèves ET sur les picross !",
+    "🌟 Toute la maison peut dormir tranquille : Jeanne veille sur tout le monde ET sur les picross !",
 ];
 
 init();

@@ -983,7 +983,7 @@ h1 {
     margin-bottom: 16px;
 }
 
-#picross-new-game, #picross-draft-btn, #picross-hint-btn {
+#picross-new-game, #picross-draft-btn, #picross-hint-btn, #picross-verify-btn {
     padding: 8px 18px;
     border: none;
     border-radius: 8px;
@@ -1000,6 +1000,15 @@ h1 {
 
 #picross-new-game:hover {
     background: #3182ce;
+}
+
+#picross-verify-btn {
+    background: #48bb78;
+    color: #fff;
+}
+
+#picross-verify-btn:hover {
+    background: #38a169;
 }
 
 #picross-hint-btn {
@@ -1176,10 +1185,41 @@ h1 {
 /* Row/col completion */
 .picross-clue-row.completed {
     color: #38a169;
+    cursor: pointer;
 }
 
 .picross-clue-col.completed {
     color: #38a169;
+    cursor: pointer;
+}
+
+/* Individual clue number states */
+.picross-clue-num.clue-matched {
+    color: #3182ce;
+}
+
+.picross-clue-num.clue-complete {
+    color: #38a169;
+}
+
+.picross-clue-col.clue-matched {
+    color: #3182ce;
+}
+
+.picross-clue-col.clue-complete {
+    color: #38a169;
+}
+
+/* Verification error highlight */
+.picross-cell.picross-verify-error {
+    outline: 3px solid #e53e3e;
+    outline-offset: -3px;
+    animation: picross-verify-pulse 0.6s ease 3;
+}
+
+@keyframes picross-verify-pulse {
+    0%, 100% { outline-color: #e53e3e; }
+    50% { outline-color: #feb2b2; }
 }
 
 @keyframes picross-error-flash {
