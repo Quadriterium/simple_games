@@ -11,6 +11,9 @@
 </head>
 <body>
     <div id="app">
+        <!-- Force Update -->
+        <button id="force-update-btn" title="Forcer la mise à jour">🔄</button>
+
         <!-- Game Switcher -->
         <div id="game-switcher">
             <button class="game-tab active" data-game="crowns">👑 Couronnes</button>
@@ -47,6 +50,10 @@
                 <div id="grid"></div>
             </div>
 
+            <div class="undo-bar">
+                <button id="crown-undo-btn" class="undo-btn" disabled>↩ Annuler</button>
+            </div>
+
             <div id="message" class="hidden"></div>
         </div>
 
@@ -75,6 +82,10 @@
             </div>
 
             <div id="sudoku-numpad"></div>
+
+            <div class="undo-bar">
+                <button id="sudoku-undo-btn" class="undo-btn" disabled>↩ Annuler</button>
+            </div>
 
             <div id="sudoku-message" class="hidden"></div>
         </div>
@@ -111,6 +122,10 @@
                 </table>
             </div>
 
+            <div class="undo-bar">
+                <button id="picross-undo-btn" class="undo-btn" disabled>↩ Annuler</button>
+            </div>
+
             <div id="picross-message" class="hidden"></div>
         </div>
     </div>
@@ -127,6 +142,28 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js');
     }
+
+    document.getElementById('force-update-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('force-update-btn');
+        btn.disabled = true;
+        btn.classList.add('updating');
+        try {
+            if ('serviceWorker' in navigator) {
+                const reg = await navigator.serviceWorker.getRegistration();
+                if (reg) {
+                    // Unregister the service worker
+                    await reg.unregister();
+                }
+                // Delete all caches
+                const keys = await caches.keys();
+                await Promise.all(keys.map(k => caches.delete(k)));
+            }
+            // Hard reload
+            location.reload(true);
+        } catch (e) {
+            location.reload(true);
+        }
+    });
     </script>
 </body>
 </html>

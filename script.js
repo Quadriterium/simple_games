@@ -9,6 +9,7 @@ let draftMode = false;
 let crownsPlaced = 0;
 let totalCrowns = 0; // gridSize * crownsPerGroup
 let gameOver = false;
+let crownUndoStack = [];
 
 // Difficulty configs per crown mode
 const DIFFICULTY_CONFIG = {
@@ -96,6 +97,7 @@ function init() {
     hintBtn.addEventListener('click', toggleHintMode);
     draftBtn.addEventListener('click', toggleDraftMode);
     overlayClose.addEventListener('click', closeOverlay);
+    document.getElementById('crown-undo-btn').addEventListener('click', crownUndo);
 
     setupClickHandlers();
     rebuildDifficultyButtons();
@@ -129,6 +131,8 @@ function startNewGame() {
     hintMode = false;
     crownsPlaced = 0;
     gameOver = false;
+    crownUndoStack = [];
+    updateCrownUndoBtn();
 
     hintBtn.classList.remove('used', 'hint-active');
     hintBadge.textContent = '1';
@@ -1002,6 +1006,38 @@ function applyCellAppearance(cell, r, c) {
     }
 }
 
+// ===== Crown Undo System =====
+
+function crownSaveState() {
+    const snapshot = {
+        grid: grid.map(row => row.map(cell => ({ ...cell }))),
+        crownsPlaced,
+        gameOver,
+    };
+    crownUndoStack.push(snapshot);
+    updateCrownUndoBtn();
+}
+
+function crownUndo() {
+    if (crownUndoStack.length === 0) return;
+    const snapshot = crownUndoStack.pop();
+    grid = snapshot.grid;
+    crownsPlaced = snapshot.crownsPlaced;
+    gameOver = snapshot.gameOver;
+    renderGrid();
+    if (!gameOver) {
+        messageEl.className = 'hidden';
+        messageEl.textContent = '';
+        closeOverlay();
+    }
+    updateCrownUndoBtn();
+}
+
+function updateCrownUndoBtn() {
+    const btn = document.getElementById('crown-undo-btn');
+    if (btn) btn.disabled = crownUndoStack.length === 0;
+}
+
 // ===== Click Handling (unified for desktop & mobile) =====
 
 let lastClickTime = 0;
@@ -1025,11 +1061,14 @@ function onGridClick(r, c) {
         lastClickTime = 0;
         lastClickRow = -1;
         lastClickCol = -1;
+        // Pop the single-click undo entry, we'll push a fresh one for the dblclick
+        crownUndoStack.pop();
         // Revert cell to state before first click
         if (lastClickPrevState !== null && !grid[r][c].locked) {
             grid[r][c].state = lastClickPrevState;
         }
         lastClickPrevState = null;
+        crownSaveState();
         handleDblClick(r, c);
     } else {
         // First click — apply immediately
@@ -1037,6 +1076,7 @@ function onGridClick(r, c) {
         lastClickRow = r;
         lastClickCol = c;
         lastClickPrevState = grid[r][c].state;
+        crownSaveState();
         handleSingleClick(r, c);
     }
 }
@@ -1091,6 +1131,7 @@ function setupClickHandlers() {
         if (r === pointerDownCell.r && c === pointerDownCell.c) return;
         if (!isDragging) {
             isDragging = true;
+            crownSaveState();
             const startData = grid[pointerDownCell.r][pointerDownCell.c];
             dragAction = (startData.state === 'cross' || startData.state === 'draft-cross') ? 'remove' : 'add';
             applyDragAction(pointerDownCell.r, pointerDownCell.c);
@@ -1447,6 +1488,7 @@ let sudokuDraftMode = false;
 let sudokuNotes = [];  // 9×9 array of Set<number>
 let sudokuErrors = []; // 9×9, true if wrong number placed
 let sudokuHinted = []; // 9×9, true if revealed by hint
+let sudokuUndoStack = [];
 
 const SUDOKU_CLUES = { easy: 38, medium: 30, hard: 24 };
 
@@ -1475,6 +1517,9 @@ function sudokuInit() {
 
     // Hint button
     document.getElementById('sudoku-hint-btn').addEventListener('click', sudokuUseHint);
+
+    // Undo button
+    document.getElementById('sudoku-undo-btn').addEventListener('click', sudokuUndo);
 
     // Build numpad
     const numpad = document.getElementById('sudoku-numpad');
@@ -1542,6 +1587,8 @@ function sudokuNewGame() {
     sudokuGameOver = false;
     sudokuSelected = null;
     sudokuDraftMode = false;
+    sudokuUndoStack = [];
+    updateSudokuUndoBtn();
     const draftBtn = document.getElementById('sudoku-draft-btn');
     if (draftBtn) draftBtn.classList.remove('draft-active');
     const msgEl = document.getElementById('sudoku-message');
@@ -1846,10 +1893,45 @@ const SUDOKU_VICTORY_MESSAGES = [
     "🌟 Clisson peut dormir tranquille : Jeanne veille sur les élèves ET sur les sudokus !",
 ];
 
+// ===== Sudoku Undo System =====
+
+function sudokuSaveState() {
+    sudokuUndoStack.push({
+        board: sudokuBoard.map(r => [...r]),
+        notes: sudokuNotes.map(r => r.map(s => new Set(s))),
+        errors: sudokuErrors.map(r => [...r]),
+        gameOver: sudokuGameOver,
+    });
+    updateSudokuUndoBtn();
+}
+
+function sudokuUndo() {
+    if (sudokuUndoStack.length === 0) return;
+    const snapshot = sudokuUndoStack.pop();
+    sudokuBoard = snapshot.board;
+    sudokuNotes = snapshot.notes;
+    sudokuErrors = snapshot.errors;
+    sudokuGameOver = snapshot.gameOver;
+    if (!sudokuGameOver) {
+        const msgEl = document.getElementById('sudoku-message');
+        msgEl.className = 'hidden';
+        msgEl.textContent = '';
+    }
+    sudokuRenderGrid();
+    updateSudokuUndoBtn();
+}
+
+function updateSudokuUndoBtn() {
+    const btn = document.getElementById('sudoku-undo-btn');
+    if (btn) btn.disabled = sudokuUndoStack.length === 0;
+}
+
 function sudokuPlaceNumber(n) {
     if (!sudokuSelected || sudokuGameOver) return;
     const { r, c } = sudokuSelected;
     if (sudokuGiven[r][c]) return;
+
+    sudokuSaveState();
 
     if (sudokuDraftMode) {
         if (n === 0) {
@@ -1916,6 +1998,7 @@ function sudokuUseHint() {
             if (!sudokuGiven[r][c] && sudokuBoard[r][c] !== sudokuSolution[r][c])
                 candidates.push({ r, c });
     if (candidates.length === 0) return;
+    sudokuSaveState();
     shuffle(candidates);
     const { r, c } = candidates[0];
     sudokuBoard[r][c] = sudokuSolution[r][c];
@@ -1985,6 +2068,7 @@ let picrossDraftMode = false;
 let picrossCrossMode = false;
 let picrossLevel = 'easy';
 let picrossLocked = [];      // locked[r][c] = true if hinted
+let picrossUndoStack = [];
 
 // Drag state for picross
 let picrossDragging = false;
@@ -2027,6 +2111,9 @@ function picrossInit() {
 
     document.getElementById('picross-hint-btn').addEventListener('click', picrossUseHint);
 
+    // Undo button
+    document.getElementById('picross-undo-btn').addEventListener('click', picrossUndo);
+
     document.querySelectorAll('.picross-toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             if (picrossGameOver) return;
@@ -2045,6 +2132,8 @@ function picrossNewGame() {
     picrossGameOver = false;
     picrossDraftMode = false;
     picrossCrossMode = false;
+    picrossUndoStack = [];
+    updatePicrossUndoBtn();
     document.querySelectorAll('.picross-toggle-btn').forEach(b => b.classList.remove('active'));
     const fillBtn = document.getElementById('picross-fill-btn');
     if (fillBtn) fillBtn.classList.add('active');
@@ -2318,6 +2407,35 @@ function picrossRenderGrid() {
     picrossSetupPointerHandlers();
 }
 
+// ===== Picross Undo System =====
+
+function picrossSaveState() {
+    picrossUndoStack.push({
+        board: picrossBoard.map(r => [...r]),
+        gameOver: picrossGameOver,
+    });
+    updatePicrossUndoBtn();
+}
+
+function picrossUndo() {
+    if (picrossUndoStack.length === 0) return;
+    const snapshot = picrossUndoStack.pop();
+    picrossBoard = snapshot.board;
+    picrossGameOver = snapshot.gameOver;
+    if (!picrossGameOver) {
+        const msgEl = document.getElementById('picross-message');
+        msgEl.className = 'hidden';
+        msgEl.textContent = '';
+    }
+    picrossRenderGrid();
+    updatePicrossUndoBtn();
+}
+
+function updatePicrossUndoBtn() {
+    const btn = document.getElementById('picross-undo-btn');
+    if (btn) btn.disabled = picrossUndoStack.length === 0;
+}
+
 function picrossSetupPointerHandlers() {
     const table = document.getElementById('picross-table');
 
@@ -2351,6 +2469,7 @@ function picrossSetupPointerHandlers() {
         if (!picrossDragging) {
             // Start dragging: determine the action from the first cell
             picrossDragging = true;
+            picrossSaveState();
             picrossDragAction = picrossResolveDragAction(picrossPointerDown.r, picrossPointerDown.c, picrossPointerIsRight);
             picrossApplyDragCell(picrossPointerDown.r, picrossPointerDown.c);
         }
@@ -2481,6 +2600,8 @@ function picrossHandleClick(r, c, isRightClick) {
     if (picrossGameOver) return;
     if (picrossLocked[r][c]) return;
 
+    picrossSaveState();
+
     const st = picrossBoard[r][c];
 
     if (picrossDraftMode) {
@@ -2570,6 +2691,7 @@ function picrossUseHint() {
                     candidates.push({ r, c });
 
     if (candidates.length === 0) return;
+    picrossSaveState();
     shuffle(candidates);
     const { r, c } = candidates[0];
     picrossBoard[r][c] = 'filled';
