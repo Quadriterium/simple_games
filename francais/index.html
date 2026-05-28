@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Exercices de Français</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+    <div id="app">
+        <h1 class="landing-title">📝 Exercices de Français</h1>
+        <p class="landing-subtitle">Choisis un type d'exercice pour t'entraîner ou relever un challenge !</p>
+
+        <div class="exercise-grid">
+            <a href="/francais/conjugaison" class="exercise-card">
+                <span class="card-icon">🔤</span>
+                <span class="card-label">Conjugaison</span>
+                <span class="card-desc">Conjugue les verbes</span>
+            </a>
+            <a href="/francais/homophones" class="exercise-card">
+                <span class="card-icon">🔀</span>
+                <span class="card-label">Homophones</span>
+                <span class="card-desc">a/à, et/est, on/ont…</span>
+            </a>
+            <a href="/francais/pluriels" class="exercise-card">
+                <span class="card-icon">📚</span>
+                <span class="card-label">Pluriels</span>
+                <span class="card-desc">Mets au pluriel</span>
+            </a>
+            <a href="/francais/feminin-masculin" class="exercise-card">
+                <span class="card-icon">👫</span>
+                <span class="card-label">Féminin / Masculin</span>
+                <span class="card-desc">Transforme le mot</span>
+            </a>
+            <a href="/francais/vocabulaire" class="exercise-card">
+                <span class="card-icon">📖</span>
+                <span class="card-label">Vocabulaire</span>
+                <span class="card-desc">Contraires et synonymes</span>
+            </a>
+            <a href="/francais/orthographe" class="exercise-card">
+                <span class="card-icon">✏️</span>
+                <span class="card-label">Orthographe</span>
+                <span class="card-desc">Trouve la bonne écriture</span>
+            </a>
+        </div>
+        <button id="force-refresh-btn" style="margin:30px auto 0;display:block;padding:8px 16px;border:1px solid #cbd5e0;border-radius:8px;background:#f7fafc;color:#718096;font-size:.8rem;cursor:pointer">🔄 Forcer la mise à jour</button>
+    </div>
+    <script>
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    document.getElementById('force-refresh-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('force-refresh-btn');
+        btn.disabled = true;
+        btn.textContent = '⏳ Mise à jour...';
+        try {
+            const keys = await caches.keys();
+            await Promise.all(keys.map(k => caches.delete(k)));
+            const reg = await navigator.serviceWorker.getRegistration();
+            if (reg) await reg.unregister();
+        } catch {}
+        location.reload(true);
+    });
+    </script>
+</body>
+</html>

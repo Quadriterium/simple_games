@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Vocabulaire</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/francais" class="back-link">← Tous les exercices</a>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-game="practice">📖 Entraînement</button>
+            <button class="game-tab" data-game="challenge">🏆 Challenge</button>
+            <button class="game-tab" data-game="leaderboard">🏅 Classement</button>
+        </div>
+
+        <!-- Practice -->
+        <div id="game-practice" class="game-panel">
+            <h1>📖 Vocabulaire</h1>
+            <p class="rules">Trouve le contraire, le synonyme ou le bon mot !</p>
+
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="french-difficulty">
+                    <button class="difflevel-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="difflevel-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="difflevel-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+
+            <div class="score-bar">
+                <span>✅ <span id="correct-count">0</span></span>
+                <span>❌ <span id="wrong-count">0</span></span>
+                <span>🔥 Série : <span id="streak-count">0</span></span>
+            </div>
+
+            <div id="problem-card" class="problem-card">
+                <div id="problem-display" class="problem-display"></div>
+            </div>
+
+            <form id="answer-form" class="answer-form" style="display:none;"></form>
+            <input type="hidden" id="answer-input">
+            <div id="choices-buttons" class="choices-buttons"></div>
+
+            <div id="french-message" class="french-message hidden"></div>
+        </div>
+
+        <!-- Challenge -->
+        <div id="game-challenge" class="game-panel hidden">
+            <h1>🏆 Challenge</h1>
+            <p class="rules">Choisis ton défi et montre ce que tu sais faire !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="challenge-difficulty">
+                    <button class="difflevel-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="difflevel-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="difflevel-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+                <div id="challenge-mode-select">
+                    <button class="challenge-mode-btn active" data-mode="100">💯 100 exercices</button>
+                    <button class="challenge-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+            </div>
+            <div id="challenge-start-screen">
+                <div class="challenge-desc-card"><p id="challenge-desc-text"></p></div>
+                <button id="challenge-start-btn" class="challenge-start-btn">🚀 C'est parti !</button>
+            </div>
+            <div id="challenge-play-screen" class="hidden">
+                <div class="challenge-status-bar">
+                    <span id="challenge-progress">📝 0 / 100</span>
+                    <span id="challenge-timer">⏱️ 00:00</span>
+                    <span id="challenge-errors">❌ 0</span>
+                </div>
+                <div id="challenge-problem-card" class="problem-card">
+                    <div id="challenge-problem-display" class="problem-display"></div>
+                </div>
+                <form id="challenge-answer-form" class="answer-form" style="display:none;"></form>
+                <input type="hidden" id="challenge-answer-input">
+                <div id="challenge-choices-buttons" class="choices-buttons"></div>
+                <div id="challenge-feedback" class="challenge-feedback hidden"></div>
+            </div>
+            <div id="challenge-result-screen" class="hidden">
+                <div class="challenge-result-card">
+                    <h2 id="challenge-result-title"></h2>
+                    <div id="challenge-result-stats"></div>
+                    <p id="challenge-result-message" class="challenge-result-message"></p>
+                </div>
+                <div class="save-score-section">
+                    <p class="save-score-prompt">Enregistrer ton score dans le classement ?</p>
+                    <form id="save-score-form" class="save-score-form">
+                        <input type="text" id="save-score-name" class="save-score-name" maxlength="30" autocomplete="off" placeholder="Ton prénom...">
+                        <button type="submit" id="save-score-btn" class="save-score-btn">💾 Enregistrer</button>
+                    </form>
+                    <p id="save-score-status" class="hidden"></p>
+                </div>
+                <button id="challenge-retry-btn" class="challenge-retry-btn">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="game-leaderboard" class="game-panel hidden">
+            <h1>🏅 Classement</h1>
+            <p class="rules">Les meilleurs scores de tous les joueurs !</p>
+            <div class="lb-filters">
+                <div class="lb-mode-select">
+                    <button class="lb-mode-btn active" data-mode="100">💯 100 exercices</button>
+                    <button class="lb-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+                <div class="lb-level-select">
+                    <button class="lb-level-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="lb-level-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="lb-level-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="lb-table-container">
+                <table class="lb-table"><thead><tr id="lb-header"></tr></thead><tbody id="lb-body"></tbody></table>
+                <p id="lb-empty" class="lb-empty hidden"></p>
+                <p id="lb-loading" class="lb-loading hidden">Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const VOCAB = {
+        easy: [
+            // Contraires simples
+            { question: 'Quel est le contraire de « grand » ?', answer: 'petit', choices: ['petit', 'gros', 'long'] },
+            { question: 'Quel est le contraire de « chaud » ?', answer: 'froid', choices: ['froid', 'tiède', 'doux'] },
+            { question: 'Quel est le contraire de « jour » ?', answer: 'nuit', choices: ['nuit', 'soir', 'matin'] },
+            { question: 'Quel est le contraire de « haut » ?', answer: 'bas', choices: ['bas', 'court', 'plat'] },
+            { question: 'Quel est le contraire de « rapide » ?', answer: 'lent', choices: ['lent', 'calme', 'doux'] },
+            { question: 'Quel est le contraire de « gros » ?', answer: 'maigre', choices: ['maigre', 'petit', 'fin'] },
+            { question: 'Quel est le contraire de « vieux » ?', answer: 'jeune', choices: ['jeune', 'neuf', 'petit'] },
+            { question: 'Quel est le contraire de « lourd » ?', answer: 'léger', choices: ['léger', 'mince', 'fin'] },
+            { question: 'Quel est le contraire de « ouvert » ?', answer: 'fermé', choices: ['fermé', 'clos', 'bloqué'] },
+            { question: 'Quel est le contraire de « triste » ?', answer: 'joyeux', choices: ['joyeux', 'drôle', 'calme'] },
+            { question: 'Quel est le contraire de « beau » ?', answer: 'laid', choices: ['laid', 'sale', 'vieux'] },
+            { question: 'Quel est le contraire de « noir » ?', answer: 'blanc', choices: ['blanc', 'gris', 'clair'] },
+            { question: 'Quel est le contraire de « long » ?', answer: 'court', choices: ['court', 'petit', 'bas'] },
+            { question: 'Quel est le contraire de « riche » ?', answer: 'pauvre', choices: ['pauvre', 'simple', 'triste'] },
+            { question: 'Quel est le contraire de « gentil » ?', answer: 'méchant', choices: ['méchant', 'vilain', 'dur'] },
+            { question: 'Quel est le contraire de « propre » ?', answer: 'sale', choices: ['sale', 'mouillé', 'vieux'] },
+            { question: 'Quel est le contraire de « dur » ?', answer: 'mou', choices: ['mou', 'doux', 'léger'] },
+            { question: 'Quel est le contraire de « mouillé » ?', answer: 'sec', choices: ['sec', 'propre', 'chaud'] },
+            { question: 'Quel est le contraire de « plein » ?', answer: 'vide', choices: ['vide', 'creux', 'léger'] },
+            { question: 'Quel est le contraire de « large » ?', answer: 'étroit', choices: ['étroit', 'mince', 'fin'] },
+            { question: 'Quel est le contraire de « fort » ?', answer: 'faible', choices: ['faible', 'petit', 'lent'] },
+            { question: 'Quel est le contraire de « premier » ?', answer: 'dernier', choices: ['dernier', 'suivant', 'second'] },
+            { question: 'Quel est le contraire de « entrer » ?', answer: 'sortir', choices: ['sortir', 'partir', 'fuir'] },
+            { question: 'Quel est le contraire de « monter » ?', answer: 'descendre', choices: ['descendre', 'tomber', 'glisser'] },
+            { question: 'Quel est le contraire de « ajouter » ?', answer: 'enlever', choices: ['enlever', 'casser', 'perdre'] },
+            { question: 'Quel est le contraire de « donner » ?', answer: 'prendre', choices: ['prendre', 'garder', 'voler'] },
+            { question: 'Quel est le contraire de « facile » ?', answer: 'difficile', choices: ['difficile', 'compliqué', 'dur'] },
+            { question: 'Quel est le contraire de « loin » ?', answer: 'près', choices: ['près', 'ici', 'devant'] },
+            { question: 'Quel est le contraire de « devant » ?', answer: 'derrière', choices: ['derrière', 'dessous', 'après'] },
+            { question: 'Quel est le contraire de « dessus » ?', answer: 'dessous', choices: ['dessous', 'derrière', 'dedans'] },
+            { question: 'Quel est le contraire de « avant » ?', answer: 'après', choices: ['après', 'derrière', 'plus tard'] },
+            { question: 'Quel est le contraire de « commencer » ?', answer: 'finir', choices: ['finir', 'arrêter', 'couper'] },
+            { question: 'Quel est le contraire de « parler » ?', answer: 'se taire', choices: ['se taire', 'chuchoter', 'murmurer'] },
+            { question: 'Quel est le contraire de « construire » ?', answer: 'détruire', choices: ['détruire', 'casser', 'démolir'] },
+            { question: 'Quel est le contraire de « clair » ?', answer: 'sombre', choices: ['sombre', 'noir', 'gris'] },
+            { question: 'Quel est le contraire de « droit » ?', answer: 'gauche', choices: ['gauche', 'tordu', 'courbe'] },
+            { question: 'Quel est le contraire de « sucré » ?', answer: 'salé', choices: ['salé', 'amer', 'acide'] },
+            { question: 'Quel est le contraire de « bruyant » ?', answer: 'silencieux', choices: ['silencieux', 'calme', 'doux'] },
+            { question: 'Quel est le contraire de « épais » ?', answer: 'mince', choices: ['mince', 'fin', 'léger'] },
+            { question: 'Quel est le contraire de « possible » ?', answer: 'impossible', choices: ['impossible', 'interdit', 'difficile'] },
+            { question: 'Quel est le contraire de « content » ?', answer: 'mécontent', choices: ['mécontent', 'triste', 'fâché'] },
+            { question: 'Quel est le contraire de « utile » ?', answer: 'inutile', choices: ['inutile', 'cassé', 'vieux'] },
+            { question: 'Quel est le contraire de « adroit » ?', answer: 'maladroit', choices: ['maladroit', 'lent', 'faible'] },
+            { question: 'Quel est le contraire de « poli » ?', answer: 'impoli', choices: ['impoli', 'méchant', 'vilain'] },
+        ],
+        medium: [
+            // Synonymes
+            { question: 'Quel mot veut dire la même chose que « content » ?', answer: 'heureux', choices: ['heureux', 'drôle', 'calme'] },
+            { question: 'Quel mot veut dire la même chose que « joli » ?', answer: 'beau', choices: ['beau', 'grand', 'neuf'] },
+            { question: 'Quel mot veut dire la même chose que « maison » ?', answer: 'habitation', choices: ['habitation', 'château', 'immeuble'] },
+            { question: 'Quel mot veut dire la même chose que « parler » ?', answer: 'dire', choices: ['dire', 'crier', 'chanter'] },
+            { question: 'Quel mot veut dire la même chose que « terminer » ?', answer: 'finir', choices: ['finir', 'arrêter', 'couper'] },
+            { question: 'Quel mot veut dire la même chose que « courageux » ?', answer: 'brave', choices: ['brave', 'fort', 'fier'] },
+            { question: 'Quel mot veut dire la même chose que « fatigué » ?', answer: 'épuisé', choices: ['épuisé', 'endormi', 'lent'] },
+            { question: 'Quel mot veut dire la même chose que « casser » ?', answer: 'briser', choices: ['briser', 'couper', 'plier'] },
+            { question: 'Quel mot veut dire la même chose que « regarder » ?', answer: 'observer', choices: ['observer', 'chercher', 'trouver'] },
+            { question: 'Quel mot veut dire la même chose que « peur » ?', answer: 'frayeur', choices: ['frayeur', 'colère', 'tristesse'] },
+            { question: 'Quel mot veut dire la même chose que « erreur » ?', answer: 'faute', choices: ['faute', 'problème', 'question'] },
+            { question: 'Quel mot veut dire la même chose que « monter » ?', answer: 'grimper', choices: ['grimper', 'sauter', 'courir'] },
+            { question: 'Quel mot veut dire la même chose que « bizarre » ?', answer: 'étrange', choices: ['étrange', 'drôle', 'nouveau'] },
+            { question: 'Quel mot veut dire la même chose que « aider » ?', answer: 'secourir', choices: ['secourir', 'sauver', 'porter'] },
+            { question: 'Quel mot veut dire la même chose que « ami » ?', answer: 'copain', choices: ['copain', 'voisin', 'frère'] },
+            { question: 'Quel mot veut dire la même chose que « voiture » ?', answer: 'auto', choices: ['auto', 'bus', 'moto'] },
+            { question: 'Quel mot veut dire la même chose que « rapide » ?', answer: 'vite', choices: ['vite', 'agile', 'nerveux'] },
+            { question: 'Quel mot veut dire la même chose que « drôle » ?', answer: 'amusant', choices: ['amusant', 'joyeux', 'gai'] },
+            { question: 'Quel mot veut dire la même chose que « intelligent » ?', answer: 'malin', choices: ['malin', 'savant', 'sage'] },
+            { question: 'Quel mot veut dire la même chose que « petit » ?', answer: 'minuscule', choices: ['minuscule', 'mince', 'court'] },
+            { question: 'Quel mot veut dire la même chose que « grand » ?', answer: 'immense', choices: ['immense', 'long', 'gros'] },
+            { question: 'Quel mot veut dire la même chose que « donner » ?', answer: 'offrir', choices: ['offrir', 'prêter', 'montrer'] },
+            { question: 'Quel mot veut dire la même chose que « marcher » ?', answer: 'avancer', choices: ['avancer', 'courir', 'sauter'] },
+            { question: 'Quel mot veut dire la même chose que « manger » ?', answer: 'se nourrir', choices: ['se nourrir', 'goûter', 'mordre'] },
+            { question: 'Quel mot veut dire la même chose que « bruit » ?', answer: 'vacarme', choices: ['vacarme', 'silence', 'musique'] },
+            { question: 'Quel mot veut dire la même chose que « chemin » ?', answer: 'route', choices: ['route', 'pont', 'rue'] },
+            { question: 'Quel mot veut dire la même chose que « méchant » ?', answer: 'cruel', choices: ['cruel', 'dur', 'sévère'] },
+            { question: 'Quel mot veut dire la même chose que « joli » ?', answer: 'mignon', choices: ['mignon', 'chic', 'propre'] },
+            { question: 'Quel mot veut dire la même chose que « triste » ?', answer: 'malheureux', choices: ['malheureux', 'seul', 'fatigué'] },
+            { question: 'Quel mot veut dire la même chose que « vêtement » ?', answer: 'habit', choices: ['habit', 'tissu', 'linge'] },
+            { question: 'Quel mot veut dire la même chose que « hurler » ?', answer: 'crier', choices: ['crier', 'pleurer', 'chanter'] },
+            { question: 'Quel mot veut dire la même chose que « demeure » ?', answer: 'maison', choices: ['maison', 'jardin', 'village'] },
+            { question: 'Quel mot veut dire la même chose que « gamin » ?', answer: 'enfant', choices: ['enfant', 'bébé', 'garçon'] },
+            { question: 'Quel mot veut dire la même chose que « imaginer » ?', answer: 'inventer', choices: ['inventer', 'dessiner', 'construire'] },
+            { question: 'Quel mot veut dire la même chose que « attraper » ?', answer: 'saisir', choices: ['saisir', 'toucher', 'frapper'] },
+            { question: 'Quel mot veut dire la même chose que « sentier » ?', answer: 'chemin', choices: ['chemin', 'forêt', 'rivière'] },
+            { question: 'Quel mot veut dire la même chose que « visage » ?', answer: 'figure', choices: ['figure', 'tête', 'portrait'] },
+            { question: 'Quel mot veut dire la même chose que « sommet » ?', answer: 'cime', choices: ['cime', 'montagne', 'colline'] },
+            { question: 'Quel mot veut dire la même chose que « découvrir » ?', answer: 'trouver', choices: ['trouver', 'chercher', 'voir'] },
+        ],
+        hard: [
+            // Définitions
+            { question: 'Animal qui miaule :', answer: 'chat', choices: ['chat', 'chien', 'souris'] },
+            { question: 'Saison où les feuilles tombent :', answer: 'automne', choices: ['automne', 'hiver', 'printemps'] },
+            { question: 'Repas du matin :', answer: 'petit-déjeuner', choices: ['petit-déjeuner', 'goûter', 'dîner'] },
+            { question: 'Personne qui soigne les malades :', answer: 'médecin', choices: ['médecin', 'pompier', 'professeur'] },
+            { question: 'Lieu où l\'on emprunte des livres :', answer: 'bibliothèque', choices: ['bibliothèque', 'librairie', 'école'] },
+            { question: 'Instrument pour écrire avec de l\'encre :', answer: 'stylo', choices: ['stylo', 'crayon', 'pinceau'] },
+            { question: 'Planète sur laquelle on vit :', answer: 'Terre', choices: ['Terre', 'Mars', 'Lune'] },
+            { question: 'Le bébé du chat s\'appelle :', answer: 'chaton', choices: ['chaton', 'poussin', 'ourson'] },
+            { question: 'Qui écrit des livres :', answer: 'auteur', choices: ['auteur', 'lecteur', 'libraire'] },
+            { question: 'Le contraire de « commencer » :', answer: 'terminer', choices: ['terminer', 'continuer', 'attendre'] },
+            { question: 'Outil pour couper du papier :', answer: 'ciseaux', choices: ['ciseaux', 'colle', 'règle'] },
+            { question: 'Animal avec une trompe :', answer: 'éléphant', choices: ['éléphant', 'girafe', 'hippopotame'] },
+            { question: 'Mois le plus court de l\'année :', answer: 'février', choices: ['février', 'mars', 'avril'] },
+            { question: 'Fruit rouge qu\'on met sur les gâteaux :', answer: 'fraise', choices: ['fraise', 'pomme', 'banane'] },
+            { question: 'Le bébé de la vache s\'appelle :', answer: 'veau', choices: ['veau', 'agneau', 'poulain'] },
+            { question: 'On s\'y assoit en classe :', answer: 'chaise', choices: ['chaise', 'bureau', 'tableau'] },
+            { question: 'Couleur du ciel par beau temps :', answer: 'bleu', choices: ['bleu', 'gris', 'blanc'] },
+            { question: 'Véhicule qui roule sur des rails :', answer: 'train', choices: ['train', 'bus', 'avion'] },
+            { question: 'Personne qui éteint les incendies :', answer: 'pompier', choices: ['pompier', 'policier', 'médecin'] },
+            { question: 'Liquide qui tombe du ciel :', answer: 'pluie', choices: ['pluie', 'neige', 'grêle'] },
+            { question: 'Saison la plus chaude :', answer: 'été', choices: ['été', 'printemps', 'automne'] },
+            { question: 'Endroit où on achète du pain :', answer: 'boulangerie', choices: ['boulangerie', 'pâtisserie', 'épicerie'] },
+            { question: 'Animal qui aboie :', answer: 'chien', choices: ['chien', 'chat', 'loup'] },
+            { question: 'Partie du corps pour sentir :', answer: 'nez', choices: ['nez', 'bouche', 'oreille'] },
+            { question: 'Objet pour se protéger de la pluie :', answer: 'parapluie', choices: ['parapluie', 'manteau', 'chapeau'] },
+            { question: 'Le petit de la poule :', answer: 'poussin', choices: ['poussin', 'caneton', 'chaton'] },
+            { question: 'Meuble pour ranger les vêtements :', answer: 'armoire', choices: ['armoire', 'étagère', 'tiroir'] },
+            { question: 'Étoile qui nous éclaire le jour :', answer: 'soleil', choices: ['soleil', 'lune', 'étoile'] },
+            { question: 'On y nage en été :', answer: 'piscine', choices: ['piscine', 'lac', 'baignoire'] },
+            { question: 'Objet pour mesurer le temps :', answer: 'horloge', choices: ['horloge', 'calendrier', 'thermomètre'] },
+            { question: 'Lieu où décollent les avions :', answer: 'aéroport', choices: ['aéroport', 'gare', 'port'] },
+            { question: 'Premier jour de la semaine :', answer: 'lundi', choices: ['lundi', 'mardi', 'dimanche'] },
+            { question: 'Instrument à cordes qu\'on gratte :', answer: 'guitare', choices: ['guitare', 'violon', 'piano'] },
+            { question: 'Le contraire de « nord » :', answer: 'sud', choices: ['sud', 'est', 'ouest'] },
+            { question: 'Couvre le sol de la forêt :', answer: 'mousse', choices: ['mousse', 'herbe', 'sable'] },
+            { question: 'Animal à huit pattes :', answer: 'araignée', choices: ['araignée', 'fourmi', 'moustique'] },
+            { question: 'Matière transparente des fenêtres :', answer: 'verre', choices: ['verre', 'plastique', 'bois'] },
+            { question: 'Repas du soir :', answer: 'dîner', choices: ['dîner', 'déjeuner', 'goûter'] },
+            { question: 'Personne qui conduit un avion :', answer: 'pilote', choices: ['pilote', 'capitaine', 'chauffeur'] },
+            { question: 'Le petit du cheval :', answer: 'poulain', choices: ['poulain', 'veau', 'agneau'] },
+            { question: 'Objet pour voir de loin :', answer: 'jumelles', choices: ['jumelles', 'lunettes', 'loupe'] },
+            { question: 'Organe qui bat dans la poitrine :', answer: 'cœur', choices: ['cœur', 'poumon', 'estomac'] },
+            { question: 'Endroit où on soigne les malades :', answer: 'hôpital', choices: ['hôpital', 'pharmacie', 'école'] },
+            { question: 'Animal au long cou :', answer: 'girafe', choices: ['girafe', 'autruche', 'éléphant'] },
+            { question: 'Sport avec un ballon rond et des buts :', answer: 'football', choices: ['football', 'rugby', 'basketball'] },
+            { question: 'Légume orange qu\'on râpe :', answer: 'carotte', choices: ['carotte', 'citrouille', 'orange'] },
+        ],
+    };
+
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    const EXERCISE_CONFIG = {
+        type: 'vocabulaire',
+        title: 'vocabulaire',
+        inputMode: 'choices',
+        generateProblem(level) {
+            const item = pickRandom(VOCAB[level]);
+            return {
+                display: item.question,
+                answer: item.answer,
+                choices: shuffle(item.choices),
+                feedbackText: `Réponse : ${item.answer}`,
+            };
+        },
+    };
+    </script>
+    <script src="../shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Exercices de Math</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+    <div id="app">
+        <h1 class="landing-title">🧮 Exercices de Math</h1>
+        <p class="landing-subtitle">Choisis un type d'exercice pour t'entraîner ou relever un challenge !</p>
+
+        <div class="exercise-grid">
+            <a href="/math/multiplications" class="exercise-card">
+                <span class="card-icon">✖️</span>
+                <span class="card-label">Multiplications</span>
+                <span class="card-desc">Tables et plus</span>
+            </a>
+            <a href="/math/additions" class="exercise-card">
+                <span class="card-icon">➕</span>
+                <span class="card-label">Additions</span>
+                <span class="card-desc">Calcule les sommes</span>
+            </a>
+            <a href="/math/soustractions" class="exercise-card">
+                <span class="card-icon">➖</span>
+                <span class="card-label">Soustractions</span>
+                <span class="card-desc">Trouve la différence</span>
+            </a>
+            <a href="/math/divisions" class="exercise-card">
+                <span class="card-icon">➗</span>
+                <span class="card-label">Divisions</span>
+                <span class="card-desc">Divisions exactes</span>
+            </a>
+            <a href="/math/divisions-posees" class="exercise-card">
+                <span class="card-icon">📝</span>
+                <span class="card-label">Division posée</span>
+                <span class="card-desc">Étape par étape, avec reste</span>
+            </a>
+            <a href="/math/complements" class="exercise-card">
+                <span class="card-icon">🔢</span>
+                <span class="card-label">Nombre manquant</span>
+                <span class="card-desc">Trouve le ?</span>
+            </a>
+            <a href="/math/mixte" class="exercise-card">
+                <span class="card-icon">⚡</span>
+                <span class="card-label">Calcul mixte</span>
+                <span class="card-desc">+, −, × mélangés</span>
+            </a>
+            <a href="/math/comparaisons" class="exercise-card">
+                <span class="card-icon">📐</span>
+                <span class="card-label">Comparaisons</span>
+                <span class="card-desc">&gt;, &lt; ou = ?</span>
+            </a>
+        </div>
+        <button id="force-refresh-btn" style="margin:30px auto 0;display:block;padding:8px 16px;border:1px solid #cbd5e0;border-radius:8px;background:#f7fafc;color:#718096;font-size:.8rem;cursor:pointer">🔄 Forcer la mise à jour</button>
+    </div>
+    <script>
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    document.getElementById('force-refresh-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('force-refresh-btn');
+        btn.disabled = true;
+        btn.textContent = '⏳ Mise à jour...';
+        try {
+            const keys = await caches.keys();
+            await Promise.all(keys.map(k => caches.delete(k)));
+            const reg = await navigator.serviceWorker.getRegistration();
+            if (reg) await reg.unregister();
+        } catch {}
+        location.reload(true);
+    });
+    </script>
+</body>
+</html>

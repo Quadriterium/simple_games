@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Divisions</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/math" class="back-link">← Tous les exercices</a>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-game="practice">➗ Entraînement</button>
+            <button class="game-tab" data-game="challenge">🏆 Challenge</button>
+            <button class="game-tab" data-game="leaderboard">🏅 Classement</button>
+        </div>
+
+        <!-- Practice -->
+        <div id="game-practice" class="game-panel">
+            <h1>➗ Divisions</h1>
+            <p class="rules">Résous les divisions (toujours exactes, sans reste) !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="math-difficulty">
+                    <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="score-bar">
+                <span>✅ <span id="correct-count">0</span></span>
+                <span>❌ <span id="wrong-count">0</span></span>
+                <span>🔥 Série : <span id="streak-count">0</span></span>
+            </div>
+            <div id="problem-card" class="problem-card">
+                <div id="problem-display" class="problem-display"></div>
+            </div>
+            <form id="answer-form" class="answer-form">
+                <input type="text" id="answer-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Ta réponse..." autofocus>
+                <button type="submit" class="submit-btn">Valider ✅</button>
+            </form>
+            <div id="math-message" class="math-message hidden"></div>
+        </div>
+
+        <!-- Challenge -->
+        <div id="game-challenge" class="game-panel hidden">
+            <h1>🏆 Challenge</h1>
+            <p class="rules">Choisis ton défi et montre ce que tu sais faire !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="challenge-difficulty">
+                    <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+                <div id="challenge-mode-select">
+                    <button class="challenge-mode-btn active" data-mode="100">💯 100 calculs</button>
+                    <button class="challenge-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+            </div>
+            <div id="challenge-start-screen">
+                <div class="challenge-desc-card"><p id="challenge-desc-text"></p></div>
+                <button id="challenge-start-btn" class="challenge-start-btn">🚀 C'est parti !</button>
+            </div>
+            <div id="challenge-play-screen" class="hidden">
+                <div class="challenge-status-bar">
+                    <span id="challenge-progress">📝 0 / 100</span>
+                    <span id="challenge-timer">⏱️ 00:00</span>
+                    <span id="challenge-errors">❌ 0</span>
+                </div>
+                <div id="challenge-problem-card" class="problem-card">
+                    <div id="challenge-problem-display" class="problem-display"></div>
+                </div>
+                <form id="challenge-answer-form" class="answer-form">
+                    <input type="text" id="challenge-answer-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Ta réponse...">
+                    <button type="submit" class="submit-btn">Valider ✅</button>
+                </form>
+                <div id="challenge-feedback" class="challenge-feedback hidden"></div>
+            </div>
+            <div id="challenge-result-screen" class="hidden">
+                <div class="challenge-result-card">
+                    <h2 id="challenge-result-title"></h2>
+                    <div id="challenge-result-stats"></div>
+                    <p id="challenge-result-message" class="challenge-result-message"></p>
+                </div>
+                <div class="save-score-section">
+                    <p class="save-score-prompt">Enregistrer ton score dans le classement ?</p>
+                    <form id="save-score-form" class="save-score-form">
+                        <input type="text" id="save-score-name" class="save-score-name" maxlength="30" autocomplete="off" placeholder="Ton prénom...">
+                        <button type="submit" id="save-score-btn" class="save-score-btn">💾 Enregistrer</button>
+                    </form>
+                    <p id="save-score-status" class="hidden"></p>
+                </div>
+                <button id="challenge-retry-btn" class="challenge-retry-btn">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="game-leaderboard" class="game-panel hidden">
+            <h1>🏅 Classement</h1>
+            <p class="rules">Les meilleurs scores de tous les joueurs !</p>
+            <div class="lb-filters">
+                <div class="lb-mode-select">
+                    <button class="lb-mode-btn active" data-mode="100">💯 100 calculs</button>
+                    <button class="lb-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+                <div class="lb-level-select">
+                    <button class="lb-level-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="lb-level-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="lb-level-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="lb-table-container">
+                <table class="lb-table"><thead><tr id="lb-header"></tr></thead><tbody id="lb-body"></tbody></table>
+                <p id="lb-empty" class="lb-empty hidden"></p>
+                <p id="lb-loading" class="lb-loading hidden">Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const EXERCISE_CONFIG = {
+        type: 'division',
+        title: 'divisions',
+        isComparison: false,
+        generateProblem(level) {
+            let divisor, result, dividend;
+            switch (level) {
+                case 'easy':
+                    divisor = randInt(2, 5); result = randInt(1, 9);
+                    break;
+                case 'medium':
+                    divisor = randInt(2, 9); result = randInt(2, 12);
+                    break;
+                case 'hard':
+                    divisor = randInt(2, 12); result = randInt(10, 25);
+                    break;
+            }
+            dividend = divisor * result;
+            return {
+                display: `${dividend} <span class="op">÷</span> ${divisor} <span class="op">=</span> <span class="placeholder">?</span>`,
+                answer: result,
+                feedbackText: `${dividend} ÷ ${divisor} = ${result}`,
+            };
+        },
+    };
+    </script>
+    <script src="../shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Calcul mixte</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/math" class="back-link">← Tous les exercices</a>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-game="practice">⚡ Entraînement</button>
+            <button class="game-tab" data-game="challenge">🏆 Challenge</button>
+            <button class="game-tab" data-game="leaderboard">🏅 Classement</button>
+        </div>
+
+        <!-- Practice -->
+        <div id="game-practice" class="game-panel">
+            <h1>⚡ Calcul mixte</h1>
+            <p class="rules">Additions, soustractions et multiplications mélangées !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="math-difficulty">
+                    <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="score-bar">
+                <span>✅ <span id="correct-count">0</span></span>
+                <span>❌ <span id="wrong-count">0</span></span>
+                <span>🔥 Série : <span id="streak-count">0</span></span>
+            </div>
+            <div id="problem-card" class="problem-card">
+                <div id="problem-display" class="problem-display"></div>
+            </div>
+            <form id="answer-form" class="answer-form">
+                <input type="text" id="answer-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Ta réponse..." autofocus>
+                <button type="submit" class="submit-btn">Valider ✅</button>
+            </form>
+            <div id="math-message" class="math-message hidden"></div>
+        </div>
+
+        <!-- Challenge -->
+        <div id="game-challenge" class="game-panel hidden">
+            <h1>🏆 Challenge</h1>
+            <p class="rules">Choisis ton défi et montre ce que tu sais faire !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="challenge-difficulty">
+                    <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+                <div id="challenge-mode-select">
+                    <button class="challenge-mode-btn active" data-mode="100">💯 100 calculs</button>
+                    <button class="challenge-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+            </div>
+            <div id="challenge-start-screen">
+                <div class="challenge-desc-card"><p id="challenge-desc-text"></p></div>
+                <button id="challenge-start-btn" class="challenge-start-btn">🚀 C'est parti !</button>
+            </div>
+            <div id="challenge-play-screen" class="hidden">
+                <div class="challenge-status-bar">
+                    <span id="challenge-progress">📝 0 / 100</span>
+                    <span id="challenge-timer">⏱️ 00:00</span>
+                    <span id="challenge-errors">❌ 0</span>
+                </div>
+                <div id="challenge-problem-card" class="problem-card">
+                    <div id="challenge-problem-display" class="problem-display"></div>
+                </div>
+                <form id="challenge-answer-form" class="answer-form">
+                    <input type="text" id="challenge-answer-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Ta réponse...">
+                    <button type="submit" class="submit-btn">Valider ✅</button>
+                </form>
+                <div id="challenge-feedback" class="challenge-feedback hidden"></div>
+            </div>
+            <div id="challenge-result-screen" class="hidden">
+                <div class="challenge-result-card">
+                    <h2 id="challenge-result-title"></h2>
+                    <div id="challenge-result-stats"></div>
+                    <p id="challenge-result-message" class="challenge-result-message"></p>
+                </div>
+                <div class="save-score-section">
+                    <p class="save-score-prompt">Enregistrer ton score dans le classement ?</p>
+                    <form id="save-score-form" class="save-score-form">
+                        <input type="text" id="save-score-name" class="save-score-name" maxlength="30" autocomplete="off" placeholder="Ton prénom...">
+                        <button type="submit" id="save-score-btn" class="save-score-btn">💾 Enregistrer</button>
+                    </form>
+                    <p id="save-score-status" class="hidden"></p>
+                </div>
+                <button id="challenge-retry-btn" class="challenge-retry-btn">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="game-leaderboard" class="game-panel hidden">
+            <h1>🏅 Classement</h1>
+            <p class="rules">Les meilleurs scores de tous les joueurs !</p>
+            <div class="lb-filters">
+                <div class="lb-mode-select">
+                    <button class="lb-mode-btn active" data-mode="100">💯 100 calculs</button>
+                    <button class="lb-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+                <div class="lb-level-select">
+                    <button class="lb-level-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="lb-level-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="lb-level-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="lb-table-container">
+                <table class="lb-table"><thead><tr id="lb-header"></tr></thead><tbody id="lb-body"></tbody></table>
+                <p id="lb-empty" class="lb-empty hidden"></p>
+                <p id="lb-loading" class="lb-loading hidden">Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const EXERCISE_CONFIG = {
+        type: 'mixte',
+        title: 'calculs mixtes',
+        isComparison: false,
+        generateProblem(level) {
+            if (level === 'hard') {
+                return this._generate3Numbers();
+            }
+
+            const ops = ['+', '−', '×'];
+            const op = ops[Math.floor(Math.random() * ops.length)];
+            let a, b, answer;
+
+            switch (op) {
+                case '+':
+                    if (level === 'easy') { a = randInt(1, 9); b = randInt(1, 9); }
+                    else { a = randInt(5, 50); b = randInt(5, 50); }
+                    answer = a + b;
+                    break;
+                case '−':
+                    if (level === 'easy') { a = randInt(3, 18); b = randInt(1, a - 1); }
+                    else { a = randInt(20, 99); b = randInt(5, a - 1); }
+                    answer = a - b;
+                    break;
+                case '×':
+                    if (level === 'easy') { a = randInt(2, 5); b = randInt(2, 5); }
+                    else { a = randInt(2, 9); b = randInt(2, 9); }
+                    answer = a * b;
+                    break;
+            }
+
+            return {
+                display: `${a} <span class="op">${op}</span> ${b} <span class="op">=</span> <span class="placeholder">?</span>`,
+                answer,
+                feedbackText: `${a} ${op} ${b} = ${answer}`,
+            };
+        },
+
+        _generate3Numbers() {
+            // 3 numbers, 2 operators, respecting priority (× before +/−)
+            const addSub = ['+', '−'];
+            const allOps = ['+', '−', '×'];
+            const op1 = allOps[Math.floor(Math.random() * allOps.length)];
+            const op2 = allOps[Math.floor(Math.random() * allOps.length)];
+
+            let a, b, c, tries = 50, answer;
+            do {
+                a = randInt(2, 9);
+                b = randInt(2, 9);
+                c = randInt(2, 9);
+                answer = this._evalExpr(a, op1, b, op2, c);
+                tries--;
+            } while ((answer < 0 || answer > 200) && tries > 0);
+
+            const op1Display = op1 === '−' ? '−' : op1;
+            const op2Display = op2 === '−' ? '−' : op2;
+
+            return {
+                display: `${a} <span class="op">${op1Display}</span> ${b} <span class="op">${op2Display}</span> ${c} <span class="op">=</span> <span class="placeholder">?</span>`,
+                answer,
+                feedbackText: `${a} ${op1Display} ${b} ${op2Display} ${c} = ${answer}`,
+            };
+        },
+
+        _evalExpr(a, op1, b, op2, c) {
+            // Respect operator precedence: × before +/−
+            if (op1 === '×' && op2 === '×') {
+                return a * b * c;
+            } else if (op1 === '×') {
+                const left = a * b;
+                return op2 === '+' ? left + c : left - c;
+            } else if (op2 === '×') {
+                const right = b * c;
+                return op1 === '+' ? a + right : a - right;
+            } else {
+                // Both are +/−
+                let result = a;
+                result = op1 === '+' ? result + b : result - b;
+                result = op2 === '+' ? result + c : result - c;
+                return result;
+            }
+        },
+    };
+    </script>
+    <script src="../shared.js"></script>
+</body>
+</html>

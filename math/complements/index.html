@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Nombre manquant</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/math" class="back-link">← Tous les exercices</a>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-game="practice">🔢 Entraînement</button>
+            <button class="game-tab" data-game="challenge">🏆 Challenge</button>
+            <button class="game-tab" data-game="leaderboard">🏅 Classement</button>
+        </div>
+
+        <!-- Practice -->
+        <div id="game-practice" class="game-panel">
+            <h1>🔢 Nombre manquant</h1>
+            <p class="rules">Trouve le nombre manquant dans chaque opération !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="math-difficulty">
+                    <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="score-bar">
+                <span>✅ <span id="correct-count">0</span></span>
+                <span>❌ <span id="wrong-count">0</span></span>
+                <span>🔥 Série : <span id="streak-count">0</span></span>
+            </div>
+            <div id="problem-card" class="problem-card">
+                <div id="problem-display" class="problem-display"></div>
+            </div>
+            <form id="answer-form" class="answer-form">
+                <input type="text" id="answer-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Ta réponse..." autofocus>
+                <button type="submit" class="submit-btn">Valider ✅</button>
+            </form>
+            <div id="math-message" class="math-message hidden"></div>
+        </div>
+
+        <!-- Challenge -->
+        <div id="game-challenge" class="game-panel hidden">
+            <h1>🏆 Challenge</h1>
+            <p class="rules">Choisis ton défi et montre ce que tu sais faire !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="challenge-difficulty">
+                    <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+                <div id="challenge-mode-select">
+                    <button class="challenge-mode-btn active" data-mode="100">💯 100 calculs</button>
+                    <button class="challenge-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+            </div>
+            <div id="challenge-start-screen">
+                <div class="challenge-desc-card"><p id="challenge-desc-text"></p></div>
+                <button id="challenge-start-btn" class="challenge-start-btn">🚀 C'est parti !</button>
+            </div>
+            <div id="challenge-play-screen" class="hidden">
+                <div class="challenge-status-bar">
+                    <span id="challenge-progress">📝 0 / 100</span>
+                    <span id="challenge-timer">⏱️ 00:00</span>
+                    <span id="challenge-errors">❌ 0</span>
+                </div>
+                <div id="challenge-problem-card" class="problem-card">
+                    <div id="challenge-problem-display" class="problem-display"></div>
+                </div>
+                <form id="challenge-answer-form" class="answer-form">
+                    <input type="text" id="challenge-answer-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Ta réponse...">
+                    <button type="submit" class="submit-btn">Valider ✅</button>
+                </form>
+                <div id="challenge-feedback" class="challenge-feedback hidden"></div>
+            </div>
+            <div id="challenge-result-screen" class="hidden">
+                <div class="challenge-result-card">
+                    <h2 id="challenge-result-title"></h2>
+                    <div id="challenge-result-stats"></div>
+                    <p id="challenge-result-message" class="challenge-result-message"></p>
+                </div>
+                <div class="save-score-section">
+                    <p class="save-score-prompt">Enregistrer ton score dans le classement ?</p>
+                    <form id="save-score-form" class="save-score-form">
+                        <input type="text" id="save-score-name" class="save-score-name" maxlength="30" autocomplete="off" placeholder="Ton prénom...">
+                        <button type="submit" id="save-score-btn" class="save-score-btn">💾 Enregistrer</button>
+                    </form>
+                    <p id="save-score-status" class="hidden"></p>
+                </div>
+                <button id="challenge-retry-btn" class="challenge-retry-btn">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="game-leaderboard" class="game-panel hidden">
+            <h1>🏅 Classement</h1>
+            <p class="rules">Les meilleurs scores de tous les joueurs !</p>
+            <div class="lb-filters">
+                <div class="lb-mode-select">
+                    <button class="lb-mode-btn active" data-mode="100">💯 100 calculs</button>
+                    <button class="lb-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+                <div class="lb-level-select">
+                    <button class="lb-level-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="lb-level-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="lb-level-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="lb-table-container">
+                <table class="lb-table"><thead><tr id="lb-header"></tr></thead><tbody id="lb-body"></tbody></table>
+                <p id="lb-empty" class="lb-empty hidden"></p>
+                <p id="lb-loading" class="lb-loading hidden">Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const EXERCISE_CONFIG = {
+        type: 'complement',
+        title: 'nombres manquants',
+        isComparison: false,
+        generateProblem(level) {
+            // Pick a random operation and hide one operand
+            const ops = ['+', '−', '×'];
+            const op = ops[Math.floor(Math.random() * ops.length)];
+            let a, b, result;
+
+            switch (op) {
+                case '+':
+                    if (level === 'easy') { a = randInt(1, 9); b = randInt(1, 9); }
+                    else if (level === 'medium') { a = randInt(1, 9); b = randInt(10, 50); }
+                    else { a = randInt(10, 99); b = randInt(10, 99); }
+                    result = a + b;
+                    break;
+                case '−':
+                    if (level === 'easy') { a = randInt(3, 18); b = randInt(1, a - 1); }
+                    else if (level === 'medium') { a = randInt(10, 50); b = randInt(1, 9); }
+                    else { a = randInt(20, 99); b = randInt(10, a - 1); }
+                    result = a - b;
+                    break;
+                case '×':
+                    if (level === 'easy') { a = randInt(2, 5); b = randInt(2, 5); }
+                    else if (level === 'medium') { a = randInt(2, 9); b = randInt(2, 9); }
+                    else { a = randInt(2, 12); b = randInt(2, 12); }
+                    result = a * b;
+                    break;
+            }
+
+            // Choose which position to hide: 0=a, 1=b, 2=result
+            const hidePos = randInt(0, 2);
+            let display, answer, feedbackText;
+            const Q = '<span class="placeholder">?</span>';
+
+            if (hidePos === 0) {
+                answer = a;
+                display = `${Q} <span class="op">${op}</span> ${b} <span class="op">=</span> ${result}`;
+                feedbackText = `${a} ${op} ${b} = ${result}`;
+            } else if (hidePos === 1) {
+                answer = b;
+                display = `${a} <span class="op">${op}</span> ${Q} <span class="op">=</span> ${result}`;
+                feedbackText = `${a} ${op} ${b} = ${result}`;
+            } else {
+                answer = result;
+                display = `${a} <span class="op">${op}</span> ${b} <span class="op">=</span> ${Q}`;
+                feedbackText = `${a} ${op} ${b} = ${result}`;
+            }
+
+            return { display, answer, feedbackText };
+        },
+    };
+    </script>
+    <script src="../shared.js"></script>
+</body>
+</html>

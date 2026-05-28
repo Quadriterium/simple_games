@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Division posée</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+    <style>
+        /* ===== Division Board ===== */
+        .division-board {
+            background: #fffef5;
+            border: 2px solid #d4c99e;
+            border-radius: 12px;
+            padding: 24px 16px 16px;
+            margin: 16px auto;
+            max-width: 440px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        /* Grid-based layout: each digit in its own column */
+        .div-grid {
+            display: inline-grid;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+            font-weight: bold;
+            gap: 0;
+            margin: 0 auto;
+            position: relative;
+            transition: grid-template-rows .25s ease;
+        }
+
+        .div-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.6em;
+            height: 1.8em;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        /* Highlighted digit (currently being worked on) */
+        .div-cell.hl-active {
+            background: rgba(230, 126, 34, 0.18);
+            border-radius: 6px;
+            transition: background .3s;
+        }
+
+        /* Bracket arrow pointing down to show "we take this digit" */
+        .div-cell .arrow-down {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            color: #e67e22;
+            animation: arrow-bounce .6s ease infinite alternate;
+            z-index: 2;
+        }
+        @keyframes arrow-bounce {
+            from { transform: translateX(-50%) translateY(0); }
+            to   { transform: translateX(-50%) translateY(3px); }
+        }
+
+        /* Bring-down arrow (curved) */
+        .bring-down-arrow {
+            position: absolute;
+            color: #e67e22;
+            font-size: 1.4em;
+            z-index: 2;
+            animation: wl-appear .4s ease;
+        }
+
+        /* Potence lines (L-shape around divisor) */
+        .div-cell.potence-top {
+            border-bottom: 3px solid #34495e;
+        }
+        .div-cell.potence-side {
+            border-left: 3px solid #34495e;
+        }
+
+        /* Quotient digits */
+        .div-cell.q-cell {
+            color: #27ae60;
+        }
+        .div-cell.q-cell.q-new {
+            animation: wl-appear .3s ease;
+        }
+
+        /* Subtraction line (red) */
+        .div-cell.sub-cell {
+            color: #c0392b;
+        }
+
+        /* Separator (line under subtraction) */
+        .div-cell.sep-cell {
+            border-bottom: 2px solid #555;
+        }
+
+        /* Remainder / bring-down */
+        .div-cell.rem-cell {
+            color: #2c3e50;
+        }
+        .div-cell.rem-cell.final-rem {
+            color: #e67e22;
+            font-weight: bold;
+        }
+        .div-cell.brought {
+            color: #e67e22;
+            animation: wl-appear .3s ease;
+        }
+
+        /* Minus sign in gutter */
+        .div-cell.minus-sign {
+            color: #c0392b;
+            font-size: 0.85em;
+        }
+
+        @keyframes wl-appear {
+            from { opacity: 0; transform: translateY(-4px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Color coding ===== */
+        .clr-dividend { color: #2980b9; }  /* blue */
+        .clr-divisor  { color: #8e44ad; }  /* purple */
+        .clr-quotient { color: #27ae60; }  /* green */
+        .clr-remainder{ color: #e67e22; }  /* orange */
+
+        /* Grid cells colored */
+        .div-cell.c-dividend { color: #2980b9; }
+        .div-cell.c-divisor  { color: #8e44ad; }
+
+        /* ===== Result ===== */
+        .div-result {
+            margin-top: 14px;
+            padding: 14px 18px;
+            background: #f0f7ff;
+            border: 2px solid #d4e6f9;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1.6;
+            animation: wl-appear .4s ease;
+        }
+        .div-result .result-emoji {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .div-result .result-equation {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .div-result .result-sentence {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        /* ===== Step Area ===== */
+        .step-area {
+            max-width: 420px;
+            margin: 18px auto;
+            text-align: center;
+        }
+
+        .step-question {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            min-height: 1.6em;
+        }
+        .step-question .hl { color: #d35400; }
+
+        .step-explain {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .step-explain .hl { color: #d35400; font-weight: 600; }
+
+        .bringing-msg {
+            font-size: 1rem;
+            color: #e67e22;
+            font-weight: 600;
+            margin: 10px 0;
+            animation: wl-appear .4s ease;
+        }
+
+        #new-problem-btn {
+            margin: 18px auto;
+            display: block;
+        }
+
+        .score-bar { margin-top: 4px; }
+
+        @media (max-width: 480px) {
+            .division-board { padding: 16px 8px 12px; }
+            .div-grid { font-size: 1.2rem; }
+            .div-cell { width: 1.4em; height: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <a href="/math" class="back-link">← Tous les exercices</a>
+        <h1>📝 Division posée</h1>
+        <p class="rules">Apprends à poser les divisions étape par étape !</p>
+
+        <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+        <div class="menu-collapsible">
+            <div id="math-difficulty">
+                <button class="mathdiff-btn active" data-level="easy">🟢 Facile</button>
+                <button class="mathdiff-btn" data-level="medium">🟡 Moyen</button>
+                <button class="mathdiff-btn" data-level="hard">🔴 Difficile</button>
+            </div>
+        </div>
+
+        <div class="score-bar">
+            <span>✅ <span id="correct-count">0</span></span>
+            <span>❌ <span id="wrong-count">0</span></span>
+            <span>📊 <span id="div-done">0</span> terminées</span>
+        </div>
+
+        <!-- Visual division -->
+        <div class="division-board">
+            <div id="div-grid" class="div-grid"></div>
+            <div id="div-result" class="div-result hidden"></div>
+        </div>
+
+        <!-- Step interaction -->
+        <div id="step-area" class="step-area">
+            <p id="step-explain" class="step-explain"></p>
+            <p id="step-question" class="step-question"></p>
+            <form id="step-form" class="answer-form">
+                <input type="text" id="step-input" class="answer-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="?" autofocus>
+                <button type="submit" class="submit-btn">Valider ✅</button>
+            </form>
+            <div id="step-feedback" class="math-message hidden"></div>
+        </div>
+
+        <button id="new-problem-btn" class="challenge-start-btn hidden">➡️ Division suivante</button>
+    </div>
+
+<script>
+/* ------------------------------------------------------------------ */
+/*  Division posée – grid-based visual long division                  */
+/* ------------------------------------------------------------------ */
+function randInt(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); }
+
+// ---- state ----
+let level = 'easy';
+let correctCount = 0, wrongCount = 0, divDone = 0;
+let dividend, divisor, dividendDigits, steps;
+let stepIdx, phase, attempts;
+// Grid tracking
+let gridCols, gridRows, gridCells;
+let currentRow;
+let quotientIdx;  // index of next quotient digit to place
+
+// ---- DOM ----
+const $grid     = document.getElementById('div-grid');
+const $result   = document.getElementById('div-result');
+const $explain  = document.getElementById('step-explain');
+const $question = document.getElementById('step-question');
+const $form     = document.getElementById('step-form');
+const $input    = document.getElementById('step-input');
+const $feedback = document.getElementById('step-feedback');
+const $newBtn   = document.getElementById('new-problem-btn');
+const $correct  = document.getElementById('correct-count');
+const $wrong    = document.getElementById('wrong-count');
+const $done     = document.getElementById('div-done');
+
+// ---- difficulty buttons ----
+document.querySelectorAll('#math-difficulty .mathdiff-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#math-difficulty .mathdiff-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        level = btn.dataset.level;
+        newProblem();
+    });
+});
+
+// ---- menu toggle ----
+document.querySelectorAll('.menu-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        btn.nextElementSibling.classList.toggle('collapsed', open);
+        btn.querySelector('.menu-arrow').textContent = open ? '▼' : '▲';
+    });
+});
+
+// ---- generation ----
+function generateDivision(level) {
+    let dnd, dvs, tries = 200;
+    do {
+        switch (level) {
+            case 'easy':
+                dvs = randInt(2, 5);
+                dnd = randInt(dvs, 9) * 10 + randInt(1, 9);
+                break;
+            case 'medium':
+                dvs = randInt(3, 9);
+                dnd = randInt(1000, 9999);
+                break;
+            case 'hard':
+                dvs = randInt(11, 49);
+                dnd = randInt(dvs * 10, 9999);
+                break;
+        }
+        tries--;
+    } while (dnd % dvs === 0 && tries > 0);
+    return { dividend: dnd, divisor: dvs };
+}
+
+function computeSteps(dnd, dvs) {
+    const digits = String(dnd).split('').map(Number);
+    const out = [];
+    let w = 0;
+    let startCol = 0;  // column index in dividend where this working number starts
+    for (let i = 0; i < digits.length; i++) {
+        w = w * 10 + digits[i];
+        if (out.length === 0 && w < dvs) continue;
+        const q = Math.floor(w / dvs);
+        const p = q * dvs;
+        const r = w - p;
+        // Which dividend digit columns make up this working number?
+        const wStr = String(w);
+        const endCol = i;
+        const sCol = endCol - wStr.length + 1;
+        out.push({
+            working: w,
+            qDigit: q,
+            product: p,
+            remainder: r,
+            nextDigit: i < digits.length - 1 ? digits[i + 1] : null,
+            nextDigitCol: i < digits.length - 1 ? i + 1 : null,
+            startCol: sCol,
+            endCol: endCol,
+        });
+        w = r;
+    }
+    return out;
+}
+
+// ---- Grid rendering ----
+// Grid layout:
+// Col 0: minus sign gutter
+// Cols 1..N: dividend digit columns
+// Col N+1: potence separator (border-left)
+// Cols N+2..N+2+dvs_len-1: divisor digits
+// Row 0: dividend digits (cols 1..N) + divisor digits (cols N+2..)
+// Row 1: quotient digits (cols 1..N) — shown in potence-side cells
+// Rows 2+: work lines
+
+function buildGrid() {
+    const dDigits = dividendDigits;
+    const dvDigits = String(divisor).split('');
+    const N = dDigits.length;
+    const qLen = steps.length;  // number of quotient digits
+
+    // Right side needs enough columns for both divisor and quotient
+    const rightCols = Math.max(dvDigits.length, qLen);
+
+    // 1 (gutter) + N (dividend) + 1 (potence sep) + rightCols
+    gridCols = 1 + N + 1 + rightCols;
+    gridRows = 2;
+
+    $grid.innerHTML = '';
+    $grid.style.gridTemplateColumns = `0.8em repeat(${N}, 1.6em) 0px repeat(${rightCols}, 1.6em)`;
+    $grid.style.gridTemplateRows = `repeat(${gridRows}, 1.8em)`;
+
+    gridCells = [];
+    for (let r = 0; r < 2; r++) {
+        addGridRow(r);
+    }
+
+    // Row 0: dividend digits
+    for (let i = 0; i < N; i++) {
+        const cell = gridCells[0][1 + i];
+        cell.textContent = dDigits[i];
+        cell.style.visibility = 'visible';
+        cell.id = 'dd-' + i;
+    }
+
+    // Row 0: potence separator
+    const sepCol = 1 + N;
+    gridCells[0][sepCol].style.visibility = 'visible';
+    gridCells[0][sepCol].classList.add('potence-side');
+    gridCells[0][sepCol].style.width = '0.3em';
+
+    // Row 0: divisor digits
+    for (let i = 0; i < dvDigits.length; i++) {
+        const cell = gridCells[0][sepCol + 1 + i];
+        cell.textContent = dvDigits[i];
+        cell.style.visibility = 'visible';
+        cell.classList.add('potence-top');
+    }
+    // Extend potence-top border across all right columns
+    for (let i = dvDigits.length; i < rightCols; i++) {
+        gridCells[0][sepCol + 1 + i].style.visibility = 'visible';
+        gridCells[0][sepCol + 1 + i].classList.add('potence-top');
+    }
+
+    // Row 1: quotient row — potence border on sep col
+    gridCells[1][sepCol].style.visibility = 'visible';
+    gridCells[1][sepCol].classList.add('potence-side');
+    gridCells[1][sepCol].style.width = '0.3em';
+    // Make quotient cells visible (empty for now)
+    for (let i = 0; i < rightCols; i++) {
+        gridCells[1][sepCol + 1 + i].style.visibility = 'visible';
+    }
+
+    quotientIdx = 0;  // track how many quotient digits placed
+    currentRow = 2;
+}
+
+// Dynamically add a new row of cells to the grid
+function addGridRow(rowIndex) {
+    gridCells[rowIndex] = [];
+    for (let c = 0; c < gridCols; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'div-cell';
+        cell.style.gridRow = (rowIndex + 1);
+        cell.style.gridColumn = (c + 1);
+        cell.textContent = '';
+        cell.style.visibility = 'hidden';
+        $grid.appendChild(cell);
+        gridCells[rowIndex][c] = cell;
+    }
+}
+
+// Ensure the grid has at least `neededRow + 1` rows
+function ensureRow(neededRow) {
+    while (gridRows <= neededRow) {
+        addGridRow(gridRows);
+        gridRows++;
+        $grid.style.gridTemplateRows = `repeat(${gridRows}, 1.8em)`;
+    }
+}
+
+function highlightDividendDigits(startCol, endCol) {
+    // Clear all highlights and arrows
+    const N = dividendDigits.length;
+    for (let i = 0; i < N; i++) {
+        const cell = gridCells[0][1 + i];
+        cell.classList.remove('hl-active');
+        const arrow = cell.querySelector('.arrow-down');
+        if (arrow) arrow.remove();
+    }
+    // Highlight range
+    for (let i = startCol; i <= endCol; i++) {
+        gridCells[0][1 + i].classList.add('hl-active');
+    }
+    // Arrow on last highlighted digit
+    const arrow = document.createElement('span');
+    arrow.className = 'arrow-down';
+    arrow.textContent = '↓';
+    gridCells[0][1 + endCol].appendChild(arrow);
+}
+
+function clearHighlights() {
+    const N = dividendDigits.length;
+    for (let i = 0; i < N; i++) {
+        const cell = gridCells[0][1 + i];
+        cell.classList.remove('hl-active');
+        const arrow = cell.querySelector('.arrow-down');
+        if (arrow) arrow.remove();
+    }
+}
+
+function setQuotientDigit(stepIndex, digit) {
+    // Quotient digits go sequentially under the divisor (right side of potence)
+    const N = dividendDigits.length;
+    const sepCol = 1 + N;
+    const col = sepCol + 1 + quotientIdx;
+    if (col < gridCols) {
+        const cell = gridCells[1][col];
+        cell.textContent = digit;
+        cell.style.visibility = 'visible';
+        cell.classList.add('q-cell', 'q-new');
+    }
+    quotientIdx++;
+}
+
+function writeWorkRow(digits, startCol, cssClass) {
+    const row = currentRow;
+    ensureRow(row);
+    const str = String(digits);
+    for (let i = 0; i < str.length; i++) {
+        const col = 1 + startCol + i;
+        if (col >= 0 && col < gridCols) {
+            const cell = gridCells[row][col];
+            cell.textContent = str[i];
+            cell.style.visibility = 'visible';
+            cssClass.split(' ').forEach(c => { if (c) cell.classList.add(c); });
+        }
+    }
+    currentRow++;
+    return row;
+}
+
+function writeMinusSign(row) {
+    ensureRow(row);
+    const cell = gridCells[row][0];
+    cell.textContent = '−';
+    cell.style.visibility = 'visible';
+    cell.classList.add('minus-sign');
+}
+
+function writeSepLine(startCol, endCol) {
+    const row = currentRow - 1;
+    ensureRow(row);
+    for (let i = startCol; i <= endCol; i++) {
+        gridCells[row][1 + i].classList.add('sep-cell');
+    }
+}
+
+function writeBringDown(remainderStr, newDigit, startCol) {
+    const row = currentRow;
+    ensureRow(row);
+    const full = remainderStr + String(newDigit);
+    for (let i = 0; i < full.length; i++) {
+        const col = 1 + startCol + i;
+        if (col < gridCols) {
+            const cell = gridCells[row][col];
+            cell.textContent = full[i];
+            cell.style.visibility = 'visible';
+            cell.classList.add('rem-cell');
+            if (i === full.length - 1) {
+                cell.classList.add('brought');
+            }
+        }
+    }
+    currentRow++;
+}
+
+// ---- problem lifecycle ----
+function newProblem() {
+    const prob = generateDivision(level);
+    dividend = prob.dividend;
+    divisor  = prob.divisor;
+    dividendDigits = String(dividend).split('').map(Number);
+    steps    = computeSteps(dividend, divisor);
+    stepIdx  = 0;
+    phase    = 'quotient';
+    attempts = 0;
+
+    $result.classList.add('hidden');
+    $result.textContent = '';
+    $newBtn.classList.add('hidden');
+    $form.classList.remove('hidden');
+    $feedback.classList.add('hidden');
+    $explain.textContent = '';
+
+    buildGrid();
+    askQuestion();
+    $input.value = '';
+    $input.focus();
+}
+
+// ---- questions ----
+function askQuestion() {
+    const s = steps[stepIdx];
+    $feedback.classList.add('hidden');
+    attempts = 0;
+
+    switch (phase) {
+        case 'quotient':
+            highlightDividendDigits(s.startCol, s.endCol);
+            $explain.innerHTML = '';
+            $question.innerHTML = `Dans <span class="hl">${s.working}</span>, combien de fois <span class="hl">${divisor}</span> ?`;
+            break;
+        case 'product':
+            $explain.innerHTML = '';
+            $question.innerHTML = `<span class="hl">${s.qDigit}</span> × <span class="hl">${divisor}</span> = ?`;
+            break;
+        case 'remainder':
+            $explain.innerHTML = '';
+            $question.innerHTML = `<span class="hl">${s.working}</span> − <span class="hl">${s.product}</span> = ?`;
+            break;
+    }
+    $input.value = '';
+    $input.focus();
+}
+
+// ---- answer checking ----
+$form.addEventListener('submit', e => {
+    e.preventDefault();
+    const raw = $input.value.trim();
+    if (raw === '') return;
+    const val = parseInt(raw, 10);
+    if (isNaN(val)) return;
+
+    const s = steps[stepIdx];
+    let expected;
+    switch (phase) {
+        case 'quotient':  expected = s.qDigit;    break;
+        case 'product':   expected = s.product;   break;
+        case 'remainder': expected = s.remainder; break;
+    }
+
+    if (val === expected) {
+        onCorrect(s);
+    } else {
+        onWrong(s, expected);
+    }
+});
+
+function onCorrect(s) {
+    correctCount++;
+    $correct.textContent = correctCount;
+    showFeedback('✅ Bravo !', 'correct');
+
+    switch (phase) {
+        case 'quotient':
+            setQuotientDigit(stepIdx, s.qDigit);
+            phase = 'product';
+            setTimeout(() => askQuestion(), 500);
+            return;
+
+        case 'product': {
+            // Write "−product" aligned under the working number
+            const pStr = String(s.product);
+            const writeStart = s.endCol - pStr.length + 1;
+            const row = writeWorkRow(pStr, writeStart, 'sub-cell');
+            writeMinusSign(row);
+            phase = 'remainder';
+            setTimeout(() => askQuestion(), 500);
+            return;
+        }
+
+        case 'remainder': {
+            // Write separator line
+            writeSepLine(s.startCol, s.endCol);
+
+            if (s.nextDigit !== null) {
+                // Write remainder + bring down next digit
+                const remStr = s.remainder === 0 ? '' : String(s.remainder);
+                const nextCol = s.nextDigitCol;
+                const fullStartCol = nextCol - (remStr + String(s.nextDigit)).length + 1;
+                writeBringDown(remStr, s.nextDigit, fullStartCol);
+
+                clearHighlights();
+                $form.classList.add('hidden');
+
+                const next = s.remainder * 10 + s.nextDigit;
+                $explain.innerHTML = '';
+                $question.innerHTML = `<span class="bringing-msg">↓ ${s.nextDigit} → <span class="hl">${next}</span></span>`;
+
+                // Briefly highlight the digit being brought down
+                gridCells[0][1 + nextCol].classList.add('hl-active');
+                const arrow = document.createElement('span');
+                arrow.className = 'arrow-down';
+                arrow.textContent = '↓';
+                gridCells[0][1 + nextCol].appendChild(arrow);
+
+                setTimeout(() => {
+                    clearHighlights();
+                    stepIdx++;
+                    phase = 'quotient';
+                    $form.classList.remove('hidden');
+                    askQuestion();
+                }, 1800);
+            } else {
+                // Final remainder
+                const remStr = String(s.remainder);
+                const writeStart = s.endCol - remStr.length + 1;
+                writeWorkRow(remStr, writeStart, 'rem-cell final-rem');
+                clearHighlights();
+                finishDivision();
+            }
+            return;
+        }
+    }
+}
+
+function onWrong(s, expected) {
+    wrongCount++;
+    $wrong.textContent = wrongCount;
+    attempts++;
+
+    if (attempts >= 3) {
+        showFeedback(`❌ La réponse était <b>${expected}</b>`, 'wrong');
+        setTimeout(() => {
+            $input.value = expected;
+            onCorrect(s);
+        }, 1200);
+    } else if (attempts === 2) {
+        showHint(s, expected);
+    } else {
+        showFeedback('❌ Essaie encore !', 'wrong');
+    }
+    $input.value = '';
+    $input.focus();
+}
+
+function showHint(s, expected) {
+    showFeedback('❌ Essaie encore !', 'wrong');
+}
+
+function showFeedback(html, type) {
+    $feedback.innerHTML = html;
+    $feedback.className = 'math-message ' + type;
+    $feedback.classList.remove('hidden');
+}
+
+function finishDivision() {
+    divDone++;
+    $done.textContent = divDone;
+
+    const q = steps.map(s => s.qDigit).join('');
+    const r = steps[steps.length - 1].remainder;
+
+    $form.classList.add('hidden');
+    $question.textContent = '';
+    $explain.textContent = '';
+    $feedback.classList.add('hidden');
+
+    // Color the grid elements to match the summary
+    colorizeGrid();
+
+    // Build colored summary
+    let equation = `<span class="clr-dividend">${dividend}</span> ÷ <span class="clr-divisor">${divisor}</span> = <span class="clr-quotient">${q}</span>`;
+    if (r > 0) equation += ` reste <span class="clr-remainder">${r}</span>`;
+
+    let sentence;
+    if (r > 0) {
+        sentence = `La division de <span class="clr-dividend">${dividend}</span> par <span class="clr-divisor">${divisor}</span> donne <span class="clr-quotient">${q}</span> avec un reste de <span class="clr-remainder">${r}</span>.`;
+    } else {
+        sentence = `La division de <span class="clr-dividend">${dividend}</span> par <span class="clr-divisor">${divisor}</span> donne exactement <span class="clr-quotient">${q}</span>.`;
+    }
+
+    $result.innerHTML = `<span class="result-emoji">🎉</span><div class="result-equation">${equation}</div><div class="result-sentence">${sentence}</div>`;
+    $result.classList.remove('hidden');
+    $newBtn.classList.remove('hidden');
+    $newBtn.focus();
+}
+
+function colorizeGrid() {
+    const N = dividendDigits.length;
+    // Dividend digits → blue
+    for (let i = 0; i < N; i++) {
+        gridCells[0][1 + i].classList.add('c-dividend');
+    }
+    // Divisor digits → purple
+    const sepCol = 1 + N;
+    const dvLen = String(divisor).length;
+    for (let i = 0; i < dvLen; i++) {
+        gridCells[0][sepCol + 1 + i].classList.add('c-divisor');
+    }
+    // Quotient is already green (q-cell)
+    // Final remainder is already orange (final-rem)
+}
+
+$newBtn.addEventListener('click', newProblem);
+newProblem();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body>
+</html>

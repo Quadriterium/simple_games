@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pluriels</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/francais" class="back-link">← Tous les exercices</a>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-game="practice">📚 Entraînement</button>
+            <button class="game-tab" data-game="challenge">🏆 Challenge</button>
+            <button class="game-tab" data-game="leaderboard">🏅 Classement</button>
+        </div>
+
+        <!-- Practice -->
+        <div id="game-practice" class="game-panel">
+            <h1>📚 Pluriels</h1>
+            <p class="rules">Écris le pluriel du mot donné !</p>
+
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="french-difficulty">
+                    <button class="difflevel-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="difflevel-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="difflevel-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+
+            <div class="score-bar">
+                <span>✅ <span id="correct-count">0</span></span>
+                <span>❌ <span id="wrong-count">0</span></span>
+                <span>🔥 Série : <span id="streak-count">0</span></span>
+            </div>
+
+            <div id="problem-card" class="problem-card">
+                <div id="problem-display" class="problem-display"></div>
+            </div>
+
+            <form id="answer-form" class="answer-form">
+                <input type="text" id="answer-input" class="answer-input" autocomplete="off" placeholder="Le pluriel..." autofocus>
+                <button type="submit" class="submit-btn">Valider ✅</button>
+            </form>
+
+            <div id="french-message" class="french-message hidden"></div>
+        </div>
+
+        <!-- Challenge -->
+        <div id="game-challenge" class="game-panel hidden">
+            <h1>🏆 Challenge</h1>
+            <p class="rules">Choisis ton défi et montre ce que tu sais faire !</p>
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="challenge-difficulty">
+                    <button class="difflevel-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="difflevel-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="difflevel-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+                <div id="challenge-mode-select">
+                    <button class="challenge-mode-btn active" data-mode="100">💯 100 exercices</button>
+                    <button class="challenge-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+            </div>
+            <div id="challenge-start-screen">
+                <div class="challenge-desc-card"><p id="challenge-desc-text"></p></div>
+                <button id="challenge-start-btn" class="challenge-start-btn">🚀 C'est parti !</button>
+            </div>
+            <div id="challenge-play-screen" class="hidden">
+                <div class="challenge-status-bar">
+                    <span id="challenge-progress">📝 0 / 100</span>
+                    <span id="challenge-timer">⏱️ 00:00</span>
+                    <span id="challenge-errors">❌ 0</span>
+                </div>
+                <div id="challenge-problem-card" class="problem-card">
+                    <div id="challenge-problem-display" class="problem-display"></div>
+                </div>
+                <form id="challenge-answer-form" class="answer-form">
+                    <input type="text" id="challenge-answer-input" class="answer-input" autocomplete="off" placeholder="Le pluriel...">
+                    <button type="submit" class="submit-btn">Valider ✅</button>
+                </form>
+                <div id="challenge-feedback" class="challenge-feedback hidden"></div>
+            </div>
+            <div id="challenge-result-screen" class="hidden">
+                <div class="challenge-result-card">
+                    <h2 id="challenge-result-title"></h2>
+                    <div id="challenge-result-stats"></div>
+                    <p id="challenge-result-message" class="challenge-result-message"></p>
+                </div>
+                <div class="save-score-section">
+                    <p class="save-score-prompt">Enregistrer ton score dans le classement ?</p>
+                    <form id="save-score-form" class="save-score-form">
+                        <input type="text" id="save-score-name" class="save-score-name" maxlength="30" autocomplete="off" placeholder="Ton prénom...">
+                        <button type="submit" id="save-score-btn" class="save-score-btn">💾 Enregistrer</button>
+                    </form>
+                    <p id="save-score-status" class="hidden"></p>
+                </div>
+                <button id="challenge-retry-btn" class="challenge-retry-btn">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="game-leaderboard" class="game-panel hidden">
+            <h1>🏅 Classement</h1>
+            <p class="rules">Les meilleurs scores de tous les joueurs !</p>
+            <div class="lb-filters">
+                <div class="lb-mode-select">
+                    <button class="lb-mode-btn active" data-mode="100">💯 100 exercices</button>
+                    <button class="lb-mode-btn" data-mode="timer">⏱️ 1 minute</button>
+                </div>
+                <div class="lb-level-select">
+                    <button class="lb-level-btn active" data-level="easy">🟢 Facile</button>
+                    <button class="lb-level-btn" data-level="medium">🟡 Moyen</button>
+                    <button class="lb-level-btn" data-level="hard">🔴 Difficile</button>
+                </div>
+            </div>
+            <div class="lb-table-container">
+                <table class="lb-table"><thead><tr id="lb-header"></tr></thead><tbody id="lb-body"></tbody></table>
+                <p id="lb-empty" class="lb-empty hidden"></p>
+                <p id="lb-loading" class="lb-loading hidden">Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const PLURALS = {
+        easy: [
+            // Pluriels réguliers en -s
+            { singular: 'chat', plural: 'chats' },
+            { singular: 'chien', plural: 'chiens' },
+            { singular: 'livre', plural: 'livres' },
+            { singular: 'maison', plural: 'maisons' },
+            { singular: 'fleur', plural: 'fleurs' },
+            { singular: 'arbre', plural: 'arbres' },
+            { singular: 'ami', plural: 'amis' },
+            { singular: 'table', plural: 'tables' },
+            { singular: 'oiseau', plural: 'oiseaux' },
+            { singular: 'voiture', plural: 'voitures' },
+            { singular: 'étoile', plural: 'étoiles' },
+            { singular: 'pomme', plural: 'pommes' },
+            { singular: 'crayon', plural: 'crayons' },
+            { singular: 'ballon', plural: 'ballons' },
+            { singular: 'cadeau', plural: 'cadeaux' },
+            { singular: 'chapeau', plural: 'chapeaux' },
+            { singular: 'gâteau', plural: 'gâteaux' },
+            { singular: 'image', plural: 'images' },
+            { singular: 'école', plural: 'écoles' },
+            { singular: 'fille', plural: 'filles' },
+            { singular: 'garçon', plural: 'garçons' },
+            { singular: 'rue', plural: 'rues' },
+            { singular: 'jouet', plural: 'jouets' },
+            { singular: 'lettre', plural: 'lettres' },
+            { singular: 'bras', plural: 'bras' },
+            { singular: 'nez', plural: 'nez' },
+            { singular: 'noix', plural: 'noix' },
+            { singular: 'souris', plural: 'souris' },
+            { singular: 'stylo', plural: 'stylos' },
+            { singular: 'canard', plural: 'canards' },
+            { singular: 'lapin', plural: 'lapins' },
+            { singular: 'poule', plural: 'poules' },
+            { singular: 'vache', plural: 'vaches' },
+            { singular: 'mouton', plural: 'moutons' },
+            { singular: 'cochon', plural: 'cochons' },
+            { singular: 'main', plural: 'mains' },
+            { singular: 'pied', plural: 'pieds' },
+            { singular: 'doigt', plural: 'doigts' },
+            { singular: 'cheveu', plural: 'cheveux' },
+            { singular: 'porte', plural: 'portes' },
+            { singular: 'fenêtre', plural: 'fenêtres' },
+            { singular: 'mur', plural: 'murs' },
+            { singular: 'jardin', plural: 'jardins' },
+            { singular: 'lit', plural: 'lits' },
+            { singular: 'chaise', plural: 'chaises' },
+            { singular: 'classe', plural: 'classes' },
+            { singular: 'cahier', plural: 'cahiers' },
+            { singular: 'copain', plural: 'copains' },
+            { singular: 'copine', plural: 'copines' },
+            { singular: 'frère', plural: 'frères' },
+            { singular: 'sœur', plural: 'sœurs' },
+            { singular: 'papa', plural: 'papas' },
+            { singular: 'enfant', plural: 'enfants' },
+            { singular: 'bonbon', plural: 'bonbons' },
+            { singular: 'fruit', plural: 'fruits' },
+            { singular: 'légume', plural: 'légumes' },
+            { singular: 'couleur', plural: 'couleurs' },
+            { singular: 'nuage', plural: 'nuages' },
+            { singular: 'montagne', plural: 'montagnes' },
+            { singular: 'rivière', plural: 'rivières' },
+            { singular: 'carte', plural: 'cartes' },
+            { singular: 'histoire', plural: 'histoires' },
+            { singular: 'chanson', plural: 'chansons' },
+            { singular: 'dent', plural: 'dents' },
+            { singular: 'ventre', plural: 'ventres' },
+            { singular: 'robe', plural: 'robes' },
+            { singular: 'pantalon', plural: 'pantalons' },
+            { singular: 'chaussure', plural: 'chaussures' },
+            { singular: 'lunette', plural: 'lunettes' },
+        ],
+        medium: [
+            // Pluriels en -eau → -eaux, -eu → -eux, -ou → -oux
+            { singular: 'bateau', plural: 'bateaux' },
+            { singular: 'manteau', plural: 'manteaux' },
+            { singular: 'rideau', plural: 'rideaux' },
+            { singular: 'château', plural: 'châteaux' },
+            { singular: 'couteau', plural: 'couteaux' },
+            { singular: 'jeu', plural: 'jeux' },
+            { singular: 'feu', plural: 'feux' },
+            { singular: 'cheveu', plural: 'cheveux' },
+            { singular: 'bijou', plural: 'bijoux' },
+            { singular: 'caillou', plural: 'cailloux' },
+            { singular: 'genou', plural: 'genoux' },
+            { singular: 'chou', plural: 'choux' },
+            { singular: 'hibou', plural: 'hiboux' },
+            { singular: 'pou', plural: 'poux' },
+            { singular: 'joujou', plural: 'joujoux' },
+            { singular: 'noyau', plural: 'noyaux' },
+            { singular: 'tuyau', plural: 'tuyaux' },
+            { singular: 'drapeau', plural: 'drapeaux' },
+            { singular: 'morceau', plural: 'morceaux' },
+            { singular: 'anneau', plural: 'anneaux' },
+            { singular: 'pinceau', plural: 'pinceaux' },
+            { singular: 'poteau', plural: 'poteaux' },
+            { singular: 'tonneau', plural: 'tonneaux' },
+            { singular: 'cerveau', plural: 'cerveaux' },
+            { singular: 'panneau', plural: 'panneaux' },
+            { singular: 'chameau', plural: 'chameaux' },
+            { singular: 'marteau', plural: 'marteaux' },
+            { singular: 'traineau', plural: 'traineaux' },
+            { singular: 'rouleau', plural: 'rouleaux' },
+            { singular: 'jumeau', plural: 'jumeaux' },
+            { singular: 'chapeau', plural: 'chapeaux' },
+            { singular: 'agneau', plural: 'agneaux' },
+            { singular: 'milieu', plural: 'milieux' },
+            { singular: 'lieu', plural: 'lieux' },
+            { singular: 'aveu', plural: 'aveux' },
+            { singular: 'neveu', plural: 'neveux' },
+            { singular: 'bleu', plural: 'bleus' },
+            { singular: 'pneu', plural: 'pneus' },
+            { singular: 'clou', plural: 'clous' },
+            { singular: 'verrou', plural: 'verrous' },
+            { singular: 'trou', plural: 'trous' },
+            { singular: 'sou', plural: 'sous' },
+            { singular: 'voyou', plural: 'voyous' },
+            { singular: 'bambou', plural: 'bambous' },
+            { singular: 'coucou', plural: 'coucous' },
+            { singular: 'kangourou', plural: 'kangourous' },
+            { singular: 'caribou', plural: 'caribous' },
+            { singular: 'gâteau', plural: 'gâteaux' },
+            { singular: 'radeau', plural: 'radeaux' },
+            { singular: 'tableau', plural: 'tableaux' },
+            { singular: 'bureau', plural: 'bureaux' },
+            { singular: 'bandeau', plural: 'bandeaux' },
+            { singular: 'réseau', plural: 'réseaux' },
+            { singular: 'flambeau', plural: 'flambeaux' },
+        ],
+        hard: [
+            // Pluriels irréguliers -al → -aux, etc.
+            { singular: 'cheval', plural: 'chevaux' },
+            { singular: 'animal', plural: 'animaux' },
+            { singular: 'journal', plural: 'journaux' },
+            { singular: 'hôpital', plural: 'hôpitaux' },
+            { singular: 'œil', plural: 'yeux' },
+            { singular: 'monsieur', plural: 'messieurs' },
+            { singular: 'madame', plural: 'mesdames' },
+            { singular: 'travail', plural: 'travaux' },
+            { singular: 'vitrail', plural: 'vitraux' },
+            { singular: 'corail', plural: 'coraux' },
+            { singular: 'bocal', plural: 'bocaux' },
+            { singular: 'canal', plural: 'canaux' },
+            { singular: 'métal', plural: 'métaux' },
+            { singular: 'signal', plural: 'signaux' },
+            { singular: 'général', plural: 'généraux' },
+            { singular: 'festival', plural: 'festivals' },
+            { singular: 'carnaval', plural: 'carnavals' },
+            { singular: 'bal', plural: 'bals' },
+            { singular: 'récital', plural: 'récitals' },
+            { singular: 'landau', plural: 'landaus' },
+            { singular: 'festival', plural: 'festivals' },
+            { singular: 'carnaval', plural: 'carnavals' },
+            { singular: 'récital', plural: 'récitals' },
+            { singular: 'bal', plural: 'bals' },
+            { singular: 'régal', plural: 'régals' },
+            { singular: 'corail', plural: 'coraux' },
+            { singular: 'émail', plural: 'émaux' },
+            { singular: 'vitrail', plural: 'vitraux' },
+            { singular: 'soupirail', plural: 'soupiraux' },
+            { singular: 'genou', plural: 'genoux' },
+            { singular: 'caillou', plural: 'cailloux' },
+            { singular: 'hibou', plural: 'hiboux' },
+            { singular: 'bijou', plural: 'bijoux' },
+            { singular: 'pou', plural: 'poux' },
+            { singular: 'chou', plural: 'choux' },
+            { singular: 'joujou', plural: 'joujoux' },
+            { singular: 'bocal', plural: 'bocaux' },
+            { singular: 'canal', plural: 'canaux' },
+            { singular: 'capital', plural: 'capitaux' },
+            { singular: 'général', plural: 'généraux' },
+            { singular: 'métal', plural: 'métaux' },
+            { singular: 'signal', plural: 'signaux' },
+            { singular: 'rival', plural: 'rivaux' },
+            { singular: 'amiral', plural: 'amiraux' },
+            { singular: 'madame', plural: 'mesdames' },
+            { singular: 'monsieur', plural: 'messieurs' },
+            { singular: 'mademoiselle', plural: 'mesdemoiselles' },
+            { singular: 'œil', plural: 'yeux' },
+            { singular: 'ciel', plural: 'cieux' },
+            { singular: 'aïeul', plural: 'aïeux' },
+        ],
+    };
+
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    const EXERCISE_CONFIG = {
+        type: 'pluriel',
+        title: 'pluriels',
+        inputMode: 'text',
+        generateProblem(level) {
+            const item = pickRandom(PLURALS[level]);
+            return {
+                display: `Quel est le pluriel de<br><span class="highlight">${item.singular}</span> ?`,
+                answer: item.plural,
+                feedbackText: `${item.singular} → ${item.plural}`,
+            };
+        },
+    };
+    </script>
+    <script src="../shared.js"></script>
+</body>
+</html>

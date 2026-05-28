@@ -1,0 +1,631 @@
+/* ===== Math page specific styles ===== */
+
+/* ===== Difficulty Buttons ===== */
+#math-difficulty {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.mathdiff-btn {
+    padding: 8px 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.mathdiff-btn:hover {
+    border-color: #805ad5;
+    color: #805ad5;
+}
+
+.mathdiff-btn.active {
+    background: #805ad5;
+    color: #fff;
+    border-color: #805ad5;
+}
+
+/* ===== Score Bar ===== */
+#score-bar {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+/* ===== Problem Card ===== */
+#problem-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px 16px;
+    margin: 0 auto 20px;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+#problem-text {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+#problem-text .operator {
+    color: #805ad5;
+    font-size: 2rem;
+}
+
+#answer-placeholder {
+    display: inline-block;
+    min-width: 60px;
+    background: #f7fafc;
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    padding: 4px 12px;
+    color: #a0aec0;
+}
+
+/* ===== Answer Form ===== */
+#answer-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+#answer-input {
+    width: 160px;
+    padding: 12px 16px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    color: #2d3748;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#answer-input:focus {
+    border-color: #805ad5;
+    box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.15);
+}
+
+#submit-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: #38a169;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#submit-btn:hover {
+    background: #2f855a;
+}
+
+#submit-btn:active {
+    transform: scale(0.96);
+}
+
+/* ===== Math Messages ===== */
+#math-message {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-top: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s;
+}
+
+#math-message.hidden {
+    display: none;
+}
+
+#math-message.correct {
+    background: #c6f6d5;
+    color: #276749;
+    animation: pop-msg 0.4s ease-out;
+}
+
+#math-message.wrong {
+    background: #fed7d7;
+    color: #9b2c2c;
+    animation: shake-msg 0.4s ease-out;
+}
+
+@keyframes pop-msg {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake-msg {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+}
+
+/* ===== Problem card animations ===== */
+#problem-card.correct-flash,
+#challenge-problem-card.correct-flash {
+    border-color: #38a169;
+    box-shadow: 0 0 0 4px rgba(56, 161, 105, 0.2);
+}
+
+#problem-card.wrong-flash,
+#challenge-problem-card.wrong-flash {
+    border-color: #e53e3e;
+    box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.2);
+}
+
+/* ===== Challenge Mode ===== */
+#challenge-mode-select {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.challenge-mode-btn {
+    padding: 8px 20px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.challenge-mode-btn:hover {
+    border-color: #d69e2e;
+    color: #d69e2e;
+}
+
+.challenge-mode-btn.active {
+    background: #d69e2e;
+    color: #fff;
+    border-color: #d69e2e;
+}
+
+.challenge-desc-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 auto 16px;
+    max-width: 400px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+#challenge-start-btn,
+#challenge-retry-btn {
+    padding: 14px 36px;
+    border: none;
+    border-radius: 12px;
+    background: #4299e1;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#challenge-start-btn:hover,
+#challenge-retry-btn:hover {
+    background: #3182ce;
+}
+
+#challenge-start-btn:active,
+#challenge-retry-btn:active {
+    transform: scale(0.96);
+}
+
+/* Challenge status bar */
+#challenge-status-bar {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+/* Reusable problem card style */
+.problem-card-style {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px 16px;
+    margin: 0 auto 20px;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.problem-text-style {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.problem-text-style .operator {
+    color: #805ad5;
+    font-size: 2rem;
+}
+
+.answer-placeholder-style {
+    display: inline-block;
+    min-width: 60px;
+    background: #f7fafc;
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    padding: 4px 12px;
+    color: #a0aec0;
+}
+
+/* Challenge answer form */
+#challenge-answer-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+#challenge-answer-input {
+    width: 160px;
+    padding: 12px 16px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    color: #2d3748;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#challenge-answer-input:focus {
+    border-color: #805ad5;
+    box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.15);
+}
+
+#challenge-submit-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: #38a169;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#challenge-submit-btn:hover {
+    background: #2f855a;
+}
+
+/* Challenge feedback */
+#challenge-feedback {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 0 auto 8px;
+}
+
+#challenge-feedback.hidden {
+    display: none;
+}
+
+#challenge-feedback.wrong {
+    background: #fed7d7;
+    color: #9b2c2c;
+}
+
+/* Challenge result card */
+#challenge-result-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin: 0 auto 20px;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+#challenge-result-title {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: #2d3748;
+}
+
+.result-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 1rem;
+}
+
+.result-stat:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: #718096;
+    font-weight: 600;
+}
+
+.result-value {
+    color: #2d3748;
+    font-weight: 700;
+}
+
+#challenge-result-message {
+    margin-top: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #805ad5;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ===== Save Score Form ===== */
+#save-score-section {
+    margin: 20px auto 16px;
+    max-width: 400px;
+}
+
+#save-score-prompt {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+#save-score-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#save-score-name {
+    width: 160px;
+    padding: 10px 14px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: #2d3748;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#save-score-name:focus {
+    border-color: #805ad5;
+    box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.15);
+}
+
+#save-score-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #805ad5;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#save-score-btn:hover {
+    background: #6b46c1;
+}
+
+#save-score-btn:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+}
+
+.save-success {
+    color: #276749;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.save-error {
+    color: #9b2c2c;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+/* ===== Leaderboard ===== */
+#lb-filters {
+    margin-bottom: 16px;
+}
+
+#lb-mode-select,
+#lb-level-select {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.lb-mode-btn,
+.lb-level-btn {
+    padding: 8px 18px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.lb-mode-btn:hover,
+.lb-level-btn:hover {
+    border-color: #d69e2e;
+    color: #d69e2e;
+}
+
+.lb-mode-btn.active {
+    background: #d69e2e;
+    color: #fff;
+    border-color: #d69e2e;
+}
+
+.lb-level-btn.active {
+    background: #805ad5;
+    color: #fff;
+    border-color: #805ad5;
+}
+
+.lb-level-btn:hover {
+    border-color: #805ad5;
+    color: #805ad5;
+}
+
+#lb-table-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#lb-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+#lb-table th {
+    background: #2d3748;
+    color: #fff;
+    padding: 10px 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+#lb-table td {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+#lb-table tr:last-child td {
+    border-bottom: none;
+}
+
+.lb-top3 {
+    background: #fffff0;
+}
+
+.lb-rank {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.lb-name {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.lb-score {
+    font-weight: 700;
+    color: #805ad5;
+}
+
+.lb-correct {
+    color: #276749;
+}
+
+.lb-wrong {
+    color: #9b2c2c;
+}
+
+#lb-empty {
+    font-size: 1rem;
+    color: #718096;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+#lb-loading {
+    font-size: 1rem;
+    color: #718096;
+    margin-top: 20px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    #problem-text,
+    .problem-text-style {
+        font-size: 1.8rem;
+    }
+
+    #problem-text .operator,
+    .problem-text-style .operator {
+        font-size: 1.5rem;
+    }
+
+    #answer-input,
+    #challenge-answer-input {
+        width: 130px;
+        font-size: 1.1rem;
+    }
+
+    #score-bar,
+    #challenge-status-bar {
+        font-size: 0.85rem;
+        gap: 10px;
+    }
+}
