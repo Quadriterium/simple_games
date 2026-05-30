@@ -137,9 +137,20 @@ function disableChoiceButtons(container) {
     container.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
 }
 
+// Replace blank "___" with the answer, colored green or red
+function revealAnswer(displayEl, answer, isCorrect) {
+    const blank = displayEl.querySelector('.blank');
+    if (blank) {
+        blank.textContent = answer;
+        blank.classList.add(isCorrect ? 'answer-correct' : 'answer-wrong');
+    }
+}
+
 function checkPracticeAnswer(userAnswer) {
     const correct = practiceState.currentProblem.answer;
     const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(correct);
+
+    revealAnswer(practiceEls.problemDisplay, correct, isCorrect);
 
     if (isCorrect) {
         practiceState.correctCount++;
@@ -388,6 +399,8 @@ function processChallengeAnswer(userAnswer) {
     const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(correct);
 
     challengeState.totalAnswered++;
+
+    revealAnswer(challengeEls.problemDisplay, correct, isCorrect);
 
     if (isCorrect) {
         challengeState.totalCorrect++;

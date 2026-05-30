@@ -1,7 +1,7 @@
 {
-    "name": "Jeu des Couronnes",
-    "short_name": "Couronnes",
-    "description": "Puzzle de couronnes à placer sur une grille colorée",
+    "name": "Mini Jeux",
+    "short_name": "Mini Jeux",
+    "description": "Jeux classiques, exercices de maths et de français",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#1a1a2e",

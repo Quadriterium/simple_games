@@ -1,12 +1,16 @@
-const CACHE_NAME = 'simple-games-v2';
+const CACHE_NAME = 'simple-games-v4';
 const ASSETS = [
     '/',
     '/index.html',
+    '/landing.css',
     '/style.css',
     '/script.js',
     '/manifest.json',
     '/icon-192.png',
     '/icon-512.png',
+    // Classic games
+    '/jeux/',
+    '/jeux/index.html',
     // Math landing
     '/math/',
     '/math/index.html',
@@ -70,16 +74,43 @@ self.addEventListener('fetch', (event) => {
     // Network-first for HTML pages, cache-first for assets
     event.respondWith(
         caches.match(event.request).then((cached) => {
-            const fetching = fetch(event.request).then((response) => {
-                // Update cache with fresh version
+            if (cached) {
+                // Exact match found — serve from cache, update in background
+                const fetching = fetch(event.request).then((response) => {
+                    if (response.ok) {
+                        const clone = response.clone();
+                        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+                    }
+                    return response;
+                }).catch(() => cached);
+                return cached || fetching;
+            }
+
+            // No exact match — if URL has no trailing slash, redirect to slashed version
+            // so relative CSS/JS paths resolve correctly
+            if (!url.pathname.endsWith('/') && !url.pathname.includes('.')) {
+                return caches.match(url.pathname + '/').then((slashed) => {
+                    if (slashed) {
+                        return Response.redirect(url.pathname + '/', 302);
+                    }
+                    return fetch(event.request).then((response) => {
+                        if (response.ok) {
+                            const clone = response.clone();
+                            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+                        }
+                        return response;
+                    }).catch(() => new Response('Offline', { status: 503 }));
+                });
+            }
+
+            // No cache match — try network
+            return fetch(event.request).then((response) => {
                 if (response.ok) {
                     const clone = response.clone();
                     caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
                 }
                 return response;
-            }).catch(() => cached);
-
-            return cached || fetching;
+            }).catch(() => new Response('Offline', { status: 503 }));
         })
     );
 });

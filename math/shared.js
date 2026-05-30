@@ -129,6 +129,18 @@ function renderPracticeProblem() {
     }
 }
 
+// Replace placeholder "?" with the answer, colored green or red
+function revealAnswer(displayEl, answer, isCorrect) {
+    const ph = displayEl.querySelector('.placeholder');
+    if (ph) {
+        const displayAnswer = EXERCISE_CONFIG.isComparison
+            ? (answer === '<' ? '&lt;' : answer === '>' ? '&gt;' : '=')
+            : answer;
+        ph.innerHTML = displayAnswer;
+        ph.classList.add(isCorrect ? 'answer-correct' : 'answer-wrong');
+    }
+}
+
 function checkPracticeAnswer(userAnswer) {
     const correct = practiceState.currentProblem.answer;
     let isCorrect;
@@ -140,6 +152,8 @@ function checkPracticeAnswer(userAnswer) {
         if (isNaN(parsed)) return;
         isCorrect = parsed === correct;
     }
+
+    revealAnswer(practiceEls.problemDisplay, correct, isCorrect);
 
     if (isCorrect) {
         practiceState.correctCount++;
@@ -402,6 +416,8 @@ function processChallengeAnswer(userAnswer) {
     }
 
     challengeState.totalAnswered++;
+
+    revealAnswer(challengeEls.problemDisplay, correct, isCorrect);
 
     if (isCorrect) {
         challengeState.totalCorrect++;

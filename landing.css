@@ -1,0 +1,85 @@
+/* ===== Main Landing Page Styles ===== */
+
+.landing-title {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+    color: #2d3748;
+}
+
+.landing-subtitle {
+    font-size: 1rem;
+    color: #718096;
+    margin-bottom: 32px;
+    line-height: 1.4;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 8px;
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-decoration: none;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-card:active {
+    transform: translateY(0);
+}
+
+.category-card.card-jeux {
+    border-color: #d69e2e;
+}
+.category-card.card-jeux:hover {
+    box-shadow: 0 6px 20px rgba(214, 158, 46, 0.2);
+}
+
+.category-card.card-math {
+    border-color: #805ad5;
+}
+.category-card.card-math:hover {
+    box-shadow: 0 6px 20px rgba(128, 90, 213, 0.2);
+}
+
+.category-card.card-francais {
+    border-color: #38a169;
+}
+.category-card.card-francais:hover {
+    box-shadow: 0 6px 20px rgba(56, 161, 105, 0.2);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+.card-label {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.card-desc {
+    font-size: 0.85rem;
+    color: #718096;
+    margin-top: 4px;
+}

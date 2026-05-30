@@ -5,6 +5,21 @@
     padding: 0;
 }
 
+/* ===== Back Link ===== */
+.back-link {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #805ad5;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: #6b46c1;
+    text-decoration: underline;
+}
+
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #f0f4f8;
