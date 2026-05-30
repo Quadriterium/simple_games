@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Picross</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#d69e2e">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/jeux/" class="back-link">← Jeux</a>
+
+        <div id="game-picross" class="game-panel">
+            <h1>🖼️ Picross</h1>
+            <p class="rules">Noircis les cases selon les indices : chaque nombre indique un groupe de cases consécutives remplies.<br>Entre deux groupes, il y a au moins une case vide.</p>
+
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="picross-difficulty">
+                    <button class="pdiff-btn active" data-level="easy">Facile (5×5)</button>
+                    <button class="pdiff-btn" data-level="medium">Moyen (10×10)</button>
+                    <button class="pdiff-btn" data-level="hard">Difficile (15×15)</button>
+                </div>
+
+                <div id="picross-toolbar">
+                    <button id="picross-new-game">🔄 Nouvelle partie</button>
+                    <button id="picross-verify-btn">✅ Vérifier</button>
+                    <button id="picross-hint-btn">🔍 Indice</button>
+                    <button id="picross-draft-btn">✏️ Brouillon</button>
+                </div>
+            </div>
+
+            <div id="picross-mode-toggle">
+                <button id="picross-fill-btn" class="picross-toggle-btn active" data-mode="fill">⬛ Remplir</button>
+                <button id="picross-cross-btn" class="picross-toggle-btn" data-mode="cross">✕ Croix</button>
+            </div>
+
+            <div id="picross-grid-container">
+                <table id="picross-table">
+                    <thead id="picross-col-clues"></thead>
+                    <tbody id="picross-body"></tbody>
+                </table>
+            </div>
+
+            <div class="undo-bar">
+                <button id="picross-undo-btn" class="undo-btn" disabled>↩ Annuler</button>
+            </div>
+
+            <div id="picross-message" class="hidden"></div>
+        </div>
+    </div>
+
+    <script src="../picross.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    </script>
+</body>
+</html>

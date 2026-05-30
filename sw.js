@@ -1,4 +1,4 @@
-const CACHE_NAME = 'simple-games-v4';
+const CACHE_NAME = 'simple-games-v5';
 const ASSETS = [
     '/',
     '/index.html',
@@ -8,9 +8,17 @@ const ASSETS = [
     '/manifest.json',
     '/icon-192.png',
     '/icon-512.png',
-    // Classic games
+    // Classic games landing
     '/jeux/',
     '/jeux/index.html',
+    '/jeux/landing.css',
+    // Classic games pages
+    '/jeux/couronnes/',
+    '/jeux/couronnes.js',
+    '/jeux/sudoku/',
+    '/jeux/sudoku.js',
+    '/jeux/picross/',
+    '/jeux/picross.js',
     // Math landing
     '/math/',
     '/math/index.html',

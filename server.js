@@ -180,7 +180,15 @@ app.get('/math/', (req, res) => {
     res.sendFile(path.join(__dirname, 'math', 'index.html'));
 });
 
-// --- Fallback routes for /jeux ---
+// --- Fallback routes for /jeux/* ---
+const jeuxSubPages = ['couronnes', 'sudoku', 'picross'];
+jeuxSubPages.forEach(page => {
+    app.get(`/jeux/${page}`, trailingSlashRedirect);
+    app.get(`/jeux/${page}/`, (req, res) => {
+        res.sendFile(path.join(__dirname, 'jeux', page, 'index.html'));
+    });
+});
+
 app.get('/jeux', trailingSlashRedirect);
 app.get('/jeux/', (req, res) => {
     res.sendFile(path.join(__dirname, 'jeux', 'index.html'));

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Couronnes</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#d69e2e">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/jeux/" class="back-link">← Jeux</a>
+
+        <div id="game-crowns" class="game-panel">
+            <h1>👑 Jeu des Couronnes</h1>
+            <p class="rules">Place les couronnes : une par ligne, colonne et couleur (ou deux en mode ×2).<br>Les couronnes ne doivent jamais être adjacentes (même en diagonale).</p>
+
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="crown-mode">
+                    <button class="mode-btn active" data-crowns="1">👑 ×1</button>
+                    <button class="mode-btn" data-crowns="2">👑 ×2</button>
+                </div>
+
+                <div id="difficulty">
+                    <button class="diff-btn active" data-size="5">Débutant (5×5)</button>
+                    <button class="diff-btn" data-size="7">Intermédiaire (7×7)</button>
+                    <button class="diff-btn" data-size="9">Difficile (9×9)</button>
+                </div>
+
+                <div id="toolbar">
+                    <button id="new-game">🔄 Nouvelle partie</button>
+                    <button id="hint-btn">🔍 Indice <span id="hint-badge">1</span></button>
+                    <button id="draft-btn">✏️ Brouillon</button>
+                </div>
+            </div>
+
+            <div id="grid-container">
+                <div id="grid"></div>
+            </div>
+
+            <div class="undo-bar">
+                <button id="crown-undo-btn" class="undo-btn" disabled>↩ Annuler</button>
+            </div>
+
+            <div id="message" class="hidden"></div>
+        </div>
+    </div>
+
+    <div id="overlay" class="hidden">
+        <div id="overlay-content">
+            <p id="overlay-text"></p>
+            <button id="overlay-close">OK</button>
+        </div>
+    </div>
+
+    <script src="../couronnes.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* ===== Games Landing Page Styles ===== */
+
+.landing-title {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: #2d3748;
+}
+
+.landing-subtitle {
+    font-size: 1rem;
+    color: #718096;
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 8px;
+}
+
+.exercise-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px 12px;
+    text-decoration: none;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.exercise-card:hover {
+    border-color: #d69e2e;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(214, 158, 46, 0.15);
+}
+
+.exercise-card:active {
+    transform: translateY(0);
+}
+
+.exercise-card .card-icon {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+}
+
+.exercise-card .card-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.exercise-card .card-desc {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    margin-top: 4px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .exercise-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .exercise-card {
+        padding: 16px 8px;
+    }
+
+    .exercise-card .card-icon {
+        font-size: 2rem;
+    }
+}

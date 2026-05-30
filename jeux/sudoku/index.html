@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sudoku</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#d69e2e">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/jeux/" class="back-link">← Jeux</a>
+
+        <div id="game-sudoku" class="game-panel">
+            <h1>🔢 Sudoku</h1>
+            <p class="rules">Remplis la grille : chaque ligne, colonne et bloc 3×3 doit contenir les chiffres de 1 à 9.</p>
+
+            <button class="menu-toggle" aria-expanded="true">⚙️ Options <span class="menu-arrow">▲</span></button>
+            <div class="menu-collapsible">
+                <div id="sudoku-difficulty">
+                    <button class="sdiff-btn active" data-level="easy">Facile</button>
+                    <button class="sdiff-btn" data-level="medium">Moyen</button>
+                    <button class="sdiff-btn" data-level="hard">Difficile</button>
+                </div>
+
+                <div id="sudoku-toolbar">
+                    <button id="sudoku-new-game">🔄 Nouvelle partie</button>
+                    <button id="sudoku-hint-btn">🔍 Indice</button>
+                    <button id="sudoku-draft-btn">✏️ Brouillon</button>
+                </div>
+            </div>
+
+            <div id="sudoku-grid-container">
+                <div id="sudoku-grid"></div>
+            </div>
+
+            <div id="sudoku-numpad"></div>
+
+            <div class="undo-bar">
+                <button id="sudoku-undo-btn" class="undo-btn" disabled>↩ Annuler</button>
+            </div>
+
+            <div id="sudoku-message" class="hidden"></div>
+        </div>
+    </div>
+
+    <script src="../sudoku.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    </script>
+</body>
+</html>
