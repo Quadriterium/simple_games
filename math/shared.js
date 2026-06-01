@@ -59,6 +59,29 @@ const COMPARISON_WRONG_MESSAGES = [
     "Raté cette fois, mais tu progresses ! 🌱",
 ];
 
+// ===== Public settings (challenges, announcements) =====
+(async function loadPublicSettings() {
+    try {
+        const resp = await fetch('/api/settings/public');
+        if (!resp.ok) return;
+        const settings = await resp.json();
+
+        if (settings.challenges_disabled && settings.challenges_disabled.includes(EXERCISE_CONFIG.type)) {
+            const challengeTab = document.querySelector('[data-game="challenge"]');
+            if (challengeTab) challengeTab.style.display = 'none';
+            const lbTab = document.querySelector('[data-game="leaderboard"]');
+            if (lbTab) lbTab.style.display = 'none';
+        }
+
+        if (settings.announcement) {
+            const banner = document.createElement('div');
+            banner.style.cssText = 'background:#e67e22;color:#fff;text-align:center;padding:8px 16px;font-size:0.9rem;position:sticky;top:0;z-index:999;';
+            banner.textContent = settings.announcement;
+            document.body.prepend(banner);
+        }
+    } catch {}
+})();
+
 // ===== Helpers =====
 function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

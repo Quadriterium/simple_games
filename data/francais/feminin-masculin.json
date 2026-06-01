@@ -1,0 +1,628 @@
+{
+  "easy": [
+    {
+      "masculine": "ami",
+      "feminine": "amie"
+    },
+    {
+      "masculine": "voisin",
+      "feminine": "voisine"
+    },
+    {
+      "masculine": "cousin",
+      "feminine": "cousine"
+    },
+    {
+      "masculine": "marchand",
+      "feminine": "marchande"
+    },
+    {
+      "masculine": "étudiant",
+      "feminine": "étudiante"
+    },
+    {
+      "masculine": "français",
+      "feminine": "française"
+    },
+    {
+      "masculine": "anglais",
+      "feminine": "anglaise"
+    },
+    {
+      "masculine": "petit",
+      "feminine": "petite"
+    },
+    {
+      "masculine": "grand",
+      "feminine": "grande"
+    },
+    {
+      "masculine": "blond",
+      "feminine": "blonde"
+    },
+    {
+      "masculine": "brun",
+      "feminine": "brune"
+    },
+    {
+      "masculine": "content",
+      "feminine": "contente"
+    },
+    {
+      "masculine": "bavard",
+      "feminine": "bavarde"
+    },
+    {
+      "masculine": "élégant",
+      "feminine": "élégante"
+    },
+    {
+      "masculine": "intelligent",
+      "feminine": "intelligente"
+    },
+    {
+      "masculine": "client",
+      "feminine": "cliente"
+    },
+    {
+      "masculine": "commerçant",
+      "feminine": "commerçante"
+    },
+    {
+      "masculine": "gagnant",
+      "feminine": "gagnante"
+    },
+    {
+      "masculine": "perdant",
+      "feminine": "perdante"
+    },
+    {
+      "masculine": "savant",
+      "feminine": "savante"
+    },
+    {
+      "masculine": "puissant",
+      "feminine": "puissante"
+    },
+    {
+      "masculine": "plaisant",
+      "feminine": "plaisante"
+    },
+    {
+      "masculine": "méchant",
+      "feminine": "méchante"
+    },
+    {
+      "masculine": "gourmand",
+      "feminine": "gourmande"
+    },
+    {
+      "masculine": "lourd",
+      "feminine": "lourde"
+    },
+    {
+      "masculine": "sourd",
+      "feminine": "sourde"
+    },
+    {
+      "masculine": "court",
+      "feminine": "courte"
+    },
+    {
+      "masculine": "idiot",
+      "feminine": "idiote"
+    },
+    {
+      "masculine": "parfait",
+      "feminine": "parfaite"
+    },
+    {
+      "masculine": "allemand",
+      "feminine": "allemande"
+    },
+    {
+      "masculine": "espagnol",
+      "feminine": "espagnole"
+    },
+    {
+      "masculine": "chinois",
+      "feminine": "chinoise"
+    },
+    {
+      "masculine": "japonais",
+      "feminine": "japonaise"
+    },
+    {
+      "masculine": "bourgeois",
+      "feminine": "bourgeoise"
+    },
+    {
+      "masculine": "candidat",
+      "feminine": "candidate"
+    },
+    {
+      "masculine": "avocat",
+      "feminine": "avocate"
+    },
+    {
+      "masculine": "ours",
+      "feminine": "ourse"
+    },
+    {
+      "masculine": "plat",
+      "feminine": "plate"
+    },
+    {
+      "masculine": "absent",
+      "feminine": "absente"
+    },
+    {
+      "masculine": "présent",
+      "feminine": "présente"
+    },
+    {
+      "masculine": "prudent",
+      "feminine": "prudente"
+    },
+    {
+      "masculine": "géant",
+      "feminine": "géante"
+    },
+    {
+      "masculine": "amusant",
+      "feminine": "amusante"
+    },
+    {
+      "masculine": "ignorant",
+      "feminine": "ignorante"
+    },
+    {
+      "masculine": "débutant",
+      "feminine": "débutante"
+    },
+    {
+      "masculine": "instant",
+      "feminine": "instante"
+    },
+    {
+      "masculine": "fort",
+      "feminine": "forte"
+    },
+    {
+      "masculine": "mort",
+      "feminine": "morte"
+    }
+  ],
+  "medium": [
+    {
+      "masculine": "chanteur",
+      "feminine": "chanteuse"
+    },
+    {
+      "masculine": "danseur",
+      "feminine": "danseuse"
+    },
+    {
+      "masculine": "joueur",
+      "feminine": "joueuse"
+    },
+    {
+      "masculine": "vendeur",
+      "feminine": "vendeuse"
+    },
+    {
+      "masculine": "boulanger",
+      "feminine": "boulangère"
+    },
+    {
+      "masculine": "berger",
+      "feminine": "bergère"
+    },
+    {
+      "masculine": "écolier",
+      "feminine": "écolière"
+    },
+    {
+      "masculine": "cuisinier",
+      "feminine": "cuisinière"
+    },
+    {
+      "masculine": "heureux",
+      "feminine": "heureuse"
+    },
+    {
+      "masculine": "joyeux",
+      "feminine": "joyeuse"
+    },
+    {
+      "masculine": "curieux",
+      "feminine": "curieuse"
+    },
+    {
+      "masculine": "peureux",
+      "feminine": "peureuse"
+    },
+    {
+      "masculine": "musicien",
+      "feminine": "musicienne"
+    },
+    {
+      "masculine": "pharmacien",
+      "feminine": "pharmacienne"
+    },
+    {
+      "masculine": "gardien",
+      "feminine": "gardienne"
+    },
+    {
+      "masculine": "nageur",
+      "feminine": "nageuse"
+    },
+    {
+      "masculine": "menteur",
+      "feminine": "menteuse"
+    },
+    {
+      "masculine": "voleur",
+      "feminine": "voleuse"
+    },
+    {
+      "masculine": "rêveur",
+      "feminine": "rêveuse"
+    },
+    {
+      "masculine": "moqueur",
+      "feminine": "moqueuse"
+    },
+    {
+      "masculine": "coiffeur",
+      "feminine": "coiffeuse"
+    },
+    {
+      "masculine": "serveur",
+      "feminine": "serveuse"
+    },
+    {
+      "masculine": "skieur",
+      "feminine": "skieuse"
+    },
+    {
+      "masculine": "plongeur",
+      "feminine": "plongeuse"
+    },
+    {
+      "masculine": "baigneur",
+      "feminine": "baigneuse"
+    },
+    {
+      "masculine": "fermier",
+      "feminine": "fermière"
+    },
+    {
+      "masculine": "infirmier",
+      "feminine": "infirmière"
+    },
+    {
+      "masculine": "prisonnier",
+      "feminine": "prisonnière"
+    },
+    {
+      "masculine": "ouvrier",
+      "feminine": "ouvrière"
+    },
+    {
+      "masculine": "aventurier",
+      "feminine": "aventurière"
+    },
+    {
+      "masculine": "couturier",
+      "feminine": "couturière"
+    },
+    {
+      "masculine": "sorcier",
+      "feminine": "sorcière"
+    },
+    {
+      "masculine": "généreux",
+      "feminine": "généreuse"
+    },
+    {
+      "masculine": "amoureux",
+      "feminine": "amoureuse"
+    },
+    {
+      "masculine": "courageux",
+      "feminine": "courageuse"
+    },
+    {
+      "masculine": "paresseux",
+      "feminine": "paresseuse"
+    },
+    {
+      "masculine": "nerveux",
+      "feminine": "nerveuse"
+    },
+    {
+      "masculine": "dangereux",
+      "feminine": "dangereuse"
+    },
+    {
+      "masculine": "italien",
+      "feminine": "italienne"
+    },
+    {
+      "masculine": "brésilien",
+      "feminine": "brésilienne"
+    },
+    {
+      "masculine": "magicien",
+      "feminine": "magicienne"
+    },
+    {
+      "masculine": "chirurgien",
+      "feminine": "chirurgienne"
+    },
+    {
+      "masculine": "mécanicien",
+      "feminine": "mécanicienne"
+    },
+    {
+      "masculine": "comédien",
+      "feminine": "comédienne"
+    },
+    {
+      "masculine": "électricien",
+      "feminine": "électricienne"
+    },
+    {
+      "masculine": "lycéen",
+      "feminine": "lycéenne"
+    },
+    {
+      "masculine": "champion",
+      "feminine": "championne"
+    },
+    {
+      "masculine": "patron",
+      "feminine": "patronne"
+    },
+    {
+      "masculine": "lion",
+      "feminine": "lionne"
+    },
+    {
+      "masculine": "mignon",
+      "feminine": "mignonne"
+    },
+    {
+      "masculine": "chat",
+      "feminine": "chatte"
+    },
+    {
+      "masculine": "muet",
+      "feminine": "muette"
+    }
+  ],
+  "hard": [
+    {
+      "masculine": "beau",
+      "feminine": "belle"
+    },
+    {
+      "masculine": "nouveau",
+      "feminine": "nouvelle"
+    },
+    {
+      "masculine": "vieux",
+      "feminine": "vieille"
+    },
+    {
+      "masculine": "fou",
+      "feminine": "folle"
+    },
+    {
+      "masculine": "roi",
+      "feminine": "reine"
+    },
+    {
+      "masculine": "prince",
+      "feminine": "princesse"
+    },
+    {
+      "masculine": "comte",
+      "feminine": "comtesse"
+    },
+    {
+      "masculine": "maître",
+      "feminine": "maîtresse"
+    },
+    {
+      "masculine": "doux",
+      "feminine": "douce"
+    },
+    {
+      "masculine": "blanc",
+      "feminine": "blanche"
+    },
+    {
+      "masculine": "sec",
+      "feminine": "sèche"
+    },
+    {
+      "masculine": "frais",
+      "feminine": "fraîche"
+    },
+    {
+      "masculine": "long",
+      "feminine": "longue"
+    },
+    {
+      "masculine": "acteur",
+      "feminine": "actrice"
+    },
+    {
+      "masculine": "directeur",
+      "feminine": "directrice"
+    },
+    {
+      "masculine": "empereur",
+      "feminine": "impératrice"
+    },
+    {
+      "masculine": "héros",
+      "feminine": "héroïne"
+    },
+    {
+      "masculine": "jumeau",
+      "feminine": "jumelle"
+    },
+    {
+      "masculine": "mou",
+      "feminine": "molle"
+    },
+    {
+      "masculine": "gros",
+      "feminine": "grosse"
+    },
+    {
+      "masculine": "épais",
+      "feminine": "épaisse"
+    },
+    {
+      "masculine": "bas",
+      "feminine": "basse"
+    },
+    {
+      "masculine": "faux",
+      "feminine": "fausse"
+    },
+    {
+      "masculine": "roux",
+      "feminine": "rousse"
+    },
+    {
+      "masculine": "jaloux",
+      "feminine": "jalouse"
+    },
+    {
+      "masculine": "époux",
+      "feminine": "épouse"
+    },
+    {
+      "masculine": "compagnon",
+      "feminine": "compagne"
+    },
+    {
+      "masculine": "oncle",
+      "feminine": "tante"
+    },
+    {
+      "masculine": "père",
+      "feminine": "mère"
+    },
+    {
+      "masculine": "frère",
+      "feminine": "sœur"
+    },
+    {
+      "masculine": "fils",
+      "feminine": "fille"
+    },
+    {
+      "masculine": "homme",
+      "feminine": "femme"
+    },
+    {
+      "masculine": "garçon",
+      "feminine": "fille"
+    },
+    {
+      "masculine": "monsieur",
+      "feminine": "madame"
+    },
+    {
+      "masculine": "parrain",
+      "feminine": "marraine"
+    },
+    {
+      "masculine": "neveu",
+      "feminine": "nièce"
+    },
+    {
+      "masculine": "taureau",
+      "feminine": "vache"
+    },
+    {
+      "masculine": "coq",
+      "feminine": "poule"
+    },
+    {
+      "masculine": "cerf",
+      "feminine": "biche"
+    },
+    {
+      "masculine": "bouc",
+      "feminine": "chèvre"
+    },
+    {
+      "masculine": "canard",
+      "feminine": "cane"
+    },
+    {
+      "masculine": "cheval",
+      "feminine": "jument"
+    },
+    {
+      "masculine": "cochon",
+      "feminine": "truie"
+    },
+    {
+      "masculine": "favori",
+      "feminine": "favorite"
+    },
+    {
+      "masculine": "malin",
+      "feminine": "maligne"
+    },
+    {
+      "masculine": "bénin",
+      "feminine": "bénigne"
+    },
+    {
+      "masculine": "turc",
+      "feminine": "turque"
+    },
+    {
+      "masculine": "grec",
+      "feminine": "grecque"
+    },
+    {
+      "masculine": "public",
+      "feminine": "publique"
+    },
+    {
+      "masculine": "sportif",
+      "feminine": "sportive"
+    },
+    {
+      "masculine": "naïf",
+      "feminine": "naïve"
+    },
+    {
+      "masculine": "neuf",
+      "feminine": "neuve"
+    },
+    {
+      "masculine": "veuf",
+      "feminine": "veuve"
+    },
+    {
+      "masculine": "inventeur",
+      "feminine": "inventrice"
+    },
+    {
+      "masculine": "inspecteur",
+      "feminine": "inspectrice"
+    }
+  ]
+}

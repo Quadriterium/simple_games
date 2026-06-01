@@ -1,0 +1,2428 @@
+{
+  "easy": [
+    {
+      "verb": "chanter",
+      "pronoun": "je",
+      "answer": "chante"
+    },
+    {
+      "verb": "chanter",
+      "pronoun": "tu",
+      "answer": "chantes"
+    },
+    {
+      "verb": "chanter",
+      "pronoun": "il",
+      "answer": "chante"
+    },
+    {
+      "verb": "chanter",
+      "pronoun": "nous",
+      "answer": "chantons"
+    },
+    {
+      "verb": "chanter",
+      "pronoun": "vous",
+      "answer": "chantez"
+    },
+    {
+      "verb": "chanter",
+      "pronoun": "ils",
+      "answer": "chantent"
+    },
+    {
+      "verb": "jouer",
+      "pronoun": "je",
+      "answer": "joue"
+    },
+    {
+      "verb": "jouer",
+      "pronoun": "tu",
+      "answer": "joues"
+    },
+    {
+      "verb": "jouer",
+      "pronoun": "il",
+      "answer": "joue"
+    },
+    {
+      "verb": "jouer",
+      "pronoun": "nous",
+      "answer": "jouons"
+    },
+    {
+      "verb": "jouer",
+      "pronoun": "vous",
+      "answer": "jouez"
+    },
+    {
+      "verb": "jouer",
+      "pronoun": "ils",
+      "answer": "jouent"
+    },
+    {
+      "verb": "manger",
+      "pronoun": "je",
+      "answer": "mange"
+    },
+    {
+      "verb": "manger",
+      "pronoun": "tu",
+      "answer": "manges"
+    },
+    {
+      "verb": "manger",
+      "pronoun": "il",
+      "answer": "mange"
+    },
+    {
+      "verb": "manger",
+      "pronoun": "nous",
+      "answer": "mangeons"
+    },
+    {
+      "verb": "manger",
+      "pronoun": "vous",
+      "answer": "mangez"
+    },
+    {
+      "verb": "manger",
+      "pronoun": "ils",
+      "answer": "mangent"
+    },
+    {
+      "verb": "parler",
+      "pronoun": "je",
+      "answer": "parle"
+    },
+    {
+      "verb": "parler",
+      "pronoun": "tu",
+      "answer": "parles"
+    },
+    {
+      "verb": "parler",
+      "pronoun": "elle",
+      "answer": "parle"
+    },
+    {
+      "verb": "parler",
+      "pronoun": "nous",
+      "answer": "parlons"
+    },
+    {
+      "verb": "parler",
+      "pronoun": "vous",
+      "answer": "parlez"
+    },
+    {
+      "verb": "parler",
+      "pronoun": "elles",
+      "answer": "parlent"
+    },
+    {
+      "verb": "marcher",
+      "pronoun": "je",
+      "answer": "marche"
+    },
+    {
+      "verb": "marcher",
+      "pronoun": "tu",
+      "answer": "marches"
+    },
+    {
+      "verb": "marcher",
+      "pronoun": "il",
+      "answer": "marche"
+    },
+    {
+      "verb": "marcher",
+      "pronoun": "nous",
+      "answer": "marchons"
+    },
+    {
+      "verb": "regarder",
+      "pronoun": "je",
+      "answer": "regarde"
+    },
+    {
+      "verb": "regarder",
+      "pronoun": "tu",
+      "answer": "regardes"
+    },
+    {
+      "verb": "regarder",
+      "pronoun": "il",
+      "answer": "regarde"
+    },
+    {
+      "verb": "regarder",
+      "pronoun": "nous",
+      "answer": "regardons"
+    },
+    {
+      "verb": "regarder",
+      "pronoun": "vous",
+      "answer": "regardez"
+    },
+    {
+      "verb": "regarder",
+      "pronoun": "ils",
+      "answer": "regardent"
+    },
+    {
+      "verb": "écouter",
+      "pronoun": "j'",
+      "answer": "écoute"
+    },
+    {
+      "verb": "écouter",
+      "pronoun": "tu",
+      "answer": "écoutes"
+    },
+    {
+      "verb": "écouter",
+      "pronoun": "il",
+      "answer": "écoute"
+    },
+    {
+      "verb": "écouter",
+      "pronoun": "nous",
+      "answer": "écoutons"
+    },
+    {
+      "verb": "écouter",
+      "pronoun": "vous",
+      "answer": "écoutez"
+    },
+    {
+      "verb": "écouter",
+      "pronoun": "ils",
+      "answer": "écoutent"
+    },
+    {
+      "verb": "travailler",
+      "pronoun": "je",
+      "answer": "travaille"
+    },
+    {
+      "verb": "travailler",
+      "pronoun": "tu",
+      "answer": "travailles"
+    },
+    {
+      "verb": "travailler",
+      "pronoun": "il",
+      "answer": "travaille"
+    },
+    {
+      "verb": "travailler",
+      "pronoun": "nous",
+      "answer": "travaillons"
+    },
+    {
+      "verb": "travailler",
+      "pronoun": "vous",
+      "answer": "travaillez"
+    },
+    {
+      "verb": "travailler",
+      "pronoun": "ils",
+      "answer": "travaillent"
+    },
+    {
+      "verb": "aimer",
+      "pronoun": "j'",
+      "answer": "aime"
+    },
+    {
+      "verb": "aimer",
+      "pronoun": "tu",
+      "answer": "aimes"
+    },
+    {
+      "verb": "aimer",
+      "pronoun": "il",
+      "answer": "aime"
+    },
+    {
+      "verb": "aimer",
+      "pronoun": "nous",
+      "answer": "aimons"
+    },
+    {
+      "verb": "aimer",
+      "pronoun": "vous",
+      "answer": "aimez"
+    },
+    {
+      "verb": "aimer",
+      "pronoun": "ils",
+      "answer": "aiment"
+    },
+    {
+      "verb": "donner",
+      "pronoun": "je",
+      "answer": "donne"
+    },
+    {
+      "verb": "donner",
+      "pronoun": "tu",
+      "answer": "donnes"
+    },
+    {
+      "verb": "donner",
+      "pronoun": "il",
+      "answer": "donne"
+    },
+    {
+      "verb": "donner",
+      "pronoun": "nous",
+      "answer": "donnons"
+    },
+    {
+      "verb": "donner",
+      "pronoun": "vous",
+      "answer": "donnez"
+    },
+    {
+      "verb": "donner",
+      "pronoun": "ils",
+      "answer": "donnent"
+    },
+    {
+      "verb": "habiter",
+      "pronoun": "j'",
+      "answer": "habite"
+    },
+    {
+      "verb": "habiter",
+      "pronoun": "tu",
+      "answer": "habites"
+    },
+    {
+      "verb": "habiter",
+      "pronoun": "il",
+      "answer": "habite"
+    },
+    {
+      "verb": "habiter",
+      "pronoun": "nous",
+      "answer": "habitons"
+    },
+    {
+      "verb": "habiter",
+      "pronoun": "vous",
+      "answer": "habitez"
+    },
+    {
+      "verb": "habiter",
+      "pronoun": "ils",
+      "answer": "habitent"
+    },
+    {
+      "verb": "arriver",
+      "pronoun": "j'",
+      "answer": "arrive"
+    },
+    {
+      "verb": "arriver",
+      "pronoun": "tu",
+      "answer": "arrives"
+    },
+    {
+      "verb": "arriver",
+      "pronoun": "il",
+      "answer": "arrive"
+    },
+    {
+      "verb": "arriver",
+      "pronoun": "nous",
+      "answer": "arrivons"
+    },
+    {
+      "verb": "arriver",
+      "pronoun": "vous",
+      "answer": "arrivez"
+    },
+    {
+      "verb": "arriver",
+      "pronoun": "ils",
+      "answer": "arrivent"
+    },
+    {
+      "verb": "tomber",
+      "pronoun": "je",
+      "answer": "tombe"
+    },
+    {
+      "verb": "tomber",
+      "pronoun": "tu",
+      "answer": "tombes"
+    },
+    {
+      "verb": "tomber",
+      "pronoun": "il",
+      "answer": "tombe"
+    },
+    {
+      "verb": "tomber",
+      "pronoun": "nous",
+      "answer": "tombons"
+    },
+    {
+      "verb": "tomber",
+      "pronoun": "vous",
+      "answer": "tombez"
+    },
+    {
+      "verb": "tomber",
+      "pronoun": "ils",
+      "answer": "tombent"
+    },
+    {
+      "verb": "fermer",
+      "pronoun": "je",
+      "answer": "ferme"
+    },
+    {
+      "verb": "fermer",
+      "pronoun": "tu",
+      "answer": "fermes"
+    },
+    {
+      "verb": "fermer",
+      "pronoun": "il",
+      "answer": "ferme"
+    },
+    {
+      "verb": "fermer",
+      "pronoun": "nous",
+      "answer": "fermons"
+    },
+    {
+      "verb": "fermer",
+      "pronoun": "vous",
+      "answer": "fermez"
+    },
+    {
+      "verb": "fermer",
+      "pronoun": "ils",
+      "answer": "ferment"
+    },
+    {
+      "verb": "couper",
+      "pronoun": "je",
+      "answer": "coupe"
+    },
+    {
+      "verb": "couper",
+      "pronoun": "tu",
+      "answer": "coupes"
+    },
+    {
+      "verb": "couper",
+      "pronoun": "il",
+      "answer": "coupe"
+    },
+    {
+      "verb": "couper",
+      "pronoun": "nous",
+      "answer": "coupons"
+    },
+    {
+      "verb": "couper",
+      "pronoun": "vous",
+      "answer": "coupez"
+    },
+    {
+      "verb": "couper",
+      "pronoun": "ils",
+      "answer": "coupent"
+    },
+    {
+      "verb": "rêver",
+      "pronoun": "je",
+      "answer": "rêve"
+    },
+    {
+      "verb": "rêver",
+      "pronoun": "tu",
+      "answer": "rêves"
+    },
+    {
+      "verb": "rêver",
+      "pronoun": "il",
+      "answer": "rêve"
+    },
+    {
+      "verb": "rêver",
+      "pronoun": "nous",
+      "answer": "rêvons"
+    },
+    {
+      "verb": "rêver",
+      "pronoun": "vous",
+      "answer": "rêvez"
+    },
+    {
+      "verb": "rêver",
+      "pronoun": "ils",
+      "answer": "rêvent"
+    },
+    {
+      "verb": "porter",
+      "pronoun": "je",
+      "answer": "porte"
+    },
+    {
+      "verb": "porter",
+      "pronoun": "tu",
+      "answer": "portes"
+    },
+    {
+      "verb": "porter",
+      "pronoun": "il",
+      "answer": "porte"
+    },
+    {
+      "verb": "porter",
+      "pronoun": "nous",
+      "answer": "portons"
+    },
+    {
+      "verb": "porter",
+      "pronoun": "vous",
+      "answer": "portez"
+    },
+    {
+      "verb": "porter",
+      "pronoun": "ils",
+      "answer": "portent"
+    },
+    {
+      "verb": "monter",
+      "pronoun": "je",
+      "answer": "monte"
+    },
+    {
+      "verb": "monter",
+      "pronoun": "tu",
+      "answer": "montes"
+    },
+    {
+      "verb": "monter",
+      "pronoun": "il",
+      "answer": "monte"
+    },
+    {
+      "verb": "monter",
+      "pronoun": "nous",
+      "answer": "montons"
+    },
+    {
+      "verb": "monter",
+      "pronoun": "vous",
+      "answer": "montez"
+    },
+    {
+      "verb": "monter",
+      "pronoun": "ils",
+      "answer": "montent"
+    },
+    {
+      "verb": "chercher",
+      "pronoun": "je",
+      "answer": "cherche"
+    },
+    {
+      "verb": "chercher",
+      "pronoun": "tu",
+      "answer": "cherches"
+    },
+    {
+      "verb": "chercher",
+      "pronoun": "il",
+      "answer": "cherche"
+    },
+    {
+      "verb": "chercher",
+      "pronoun": "nous",
+      "answer": "cherchons"
+    },
+    {
+      "verb": "chercher",
+      "pronoun": "vous",
+      "answer": "cherchez"
+    },
+    {
+      "verb": "chercher",
+      "pronoun": "ils",
+      "answer": "cherchent"
+    },
+    {
+      "verb": "trouver",
+      "pronoun": "je",
+      "answer": "trouve"
+    },
+    {
+      "verb": "trouver",
+      "pronoun": "tu",
+      "answer": "trouves"
+    },
+    {
+      "verb": "trouver",
+      "pronoun": "il",
+      "answer": "trouve"
+    },
+    {
+      "verb": "trouver",
+      "pronoun": "nous",
+      "answer": "trouvons"
+    },
+    {
+      "verb": "trouver",
+      "pronoun": "vous",
+      "answer": "trouvez"
+    },
+    {
+      "verb": "trouver",
+      "pronoun": "ils",
+      "answer": "trouvent"
+    },
+    {
+      "verb": "laver",
+      "pronoun": "je",
+      "answer": "lave"
+    },
+    {
+      "verb": "laver",
+      "pronoun": "tu",
+      "answer": "laves"
+    },
+    {
+      "verb": "laver",
+      "pronoun": "il",
+      "answer": "lave"
+    },
+    {
+      "verb": "laver",
+      "pronoun": "nous",
+      "answer": "lavons"
+    },
+    {
+      "verb": "laver",
+      "pronoun": "vous",
+      "answer": "lavez"
+    },
+    {
+      "verb": "laver",
+      "pronoun": "ils",
+      "answer": "lavent"
+    },
+    {
+      "verb": "dessiner",
+      "pronoun": "je",
+      "answer": "dessine"
+    },
+    {
+      "verb": "dessiner",
+      "pronoun": "tu",
+      "answer": "dessines"
+    },
+    {
+      "verb": "dessiner",
+      "pronoun": "il",
+      "answer": "dessine"
+    },
+    {
+      "verb": "dessiner",
+      "pronoun": "nous",
+      "answer": "dessinons"
+    },
+    {
+      "verb": "dessiner",
+      "pronoun": "vous",
+      "answer": "dessinez"
+    },
+    {
+      "verb": "dessiner",
+      "pronoun": "ils",
+      "answer": "dessinent"
+    },
+    {
+      "verb": "danser",
+      "pronoun": "je",
+      "answer": "danse"
+    },
+    {
+      "verb": "danser",
+      "pronoun": "tu",
+      "answer": "danses"
+    },
+    {
+      "verb": "danser",
+      "pronoun": "il",
+      "answer": "danse"
+    },
+    {
+      "verb": "danser",
+      "pronoun": "nous",
+      "answer": "dansons"
+    },
+    {
+      "verb": "danser",
+      "pronoun": "vous",
+      "answer": "dansez"
+    },
+    {
+      "verb": "danser",
+      "pronoun": "ils",
+      "answer": "dansent"
+    },
+    {
+      "verb": "nager",
+      "pronoun": "je",
+      "answer": "nage"
+    },
+    {
+      "verb": "nager",
+      "pronoun": "tu",
+      "answer": "nages"
+    },
+    {
+      "verb": "nager",
+      "pronoun": "il",
+      "answer": "nage"
+    },
+    {
+      "verb": "nager",
+      "pronoun": "nous",
+      "answer": "nageons"
+    },
+    {
+      "verb": "nager",
+      "pronoun": "vous",
+      "answer": "nagez"
+    },
+    {
+      "verb": "nager",
+      "pronoun": "ils",
+      "answer": "nagent"
+    },
+    {
+      "verb": "sauter",
+      "pronoun": "je",
+      "answer": "saute"
+    },
+    {
+      "verb": "sauter",
+      "pronoun": "tu",
+      "answer": "sautes"
+    },
+    {
+      "verb": "sauter",
+      "pronoun": "il",
+      "answer": "saute"
+    },
+    {
+      "verb": "sauter",
+      "pronoun": "nous",
+      "answer": "sautons"
+    },
+    {
+      "verb": "sauter",
+      "pronoun": "vous",
+      "answer": "sautez"
+    },
+    {
+      "verb": "sauter",
+      "pronoun": "ils",
+      "answer": "sautent"
+    },
+    {
+      "verb": "préparer",
+      "pronoun": "je",
+      "answer": "prépare"
+    },
+    {
+      "verb": "préparer",
+      "pronoun": "tu",
+      "answer": "prépares"
+    },
+    {
+      "verb": "préparer",
+      "pronoun": "il",
+      "answer": "prépare"
+    },
+    {
+      "verb": "préparer",
+      "pronoun": "nous",
+      "answer": "préparons"
+    },
+    {
+      "verb": "préparer",
+      "pronoun": "vous",
+      "answer": "préparez"
+    },
+    {
+      "verb": "préparer",
+      "pronoun": "ils",
+      "answer": "préparent"
+    },
+    {
+      "verb": "voler",
+      "pronoun": "je",
+      "answer": "vole"
+    },
+    {
+      "verb": "voler",
+      "pronoun": "tu",
+      "answer": "voles"
+    },
+    {
+      "verb": "voler",
+      "pronoun": "il",
+      "answer": "vole"
+    },
+    {
+      "verb": "voler",
+      "pronoun": "nous",
+      "answer": "volons"
+    },
+    {
+      "verb": "voler",
+      "pronoun": "vous",
+      "answer": "volez"
+    },
+    {
+      "verb": "voler",
+      "pronoun": "ils",
+      "answer": "volent"
+    },
+    {
+      "verb": "tourner",
+      "pronoun": "je",
+      "answer": "tourne"
+    },
+    {
+      "verb": "tourner",
+      "pronoun": "tu",
+      "answer": "tournes"
+    },
+    {
+      "verb": "tourner",
+      "pronoun": "il",
+      "answer": "tourne"
+    },
+    {
+      "verb": "tourner",
+      "pronoun": "nous",
+      "answer": "tournons"
+    },
+    {
+      "verb": "tourner",
+      "pronoun": "vous",
+      "answer": "tournez"
+    },
+    {
+      "verb": "tourner",
+      "pronoun": "ils",
+      "answer": "tournent"
+    },
+    {
+      "verb": "compter",
+      "pronoun": "je",
+      "answer": "compte"
+    },
+    {
+      "verb": "compter",
+      "pronoun": "tu",
+      "answer": "comptes"
+    },
+    {
+      "verb": "compter",
+      "pronoun": "il",
+      "answer": "compte"
+    },
+    {
+      "verb": "compter",
+      "pronoun": "nous",
+      "answer": "comptons"
+    },
+    {
+      "verb": "compter",
+      "pronoun": "vous",
+      "answer": "comptez"
+    },
+    {
+      "verb": "compter",
+      "pronoun": "ils",
+      "answer": "comptent"
+    },
+    {
+      "verb": "rester",
+      "pronoun": "je",
+      "answer": "reste"
+    },
+    {
+      "verb": "rester",
+      "pronoun": "tu",
+      "answer": "restes"
+    },
+    {
+      "verb": "rester",
+      "pronoun": "il",
+      "answer": "reste"
+    },
+    {
+      "verb": "rester",
+      "pronoun": "nous",
+      "answer": "restons"
+    },
+    {
+      "verb": "rester",
+      "pronoun": "vous",
+      "answer": "restez"
+    },
+    {
+      "verb": "rester",
+      "pronoun": "ils",
+      "answer": "restent"
+    },
+    {
+      "verb": "passer",
+      "pronoun": "je",
+      "answer": "passe"
+    },
+    {
+      "verb": "passer",
+      "pronoun": "tu",
+      "answer": "passes"
+    },
+    {
+      "verb": "passer",
+      "pronoun": "il",
+      "answer": "passe"
+    },
+    {
+      "verb": "passer",
+      "pronoun": "nous",
+      "answer": "passons"
+    },
+    {
+      "verb": "passer",
+      "pronoun": "vous",
+      "answer": "passez"
+    },
+    {
+      "verb": "passer",
+      "pronoun": "ils",
+      "answer": "passent"
+    },
+    {
+      "verb": "crier",
+      "pronoun": "je",
+      "answer": "crie"
+    },
+    {
+      "verb": "crier",
+      "pronoun": "tu",
+      "answer": "cries"
+    },
+    {
+      "verb": "crier",
+      "pronoun": "il",
+      "answer": "crie"
+    },
+    {
+      "verb": "crier",
+      "pronoun": "nous",
+      "answer": "crions"
+    },
+    {
+      "verb": "crier",
+      "pronoun": "vous",
+      "answer": "criez"
+    },
+    {
+      "verb": "crier",
+      "pronoun": "ils",
+      "answer": "crient"
+    },
+    {
+      "verb": "pleurer",
+      "pronoun": "je",
+      "answer": "pleure"
+    },
+    {
+      "verb": "pleurer",
+      "pronoun": "tu",
+      "answer": "pleures"
+    },
+    {
+      "verb": "pleurer",
+      "pronoun": "il",
+      "answer": "pleure"
+    },
+    {
+      "verb": "pleurer",
+      "pronoun": "nous",
+      "answer": "pleurons"
+    },
+    {
+      "verb": "pleurer",
+      "pronoun": "vous",
+      "answer": "pleurez"
+    },
+    {
+      "verb": "pleurer",
+      "pronoun": "ils",
+      "answer": "pleurent"
+    }
+  ],
+  "medium": [
+    {
+      "verb": "finir",
+      "pronoun": "je",
+      "answer": "finis"
+    },
+    {
+      "verb": "finir",
+      "pronoun": "tu",
+      "answer": "finis"
+    },
+    {
+      "verb": "finir",
+      "pronoun": "il",
+      "answer": "finit"
+    },
+    {
+      "verb": "finir",
+      "pronoun": "nous",
+      "answer": "finissons"
+    },
+    {
+      "verb": "finir",
+      "pronoun": "vous",
+      "answer": "finissez"
+    },
+    {
+      "verb": "finir",
+      "pronoun": "ils",
+      "answer": "finissent"
+    },
+    {
+      "verb": "grandir",
+      "pronoun": "je",
+      "answer": "grandis"
+    },
+    {
+      "verb": "grandir",
+      "pronoun": "tu",
+      "answer": "grandis"
+    },
+    {
+      "verb": "grandir",
+      "pronoun": "il",
+      "answer": "grandit"
+    },
+    {
+      "verb": "grandir",
+      "pronoun": "nous",
+      "answer": "grandissons"
+    },
+    {
+      "verb": "grandir",
+      "pronoun": "vous",
+      "answer": "grandissez"
+    },
+    {
+      "verb": "grandir",
+      "pronoun": "ils",
+      "answer": "grandissent"
+    },
+    {
+      "verb": "choisir",
+      "pronoun": "je",
+      "answer": "choisis"
+    },
+    {
+      "verb": "choisir",
+      "pronoun": "tu",
+      "answer": "choisis"
+    },
+    {
+      "verb": "choisir",
+      "pronoun": "elle",
+      "answer": "choisit"
+    },
+    {
+      "verb": "choisir",
+      "pronoun": "nous",
+      "answer": "choisissons"
+    },
+    {
+      "verb": "choisir",
+      "pronoun": "vous",
+      "answer": "choisissez"
+    },
+    {
+      "verb": "choisir",
+      "pronoun": "elles",
+      "answer": "choisissent"
+    },
+    {
+      "verb": "réussir",
+      "pronoun": "je",
+      "answer": "réussis"
+    },
+    {
+      "verb": "réussir",
+      "pronoun": "tu",
+      "answer": "réussis"
+    },
+    {
+      "verb": "réussir",
+      "pronoun": "il",
+      "answer": "réussit"
+    },
+    {
+      "verb": "réussir",
+      "pronoun": "nous",
+      "answer": "réussissons"
+    },
+    {
+      "verb": "réussir",
+      "pronoun": "vous",
+      "answer": "réussissez"
+    },
+    {
+      "verb": "réussir",
+      "pronoun": "ils",
+      "answer": "réussissent"
+    },
+    {
+      "verb": "obéir",
+      "pronoun": "je",
+      "answer": "obéis"
+    },
+    {
+      "verb": "obéir",
+      "pronoun": "tu",
+      "answer": "obéis"
+    },
+    {
+      "verb": "obéir",
+      "pronoun": "il",
+      "answer": "obéit"
+    },
+    {
+      "verb": "obéir",
+      "pronoun": "nous",
+      "answer": "obéissons"
+    },
+    {
+      "verb": "obéir",
+      "pronoun": "vous",
+      "answer": "obéissez"
+    },
+    {
+      "verb": "obéir",
+      "pronoun": "ils",
+      "answer": "obéissent"
+    },
+    {
+      "verb": "rougir",
+      "pronoun": "je",
+      "answer": "rougis"
+    },
+    {
+      "verb": "rougir",
+      "pronoun": "tu",
+      "answer": "rougis"
+    },
+    {
+      "verb": "rougir",
+      "pronoun": "il",
+      "answer": "rougit"
+    },
+    {
+      "verb": "rougir",
+      "pronoun": "nous",
+      "answer": "rougissons"
+    },
+    {
+      "verb": "rougir",
+      "pronoun": "vous",
+      "answer": "rougissez"
+    },
+    {
+      "verb": "rougir",
+      "pronoun": "ils",
+      "answer": "rougissent"
+    },
+    {
+      "verb": "guérir",
+      "pronoun": "je",
+      "answer": "guéris"
+    },
+    {
+      "verb": "guérir",
+      "pronoun": "tu",
+      "answer": "guéris"
+    },
+    {
+      "verb": "guérir",
+      "pronoun": "il",
+      "answer": "guérit"
+    },
+    {
+      "verb": "guérir",
+      "pronoun": "nous",
+      "answer": "guérissons"
+    },
+    {
+      "verb": "guérir",
+      "pronoun": "vous",
+      "answer": "guérissez"
+    },
+    {
+      "verb": "guérir",
+      "pronoun": "ils",
+      "answer": "guérissent"
+    },
+    {
+      "verb": "applaudir",
+      "pronoun": "j'",
+      "answer": "applaudis"
+    },
+    {
+      "verb": "applaudir",
+      "pronoun": "tu",
+      "answer": "applaudis"
+    },
+    {
+      "verb": "applaudir",
+      "pronoun": "il",
+      "answer": "applaudit"
+    },
+    {
+      "verb": "applaudir",
+      "pronoun": "nous",
+      "answer": "applaudissons"
+    },
+    {
+      "verb": "applaudir",
+      "pronoun": "vous",
+      "answer": "applaudissez"
+    },
+    {
+      "verb": "applaudir",
+      "pronoun": "ils",
+      "answer": "applaudissent"
+    },
+    {
+      "verb": "ralentir",
+      "pronoun": "je",
+      "answer": "ralentis"
+    },
+    {
+      "verb": "ralentir",
+      "pronoun": "tu",
+      "answer": "ralentis"
+    },
+    {
+      "verb": "ralentir",
+      "pronoun": "il",
+      "answer": "ralentit"
+    },
+    {
+      "verb": "ralentir",
+      "pronoun": "nous",
+      "answer": "ralentissons"
+    },
+    {
+      "verb": "ralentir",
+      "pronoun": "vous",
+      "answer": "ralentissez"
+    },
+    {
+      "verb": "ralentir",
+      "pronoun": "ils",
+      "answer": "ralentissent"
+    },
+    {
+      "verb": "grossir",
+      "pronoun": "je",
+      "answer": "grossis"
+    },
+    {
+      "verb": "grossir",
+      "pronoun": "tu",
+      "answer": "grossis"
+    },
+    {
+      "verb": "grossir",
+      "pronoun": "il",
+      "answer": "grossit"
+    },
+    {
+      "verb": "grossir",
+      "pronoun": "nous",
+      "answer": "grossissons"
+    },
+    {
+      "verb": "grossir",
+      "pronoun": "vous",
+      "answer": "grossissez"
+    },
+    {
+      "verb": "grossir",
+      "pronoun": "ils",
+      "answer": "grossissent"
+    },
+    {
+      "verb": "maigrir",
+      "pronoun": "je",
+      "answer": "maigris"
+    },
+    {
+      "verb": "maigrir",
+      "pronoun": "tu",
+      "answer": "maigris"
+    },
+    {
+      "verb": "maigrir",
+      "pronoun": "il",
+      "answer": "maigrit"
+    },
+    {
+      "verb": "maigrir",
+      "pronoun": "nous",
+      "answer": "maigrissons"
+    },
+    {
+      "verb": "maigrir",
+      "pronoun": "vous",
+      "answer": "maigrissez"
+    },
+    {
+      "verb": "maigrir",
+      "pronoun": "ils",
+      "answer": "maigrissent"
+    },
+    {
+      "verb": "remplir",
+      "pronoun": "je",
+      "answer": "remplis"
+    },
+    {
+      "verb": "remplir",
+      "pronoun": "tu",
+      "answer": "remplis"
+    },
+    {
+      "verb": "remplir",
+      "pronoun": "il",
+      "answer": "remplit"
+    },
+    {
+      "verb": "remplir",
+      "pronoun": "nous",
+      "answer": "remplissons"
+    },
+    {
+      "verb": "remplir",
+      "pronoun": "vous",
+      "answer": "remplissez"
+    },
+    {
+      "verb": "remplir",
+      "pronoun": "ils",
+      "answer": "remplissent"
+    },
+    {
+      "verb": "punir",
+      "pronoun": "je",
+      "answer": "punis"
+    },
+    {
+      "verb": "punir",
+      "pronoun": "tu",
+      "answer": "punis"
+    },
+    {
+      "verb": "punir",
+      "pronoun": "il",
+      "answer": "punit"
+    },
+    {
+      "verb": "punir",
+      "pronoun": "nous",
+      "answer": "punissons"
+    },
+    {
+      "verb": "punir",
+      "pronoun": "vous",
+      "answer": "punissez"
+    },
+    {
+      "verb": "punir",
+      "pronoun": "ils",
+      "answer": "punissent"
+    },
+    {
+      "verb": "nourrir",
+      "pronoun": "je",
+      "answer": "nourris"
+    },
+    {
+      "verb": "nourrir",
+      "pronoun": "tu",
+      "answer": "nourris"
+    },
+    {
+      "verb": "nourrir",
+      "pronoun": "il",
+      "answer": "nourrit"
+    },
+    {
+      "verb": "nourrir",
+      "pronoun": "nous",
+      "answer": "nourrissons"
+    },
+    {
+      "verb": "nourrir",
+      "pronoun": "vous",
+      "answer": "nourrissez"
+    },
+    {
+      "verb": "nourrir",
+      "pronoun": "ils",
+      "answer": "nourrissent"
+    },
+    {
+      "verb": "réfléchir",
+      "pronoun": "je",
+      "answer": "réfléchis"
+    },
+    {
+      "verb": "réfléchir",
+      "pronoun": "tu",
+      "answer": "réfléchis"
+    },
+    {
+      "verb": "réfléchir",
+      "pronoun": "il",
+      "answer": "réfléchit"
+    },
+    {
+      "verb": "réfléchir",
+      "pronoun": "nous",
+      "answer": "réfléchissons"
+    },
+    {
+      "verb": "réfléchir",
+      "pronoun": "vous",
+      "answer": "réfléchissez"
+    },
+    {
+      "verb": "réfléchir",
+      "pronoun": "ils",
+      "answer": "réfléchissent"
+    },
+    {
+      "verb": "agir",
+      "pronoun": "j'",
+      "answer": "agis"
+    },
+    {
+      "verb": "agir",
+      "pronoun": "tu",
+      "answer": "agis"
+    },
+    {
+      "verb": "agir",
+      "pronoun": "il",
+      "answer": "agit"
+    },
+    {
+      "verb": "agir",
+      "pronoun": "nous",
+      "answer": "agissons"
+    },
+    {
+      "verb": "agir",
+      "pronoun": "vous",
+      "answer": "agissez"
+    },
+    {
+      "verb": "agir",
+      "pronoun": "ils",
+      "answer": "agissent"
+    },
+    {
+      "verb": "bondir",
+      "pronoun": "je",
+      "answer": "bondis"
+    },
+    {
+      "verb": "bondir",
+      "pronoun": "tu",
+      "answer": "bondis"
+    },
+    {
+      "verb": "bondir",
+      "pronoun": "il",
+      "answer": "bondit"
+    },
+    {
+      "verb": "bondir",
+      "pronoun": "nous",
+      "answer": "bondissons"
+    },
+    {
+      "verb": "bondir",
+      "pronoun": "vous",
+      "answer": "bondissez"
+    },
+    {
+      "verb": "bondir",
+      "pronoun": "ils",
+      "answer": "bondissent"
+    },
+    {
+      "verb": "salir",
+      "pronoun": "je",
+      "answer": "salis"
+    },
+    {
+      "verb": "salir",
+      "pronoun": "tu",
+      "answer": "salis"
+    },
+    {
+      "verb": "salir",
+      "pronoun": "il",
+      "answer": "salit"
+    },
+    {
+      "verb": "salir",
+      "pronoun": "nous",
+      "answer": "salissons"
+    },
+    {
+      "verb": "salir",
+      "pronoun": "vous",
+      "answer": "salissez"
+    },
+    {
+      "verb": "salir",
+      "pronoun": "ils",
+      "answer": "salissent"
+    },
+    {
+      "verb": "bâtir",
+      "pronoun": "je",
+      "answer": "bâtis"
+    },
+    {
+      "verb": "bâtir",
+      "pronoun": "tu",
+      "answer": "bâtis"
+    },
+    {
+      "verb": "bâtir",
+      "pronoun": "il",
+      "answer": "bâtit"
+    },
+    {
+      "verb": "bâtir",
+      "pronoun": "nous",
+      "answer": "bâtissons"
+    },
+    {
+      "verb": "bâtir",
+      "pronoun": "vous",
+      "answer": "bâtissez"
+    },
+    {
+      "verb": "bâtir",
+      "pronoun": "ils",
+      "answer": "bâtissent"
+    }
+  ],
+  "hard": [
+    {
+      "verb": "être",
+      "pronoun": "je",
+      "answer": "suis"
+    },
+    {
+      "verb": "être",
+      "pronoun": "tu",
+      "answer": "es"
+    },
+    {
+      "verb": "être",
+      "pronoun": "il",
+      "answer": "est"
+    },
+    {
+      "verb": "être",
+      "pronoun": "nous",
+      "answer": "sommes"
+    },
+    {
+      "verb": "être",
+      "pronoun": "vous",
+      "answer": "êtes"
+    },
+    {
+      "verb": "être",
+      "pronoun": "ils",
+      "answer": "sont"
+    },
+    {
+      "verb": "avoir",
+      "pronoun": "j'",
+      "answer": "ai"
+    },
+    {
+      "verb": "avoir",
+      "pronoun": "tu",
+      "answer": "as"
+    },
+    {
+      "verb": "avoir",
+      "pronoun": "il",
+      "answer": "a"
+    },
+    {
+      "verb": "avoir",
+      "pronoun": "nous",
+      "answer": "avons"
+    },
+    {
+      "verb": "avoir",
+      "pronoun": "vous",
+      "answer": "avez"
+    },
+    {
+      "verb": "avoir",
+      "pronoun": "ils",
+      "answer": "ont"
+    },
+    {
+      "verb": "aller",
+      "pronoun": "je",
+      "answer": "vais"
+    },
+    {
+      "verb": "aller",
+      "pronoun": "tu",
+      "answer": "vas"
+    },
+    {
+      "verb": "aller",
+      "pronoun": "il",
+      "answer": "va"
+    },
+    {
+      "verb": "aller",
+      "pronoun": "nous",
+      "answer": "allons"
+    },
+    {
+      "verb": "aller",
+      "pronoun": "vous",
+      "answer": "allez"
+    },
+    {
+      "verb": "aller",
+      "pronoun": "ils",
+      "answer": "vont"
+    },
+    {
+      "verb": "faire",
+      "pronoun": "je",
+      "answer": "fais"
+    },
+    {
+      "verb": "faire",
+      "pronoun": "tu",
+      "answer": "fais"
+    },
+    {
+      "verb": "faire",
+      "pronoun": "il",
+      "answer": "fait"
+    },
+    {
+      "verb": "faire",
+      "pronoun": "nous",
+      "answer": "faisons"
+    },
+    {
+      "verb": "faire",
+      "pronoun": "vous",
+      "answer": "faites"
+    },
+    {
+      "verb": "faire",
+      "pronoun": "ils",
+      "answer": "font"
+    },
+    {
+      "verb": "pouvoir",
+      "pronoun": "je",
+      "answer": "peux"
+    },
+    {
+      "verb": "pouvoir",
+      "pronoun": "tu",
+      "answer": "peux"
+    },
+    {
+      "verb": "pouvoir",
+      "pronoun": "il",
+      "answer": "peut"
+    },
+    {
+      "verb": "pouvoir",
+      "pronoun": "nous",
+      "answer": "pouvons"
+    },
+    {
+      "verb": "pouvoir",
+      "pronoun": "vous",
+      "answer": "pouvez"
+    },
+    {
+      "verb": "pouvoir",
+      "pronoun": "ils",
+      "answer": "peuvent"
+    },
+    {
+      "verb": "venir",
+      "pronoun": "je",
+      "answer": "viens"
+    },
+    {
+      "verb": "venir",
+      "pronoun": "tu",
+      "answer": "viens"
+    },
+    {
+      "verb": "venir",
+      "pronoun": "il",
+      "answer": "vient"
+    },
+    {
+      "verb": "venir",
+      "pronoun": "nous",
+      "answer": "venons"
+    },
+    {
+      "verb": "venir",
+      "pronoun": "vous",
+      "answer": "venez"
+    },
+    {
+      "verb": "venir",
+      "pronoun": "ils",
+      "answer": "viennent"
+    },
+    {
+      "verb": "dire",
+      "pronoun": "je",
+      "answer": "dis"
+    },
+    {
+      "verb": "dire",
+      "pronoun": "tu",
+      "answer": "dis"
+    },
+    {
+      "verb": "dire",
+      "pronoun": "il",
+      "answer": "dit"
+    },
+    {
+      "verb": "dire",
+      "pronoun": "nous",
+      "answer": "disons"
+    },
+    {
+      "verb": "dire",
+      "pronoun": "vous",
+      "answer": "dites"
+    },
+    {
+      "verb": "dire",
+      "pronoun": "ils",
+      "answer": "disent"
+    },
+    {
+      "verb": "prendre",
+      "pronoun": "je",
+      "answer": "prends"
+    },
+    {
+      "verb": "prendre",
+      "pronoun": "tu",
+      "answer": "prends"
+    },
+    {
+      "verb": "prendre",
+      "pronoun": "il",
+      "answer": "prend"
+    },
+    {
+      "verb": "prendre",
+      "pronoun": "nous",
+      "answer": "prenons"
+    },
+    {
+      "verb": "prendre",
+      "pronoun": "vous",
+      "answer": "prenez"
+    },
+    {
+      "verb": "prendre",
+      "pronoun": "ils",
+      "answer": "prennent"
+    },
+    {
+      "verb": "voir",
+      "pronoun": "je",
+      "answer": "vois"
+    },
+    {
+      "verb": "voir",
+      "pronoun": "tu",
+      "answer": "vois"
+    },
+    {
+      "verb": "voir",
+      "pronoun": "il",
+      "answer": "voit"
+    },
+    {
+      "verb": "voir",
+      "pronoun": "nous",
+      "answer": "voyons"
+    },
+    {
+      "verb": "voir",
+      "pronoun": "vous",
+      "answer": "voyez"
+    },
+    {
+      "verb": "voir",
+      "pronoun": "ils",
+      "answer": "voient"
+    },
+    {
+      "verb": "savoir",
+      "pronoun": "je",
+      "answer": "sais"
+    },
+    {
+      "verb": "savoir",
+      "pronoun": "tu",
+      "answer": "sais"
+    },
+    {
+      "verb": "savoir",
+      "pronoun": "il",
+      "answer": "sait"
+    },
+    {
+      "verb": "savoir",
+      "pronoun": "nous",
+      "answer": "savons"
+    },
+    {
+      "verb": "savoir",
+      "pronoun": "vous",
+      "answer": "savez"
+    },
+    {
+      "verb": "savoir",
+      "pronoun": "ils",
+      "answer": "savent"
+    },
+    {
+      "verb": "vouloir",
+      "pronoun": "je",
+      "answer": "veux"
+    },
+    {
+      "verb": "vouloir",
+      "pronoun": "tu",
+      "answer": "veux"
+    },
+    {
+      "verb": "vouloir",
+      "pronoun": "il",
+      "answer": "veut"
+    },
+    {
+      "verb": "vouloir",
+      "pronoun": "nous",
+      "answer": "voulons"
+    },
+    {
+      "verb": "vouloir",
+      "pronoun": "vous",
+      "answer": "voulez"
+    },
+    {
+      "verb": "vouloir",
+      "pronoun": "ils",
+      "answer": "veulent"
+    },
+    {
+      "verb": "devoir",
+      "pronoun": "je",
+      "answer": "dois"
+    },
+    {
+      "verb": "devoir",
+      "pronoun": "tu",
+      "answer": "dois"
+    },
+    {
+      "verb": "devoir",
+      "pronoun": "il",
+      "answer": "doit"
+    },
+    {
+      "verb": "devoir",
+      "pronoun": "nous",
+      "answer": "devons"
+    },
+    {
+      "verb": "devoir",
+      "pronoun": "vous",
+      "answer": "devez"
+    },
+    {
+      "verb": "devoir",
+      "pronoun": "ils",
+      "answer": "doivent"
+    },
+    {
+      "verb": "mettre",
+      "pronoun": "je",
+      "answer": "mets"
+    },
+    {
+      "verb": "mettre",
+      "pronoun": "tu",
+      "answer": "mets"
+    },
+    {
+      "verb": "mettre",
+      "pronoun": "il",
+      "answer": "met"
+    },
+    {
+      "verb": "mettre",
+      "pronoun": "nous",
+      "answer": "mettons"
+    },
+    {
+      "verb": "mettre",
+      "pronoun": "vous",
+      "answer": "mettez"
+    },
+    {
+      "verb": "mettre",
+      "pronoun": "ils",
+      "answer": "mettent"
+    },
+    {
+      "verb": "partir",
+      "pronoun": "je",
+      "answer": "pars"
+    },
+    {
+      "verb": "partir",
+      "pronoun": "tu",
+      "answer": "pars"
+    },
+    {
+      "verb": "partir",
+      "pronoun": "il",
+      "answer": "part"
+    },
+    {
+      "verb": "partir",
+      "pronoun": "nous",
+      "answer": "partons"
+    },
+    {
+      "verb": "partir",
+      "pronoun": "vous",
+      "answer": "partez"
+    },
+    {
+      "verb": "partir",
+      "pronoun": "ils",
+      "answer": "partent"
+    },
+    {
+      "verb": "sortir",
+      "pronoun": "je",
+      "answer": "sors"
+    },
+    {
+      "verb": "sortir",
+      "pronoun": "tu",
+      "answer": "sors"
+    },
+    {
+      "verb": "sortir",
+      "pronoun": "il",
+      "answer": "sort"
+    },
+    {
+      "verb": "sortir",
+      "pronoun": "nous",
+      "answer": "sortons"
+    },
+    {
+      "verb": "sortir",
+      "pronoun": "vous",
+      "answer": "sortez"
+    },
+    {
+      "verb": "sortir",
+      "pronoun": "ils",
+      "answer": "sortent"
+    },
+    {
+      "verb": "dormir",
+      "pronoun": "je",
+      "answer": "dors"
+    },
+    {
+      "verb": "dormir",
+      "pronoun": "tu",
+      "answer": "dors"
+    },
+    {
+      "verb": "dormir",
+      "pronoun": "il",
+      "answer": "dort"
+    },
+    {
+      "verb": "dormir",
+      "pronoun": "nous",
+      "answer": "dormons"
+    },
+    {
+      "verb": "dormir",
+      "pronoun": "vous",
+      "answer": "dormez"
+    },
+    {
+      "verb": "dormir",
+      "pronoun": "ils",
+      "answer": "dorment"
+    },
+    {
+      "verb": "lire",
+      "pronoun": "je",
+      "answer": "lis"
+    },
+    {
+      "verb": "lire",
+      "pronoun": "tu",
+      "answer": "lis"
+    },
+    {
+      "verb": "lire",
+      "pronoun": "il",
+      "answer": "lit"
+    },
+    {
+      "verb": "lire",
+      "pronoun": "nous",
+      "answer": "lisons"
+    },
+    {
+      "verb": "lire",
+      "pronoun": "vous",
+      "answer": "lisez"
+    },
+    {
+      "verb": "lire",
+      "pronoun": "ils",
+      "answer": "lisent"
+    },
+    {
+      "verb": "écrire",
+      "pronoun": "j'",
+      "answer": "écris"
+    },
+    {
+      "verb": "écrire",
+      "pronoun": "tu",
+      "answer": "écris"
+    },
+    {
+      "verb": "écrire",
+      "pronoun": "il",
+      "answer": "écrit"
+    },
+    {
+      "verb": "écrire",
+      "pronoun": "nous",
+      "answer": "écrivons"
+    },
+    {
+      "verb": "écrire",
+      "pronoun": "vous",
+      "answer": "écrivez"
+    },
+    {
+      "verb": "écrire",
+      "pronoun": "ils",
+      "answer": "écrivent"
+    },
+    {
+      "verb": "boire",
+      "pronoun": "je",
+      "answer": "bois"
+    },
+    {
+      "verb": "boire",
+      "pronoun": "tu",
+      "answer": "bois"
+    },
+    {
+      "verb": "boire",
+      "pronoun": "il",
+      "answer": "boit"
+    },
+    {
+      "verb": "boire",
+      "pronoun": "nous",
+      "answer": "buvons"
+    },
+    {
+      "verb": "boire",
+      "pronoun": "vous",
+      "answer": "buvez"
+    },
+    {
+      "verb": "boire",
+      "pronoun": "ils",
+      "answer": "boivent"
+    },
+    {
+      "verb": "connaître",
+      "pronoun": "je",
+      "answer": "connais"
+    },
+    {
+      "verb": "connaître",
+      "pronoun": "tu",
+      "answer": "connais"
+    },
+    {
+      "verb": "connaître",
+      "pronoun": "il",
+      "answer": "connaît"
+    },
+    {
+      "verb": "connaître",
+      "pronoun": "nous",
+      "answer": "connaissons"
+    },
+    {
+      "verb": "connaître",
+      "pronoun": "vous",
+      "answer": "connaissez"
+    },
+    {
+      "verb": "connaître",
+      "pronoun": "ils",
+      "answer": "connaissent"
+    },
+    {
+      "verb": "croire",
+      "pronoun": "je",
+      "answer": "crois"
+    },
+    {
+      "verb": "croire",
+      "pronoun": "tu",
+      "answer": "crois"
+    },
+    {
+      "verb": "croire",
+      "pronoun": "il",
+      "answer": "croit"
+    },
+    {
+      "verb": "croire",
+      "pronoun": "nous",
+      "answer": "croyons"
+    },
+    {
+      "verb": "croire",
+      "pronoun": "vous",
+      "answer": "croyez"
+    },
+    {
+      "verb": "croire",
+      "pronoun": "ils",
+      "answer": "croient"
+    },
+    {
+      "verb": "courir",
+      "pronoun": "je",
+      "answer": "cours"
+    },
+    {
+      "verb": "courir",
+      "pronoun": "tu",
+      "answer": "cours"
+    },
+    {
+      "verb": "courir",
+      "pronoun": "il",
+      "answer": "court"
+    },
+    {
+      "verb": "courir",
+      "pronoun": "nous",
+      "answer": "courons"
+    },
+    {
+      "verb": "courir",
+      "pronoun": "vous",
+      "answer": "courez"
+    },
+    {
+      "verb": "courir",
+      "pronoun": "ils",
+      "answer": "courent"
+    },
+    {
+      "verb": "ouvrir",
+      "pronoun": "j'",
+      "answer": "ouvre"
+    },
+    {
+      "verb": "ouvrir",
+      "pronoun": "tu",
+      "answer": "ouvres"
+    },
+    {
+      "verb": "ouvrir",
+      "pronoun": "il",
+      "answer": "ouvre"
+    },
+    {
+      "verb": "ouvrir",
+      "pronoun": "nous",
+      "answer": "ouvrons"
+    },
+    {
+      "verb": "ouvrir",
+      "pronoun": "vous",
+      "answer": "ouvrez"
+    },
+    {
+      "verb": "ouvrir",
+      "pronoun": "ils",
+      "answer": "ouvrent"
+    },
+    {
+      "verb": "suivre",
+      "pronoun": "je",
+      "answer": "suis"
+    },
+    {
+      "verb": "suivre",
+      "pronoun": "tu",
+      "answer": "suis"
+    },
+    {
+      "verb": "suivre",
+      "pronoun": "il",
+      "answer": "suit"
+    },
+    {
+      "verb": "suivre",
+      "pronoun": "nous",
+      "answer": "suivons"
+    },
+    {
+      "verb": "suivre",
+      "pronoun": "vous",
+      "answer": "suivez"
+    },
+    {
+      "verb": "suivre",
+      "pronoun": "ils",
+      "answer": "suivent"
+    },
+    {
+      "verb": "vivre",
+      "pronoun": "je",
+      "answer": "vis"
+    },
+    {
+      "verb": "vivre",
+      "pronoun": "tu",
+      "answer": "vis"
+    },
+    {
+      "verb": "vivre",
+      "pronoun": "il",
+      "answer": "vit"
+    },
+    {
+      "verb": "vivre",
+      "pronoun": "nous",
+      "answer": "vivons"
+    },
+    {
+      "verb": "vivre",
+      "pronoun": "vous",
+      "answer": "vivez"
+    },
+    {
+      "verb": "vivre",
+      "pronoun": "ils",
+      "answer": "vivent"
+    },
+    {
+      "verb": "apprendre",
+      "pronoun": "j'",
+      "answer": "apprends"
+    },
+    {
+      "verb": "apprendre",
+      "pronoun": "tu",
+      "answer": "apprends"
+    },
+    {
+      "verb": "apprendre",
+      "pronoun": "il",
+      "answer": "apprend"
+    },
+    {
+      "verb": "apprendre",
+      "pronoun": "nous",
+      "answer": "apprenons"
+    },
+    {
+      "verb": "apprendre",
+      "pronoun": "vous",
+      "answer": "apprenez"
+    },
+    {
+      "verb": "apprendre",
+      "pronoun": "ils",
+      "answer": "apprennent"
+    },
+    {
+      "verb": "attendre",
+      "pronoun": "j'",
+      "answer": "attends"
+    },
+    {
+      "verb": "attendre",
+      "pronoun": "tu",
+      "answer": "attends"
+    },
+    {
+      "verb": "attendre",
+      "pronoun": "il",
+      "answer": "attend"
+    },
+    {
+      "verb": "attendre",
+      "pronoun": "nous",
+      "answer": "attendons"
+    },
+    {
+      "verb": "attendre",
+      "pronoun": "vous",
+      "answer": "attendez"
+    },
+    {
+      "verb": "attendre",
+      "pronoun": "ils",
+      "answer": "attendent"
+    },
+    {
+      "verb": "répondre",
+      "pronoun": "je",
+      "answer": "réponds"
+    },
+    {
+      "verb": "répondre",
+      "pronoun": "tu",
+      "answer": "réponds"
+    },
+    {
+      "verb": "répondre",
+      "pronoun": "il",
+      "answer": "répond"
+    },
+    {
+      "verb": "répondre",
+      "pronoun": "nous",
+      "answer": "répondons"
+    },
+    {
+      "verb": "répondre",
+      "pronoun": "vous",
+      "answer": "répondez"
+    },
+    {
+      "verb": "répondre",
+      "pronoun": "ils",
+      "answer": "répondent"
+    },
+    {
+      "verb": "perdre",
+      "pronoun": "je",
+      "answer": "perds"
+    },
+    {
+      "verb": "perdre",
+      "pronoun": "tu",
+      "answer": "perds"
+    },
+    {
+      "verb": "perdre",
+      "pronoun": "il",
+      "answer": "perd"
+    },
+    {
+      "verb": "perdre",
+      "pronoun": "nous",
+      "answer": "perdons"
+    },
+    {
+      "verb": "perdre",
+      "pronoun": "vous",
+      "answer": "perdez"
+    },
+    {
+      "verb": "perdre",
+      "pronoun": "ils",
+      "answer": "perdent"
+    }
+  ]
+}

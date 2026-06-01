@@ -281,6 +281,7 @@
         type: 'vocabulaire',
         title: 'vocabulaire',
         inputMode: 'choices',
+        dataVar: 'VOCAB',
         generateProblem(level) {
             const item = pickRandom(VOCAB[level]);
             return {

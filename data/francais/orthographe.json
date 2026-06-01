@@ -1,0 +1,932 @@
+{
+  "easy": [
+    {
+      "correct": "école",
+      "wrong": [
+        "ékole",
+        "écol"
+      ]
+    },
+    {
+      "correct": "maison",
+      "wrong": [
+        "méson",
+        "maizon"
+      ]
+    },
+    {
+      "correct": "éléphant",
+      "wrong": [
+        "éléfant",
+        "élléphant"
+      ]
+    },
+    {
+      "correct": "pharmacie",
+      "wrong": [
+        "farmacie",
+        "pharmasie"
+      ]
+    },
+    {
+      "correct": "chocolat",
+      "wrong": [
+        "chocholat",
+        "chocola"
+      ]
+    },
+    {
+      "correct": "papillon",
+      "wrong": [
+        "papilon",
+        "papillion"
+      ]
+    },
+    {
+      "correct": "girafe",
+      "wrong": [
+        "jirafe",
+        "giraffe"
+      ]
+    },
+    {
+      "correct": "dinosaure",
+      "wrong": [
+        "dinausore",
+        "dinozaure"
+      ]
+    },
+    {
+      "correct": "bonheur",
+      "wrong": [
+        "bonneur",
+        "bonheure"
+      ]
+    },
+    {
+      "correct": "famille",
+      "wrong": [
+        "famile",
+        "famillle"
+      ]
+    },
+    {
+      "correct": "histoire",
+      "wrong": [
+        "istoire",
+        "histoir"
+      ]
+    },
+    {
+      "correct": "toujours",
+      "wrong": [
+        "toujour",
+        "toujoures"
+      ]
+    },
+    {
+      "correct": "beaucoup",
+      "wrong": [
+        "baucoup",
+        "beaucou"
+      ]
+    },
+    {
+      "correct": "aujourd'hui",
+      "wrong": [
+        "aujourdhui",
+        "aujour'dui"
+      ]
+    },
+    {
+      "correct": "longtemps",
+      "wrong": [
+        "lontemps",
+        "longtems"
+      ]
+    },
+    {
+      "correct": "mercredi",
+      "wrong": [
+        "mercrdi",
+        "merquedi"
+      ]
+    },
+    {
+      "correct": "vendredi",
+      "wrong": [
+        "vandredi",
+        "vendrdi"
+      ]
+    },
+    {
+      "correct": "dimanche",
+      "wrong": [
+        "dimenche",
+        "dimanche"
+      ]
+    },
+    {
+      "correct": "septembre",
+      "wrong": [
+        "septambre",
+        "setembre"
+      ]
+    },
+    {
+      "correct": "novembre",
+      "wrong": [
+        "novambre",
+        "novambe"
+      ]
+    },
+    {
+      "correct": "février",
+      "wrong": [
+        "févriller",
+        "févrié"
+      ]
+    },
+    {
+      "correct": "printemps",
+      "wrong": [
+        "printent",
+        "printemp"
+      ]
+    },
+    {
+      "correct": "monsieur",
+      "wrong": [
+        "monsieu",
+        "messieur"
+      ]
+    },
+    {
+      "correct": "madame",
+      "wrong": [
+        "medame",
+        "madamme"
+      ]
+    },
+    {
+      "correct": "récréation",
+      "wrong": [
+        "récréasion",
+        "récrécion"
+      ]
+    },
+    {
+      "correct": "ambulance",
+      "wrong": [
+        "anbulance",
+        "ambelance"
+      ]
+    },
+    {
+      "correct": "ciseaux",
+      "wrong": [
+        "cizeau",
+        "cisseaux"
+      ]
+    },
+    {
+      "correct": "crayon",
+      "wrong": [
+        "créyon",
+        "cryon"
+      ]
+    },
+    {
+      "correct": "tableau",
+      "wrong": [
+        "tablo",
+        "tableaux"
+      ]
+    },
+    {
+      "correct": "chambre",
+      "wrong": [
+        "chanbre",
+        "chembre"
+      ]
+    },
+    {
+      "correct": "fenêtre",
+      "wrong": [
+        "fenêitre",
+        "fenetre"
+      ]
+    },
+    {
+      "correct": "oiseau",
+      "wrong": [
+        "oizo",
+        "oisseau"
+      ]
+    },
+    {
+      "correct": "orange",
+      "wrong": [
+        "orenge",
+        "oranje"
+      ]
+    },
+    {
+      "correct": "ballon",
+      "wrong": [
+        "balon",
+        "ballont"
+      ]
+    },
+    {
+      "correct": "poisson",
+      "wrong": [
+        "poison",
+        "poisson"
+      ]
+    },
+    {
+      "correct": "maman",
+      "wrong": [
+        "mamen",
+        "mamman"
+      ]
+    },
+    {
+      "correct": "pantalon",
+      "wrong": [
+        "pentalon",
+        "pantallon"
+      ]
+    },
+    {
+      "correct": "chapeau",
+      "wrong": [
+        "chapo",
+        "chapeaux"
+      ]
+    },
+    {
+      "correct": "gâteau",
+      "wrong": [
+        "gato",
+        "gâto"
+      ]
+    },
+    {
+      "correct": "cadeau",
+      "wrong": [
+        "cado",
+        "cadau"
+      ]
+    },
+    {
+      "correct": "bientôt",
+      "wrong": [
+        "bientot",
+        "bieno"
+      ]
+    },
+    {
+      "correct": "quelquefois",
+      "wrong": [
+        "quelquefoi",
+        "kelquefois"
+      ]
+    },
+    {
+      "correct": "maintenant",
+      "wrong": [
+        "maintenan",
+        "mentenant"
+      ]
+    },
+    {
+      "correct": "peut-être",
+      "wrong": [
+        "peutatre",
+        "peut être"
+      ]
+    }
+  ],
+  "medium": [
+    {
+      "correct": "attention",
+      "wrong": [
+        "atention",
+        "attantion"
+      ]
+    },
+    {
+      "correct": "addition",
+      "wrong": [
+        "adition",
+        "addiion"
+      ]
+    },
+    {
+      "correct": "appareil",
+      "wrong": [
+        "apareil",
+        "appareuil"
+      ]
+    },
+    {
+      "correct": "appeler",
+      "wrong": [
+        "apeler",
+        "appeller"
+      ]
+    },
+    {
+      "correct": "erreur",
+      "wrong": [
+        "ereur",
+        "érreur"
+      ]
+    },
+    {
+      "correct": "intelligence",
+      "wrong": [
+        "intéligence",
+        "intelligeance"
+      ]
+    },
+    {
+      "correct": "ennui",
+      "wrong": [
+        "enui",
+        "ennuie"
+      ]
+    },
+    {
+      "correct": "grammaire",
+      "wrong": [
+        "gramaire",
+        "grammère"
+      ]
+    },
+    {
+      "correct": "différent",
+      "wrong": [
+        "diférent",
+        "diffèrent"
+      ]
+    },
+    {
+      "correct": "atterrir",
+      "wrong": [
+        "aterir",
+        "attérir"
+      ]
+    },
+    {
+      "correct": "innocent",
+      "wrong": [
+        "inocent",
+        "inossent"
+      ]
+    },
+    {
+      "correct": "occasion",
+      "wrong": [
+        "ocasion",
+        "occassion"
+      ]
+    },
+    {
+      "correct": "possible",
+      "wrong": [
+        "posible",
+        "possiple"
+      ]
+    },
+    {
+      "correct": "approcher",
+      "wrong": [
+        "aprocher",
+        "approché"
+      ]
+    },
+    {
+      "correct": "terrasse",
+      "wrong": [
+        "térase",
+        "terasse"
+      ]
+    },
+    {
+      "correct": "accélérer",
+      "wrong": [
+        "acélérer",
+        "accellérer"
+      ]
+    },
+    {
+      "correct": "accès",
+      "wrong": [
+        "acès",
+        "accés"
+      ]
+    },
+    {
+      "correct": "accompagner",
+      "wrong": [
+        "acompagner",
+        "accompagné"
+      ]
+    },
+    {
+      "correct": "allégresse",
+      "wrong": [
+        "alégresse",
+        "allégrese"
+      ]
+    },
+    {
+      "correct": "balle",
+      "wrong": [
+        "bale",
+        "bal"
+      ]
+    },
+    {
+      "correct": "belette",
+      "wrong": [
+        "belete",
+        "bellette"
+      ]
+    },
+    {
+      "correct": "billet",
+      "wrong": [
+        "bilet",
+        "billait"
+      ]
+    },
+    {
+      "correct": "bonnement",
+      "wrong": [
+        "bonement",
+        "bonment"
+      ]
+    },
+    {
+      "correct": "carrosse",
+      "wrong": [
+        "carosse",
+        "carrose"
+      ]
+    },
+    {
+      "correct": "cassette",
+      "wrong": [
+        "casette",
+        "cassete"
+      ]
+    },
+    {
+      "correct": "chaussette",
+      "wrong": [
+        "chausette",
+        "chaussete"
+      ]
+    },
+    {
+      "correct": "colline",
+      "wrong": [
+        "coline",
+        "colinne"
+      ]
+    },
+    {
+      "correct": "correspondre",
+      "wrong": [
+        "corespondre",
+        "correspendre"
+      ]
+    },
+    {
+      "correct": "dessert",
+      "wrong": [
+        "désert",
+        "daisser"
+      ]
+    },
+    {
+      "correct": "effrayer",
+      "wrong": [
+        "efrayer",
+        "effrayé"
+      ]
+    },
+    {
+      "correct": "essayer",
+      "wrong": [
+        "esayer",
+        "esséyé"
+      ]
+    },
+    {
+      "correct": "goutte",
+      "wrong": [
+        "goute",
+        "goutter"
+      ]
+    },
+    {
+      "correct": "illusoire",
+      "wrong": [
+        "ilusoire",
+        "illusoirre"
+      ]
+    },
+    {
+      "correct": "immense",
+      "wrong": [
+        "imense",
+        "immance"
+      ]
+    },
+    {
+      "correct": "immortel",
+      "wrong": [
+        "imortel",
+        "immortèl"
+      ]
+    },
+    {
+      "correct": "mammouth",
+      "wrong": [
+        "mammout",
+        "mamouth"
+      ]
+    },
+    {
+      "correct": "marionnette",
+      "wrong": [
+        "marionette",
+        "marionnète"
+      ]
+    },
+    {
+      "correct": "napperon",
+      "wrong": [
+        "naperon",
+        "napéron"
+      ]
+    },
+    {
+      "correct": "pommade",
+      "wrong": [
+        "pomade",
+        "pommâde"
+      ]
+    },
+    {
+      "correct": "tonnerre",
+      "wrong": [
+        "tonerre",
+        "tonnere"
+      ]
+    },
+    {
+      "correct": "vaccination",
+      "wrong": [
+        "vacination",
+        "vaxination"
+      ]
+    },
+    {
+      "correct": "allumer",
+      "wrong": [
+        "alumer",
+        "allumé"
+      ]
+    },
+    {
+      "correct": "annonce",
+      "wrong": [
+        "anonce",
+        "annonsse"
+      ]
+    },
+    {
+      "correct": "arrêter",
+      "wrong": [
+        "arêter",
+        "arrêté"
+      ]
+    }
+  ],
+  "hard": [
+    {
+      "correct": "bibliothèque",
+      "wrong": [
+        "bibliotèque",
+        "bibliothéque"
+      ]
+    },
+    {
+      "correct": "chrysanthème",
+      "wrong": [
+        "crysanthème",
+        "chrysantème"
+      ]
+    },
+    {
+      "correct": "anticonstitutionnel",
+      "wrong": [
+        "anticonstitutionel",
+        "anticonstitutionelle"
+      ]
+    },
+    {
+      "correct": "acquisition",
+      "wrong": [
+        "aquisition",
+        "acquisistion"
+      ]
+    },
+    {
+      "correct": "conscience",
+      "wrong": [
+        "consience",
+        "consciance"
+      ]
+    },
+    {
+      "correct": "enthousiasme",
+      "wrong": [
+        "entousiasme",
+        "enthoussiasme"
+      ]
+    },
+    {
+      "correct": "environnement",
+      "wrong": [
+        "environement",
+        "envirronement"
+      ]
+    },
+    {
+      "correct": "exceptionnel",
+      "wrong": [
+        "exeptionnel",
+        "exceptionel"
+      ]
+    },
+    {
+      "correct": "hippopotame",
+      "wrong": [
+        "hipopotame",
+        "hippopothame"
+      ]
+    },
+    {
+      "correct": "nécessaire",
+      "wrong": [
+        "nécéssaire",
+        "nessecaire"
+      ]
+    },
+    {
+      "correct": "orchestre",
+      "wrong": [
+        "orkestre",
+        "orchèstre"
+      ]
+    },
+    {
+      "correct": "phénomène",
+      "wrong": [
+        "fénomène",
+        "phénomêne"
+      ]
+    },
+    {
+      "correct": "technique",
+      "wrong": [
+        "tecnique",
+        "téchnique"
+      ]
+    },
+    {
+      "correct": "sympathique",
+      "wrong": [
+        "sympatique",
+        "symphatique"
+      ]
+    },
+    {
+      "correct": "géographie",
+      "wrong": [
+        "géografie",
+        "géographi"
+      ]
+    },
+    {
+      "correct": "accueillir",
+      "wrong": [
+        "acceuillir",
+        "acueillir"
+      ]
+    },
+    {
+      "correct": "brouillard",
+      "wrong": [
+        "brouilliar",
+        "brouyard"
+      ]
+    },
+    {
+      "correct": "catacombes",
+      "wrong": [
+        "cataconbes",
+        "catacombe"
+      ]
+    },
+    {
+      "correct": "catastrophe",
+      "wrong": [
+        "catastrofe",
+        "catastrof"
+      ]
+    },
+    {
+      "correct": "chorégraphie",
+      "wrong": [
+        "corégraphie",
+        "chorégrafie"
+      ]
+    },
+    {
+      "correct": "circonstance",
+      "wrong": [
+        "circonstence",
+        "circonstanse"
+      ]
+    },
+    {
+      "correct": "concurrence",
+      "wrong": [
+        "concurence",
+        "conccurence"
+      ]
+    },
+    {
+      "correct": "contradictoire",
+      "wrong": [
+        "contradictoir",
+        "contradiktoire"
+      ]
+    },
+    {
+      "correct": "corrélation",
+      "wrong": [
+        "corélation",
+        "corrélasion"
+      ]
+    },
+    {
+      "correct": "cueillette",
+      "wrong": [
+        "ceuillette",
+        "cueillete"
+      ]
+    },
+    {
+      "correct": "développement",
+      "wrong": [
+        "dévelopement",
+        "developement"
+      ]
+    },
+    {
+      "correct": "disséminer",
+      "wrong": [
+        "diséminer",
+        "disséminé"
+      ]
+    },
+    {
+      "correct": "ébouriffant",
+      "wrong": [
+        "ébourifant",
+        "ébouriffent"
+      ]
+    },
+    {
+      "correct": "équilibre",
+      "wrong": [
+        "équilibre",
+        "ékilibre"
+      ]
+    },
+    {
+      "correct": "gourvernement",
+      "wrong": [
+        "gouverment",
+        "gouvairnement"
+      ]
+    },
+    {
+      "correct": "hémorragie",
+      "wrong": [
+        "hémoragie",
+        "hémorragi"
+      ]
+    },
+    {
+      "correct": "hiéroglyphe",
+      "wrong": [
+        "hiéroglife",
+        "hiérogliffe"
+      ]
+    },
+    {
+      "correct": "inauguration",
+      "wrong": [
+        "inoguration",
+        "inaugrasion"
+      ]
+    },
+    {
+      "correct": "inaccessible",
+      "wrong": [
+        "inaccesible",
+        "inacessible"
+      ]
+    },
+    {
+      "correct": "invraisemblable",
+      "wrong": [
+        "invresemblable",
+        "invraisemblabe"
+      ]
+    },
+    {
+      "correct": "moustiquaire",
+      "wrong": [
+        "moustiquerre",
+        "moustikaire"
+      ]
+    },
+    {
+      "correct": "onomatopée",
+      "wrong": [
+        "onomathopée",
+        "onomatopé"
+      ]
+    },
+    {
+      "correct": "philosophie",
+      "wrong": [
+        "filosophie",
+        "phylosophie"
+      ]
+    },
+    {
+      "correct": "pneumonie",
+      "wrong": [
+        "pneomonie",
+        "pnéumonie"
+      ]
+    },
+    {
+      "correct": "psychédélique",
+      "wrong": [
+        "psychédélik",
+        "psikédélique"
+      ]
+    },
+    {
+      "correct": "rhumatisme",
+      "wrong": [
+        "rumatisme",
+        "rhumatismes"
+      ]
+    },
+    {
+      "correct": "rhinocéros",
+      "wrong": [
+        "rinocéros",
+        "rhinoseros"
+      ]
+    },
+    {
+      "correct": "soixante",
+      "wrong": [
+        "soissante",
+        "soixente"
+      ]
+    },
+    {
+      "correct": "québec",
+      "wrong": [
+        "kébec",
+        "quebéque"
+      ]
+    }
+  ]
+}

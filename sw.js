@@ -1,4 +1,4 @@
-const CACHE_NAME = 'simple-games-v5';
+const CACHE_NAME = 'simple-games-v10';
 const ASSETS = [
     '/',
     '/index.html',
@@ -47,11 +47,26 @@ const ASSETS = [
     '/francais/feminin-masculin/',
     '/francais/vocabulaire/',
     '/francais/orthographe/',
+    // French content (for offline fallback)
+    '/api/content/conjugaison',
+    '/api/content/homophone',
+    '/api/content/pluriel',
+    '/api/content/feminin-masculin',
+    '/api/content/vocabulaire',
+    '/api/content/orthographe',
 ];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+        caches.open(CACHE_NAME).then((cache) =>
+            Promise.allSettled(
+                ASSETS.map(url =>
+                    fetch(url, { credentials: 'same-origin' })
+                        .then(r => { if (r.ok) return cache.put(url, r); })
+                        .catch(() => { /* ignore individual asset failures */ })
+                )
+            )
+        )
     );
     self.skipWaiting();
 });
@@ -65,60 +80,94 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
+// ---- helpers ----
+
+function networkOnly(request) {
+    return fetch(request).catch(() =>
+        new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } })
+    );
+}
+
+function cacheFirst(request) {
+    return caches.match(request).then(cached => cached || fetch(request).then(r => {
+        if (r.ok) caches.open(CACHE_NAME).then(c => c.put(request, r.clone()));
+        return r;
+    }));
+}
+
+function staleWhileRevalidate(request) {
+    return caches.match(request).then(cached => {
+        const network = fetch(request).then(r => {
+            if (r.ok) caches.open(CACHE_NAME).then(c => c.put(request, r.clone()));
+            return r;
+        }).catch(() => cached || new Response(JSON.stringify({ error: 'offline' }), {
+            status: 503, headers: { 'Content-Type': 'application/json' },
+        }));
+        return cached || network;
+    });
+}
+
+// ---- fetch handler ----
+
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // Don't cache API calls — let them fail naturally when offline
-    if (url.pathname.startsWith('/api/')) {
+    // Only handle same-origin requests
+    if (url.origin !== self.location.origin) return;
+
+    try {
+        // Admin routes: never cache, always network (with credentials)
+        if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/api/admin')) {
+            event.respondWith(
+                fetch(event.request).catch(() =>
+                    new Response('Offline', { status: 503 })
+                )
+            );
+            return;
+        }
+
+        // Navigation requests (HTML pages): network-first, fallback to cache
+        // Chrome REQUIRES this to never reject — a rejected respondWith = ERR_CONNECTION_RESET
+        if (event.request.mode === 'navigate') {
+            event.respondWith(
+                fetch(event.request).then(r => {
+                    if (r.ok) caches.open(CACHE_NAME).then(c => c.put(event.request, r.clone()));
+                    return r;
+                }).catch(() =>
+                    // Try exact URL, then root, then offline page
+                    caches.match(event.request)
+                        .then(c => c || caches.match('/'))
+                        .then(c => c || new Response('Offline — rechargez quand la connexion est rétablie.', {
+                            status: 503,
+                            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+                        }))
+                )
+            );
+            return;
+        }
+
+        // French content API: stale-while-revalidate for offline support
+        if (url.pathname.startsWith('/api/content/')) {
+            event.respondWith(staleWhileRevalidate(event.request));
+            return;
+        }
+
+        // Other API calls: network only
+        if (url.pathname.startsWith('/api/')) {
+            event.respondWith(networkOnly(event.request));
+            return;
+        }
+
+        // Static assets: cache-first
+        event.respondWith(
+            cacheFirst(event.request).catch(() =>
+                new Response('Offline', { status: 503 })
+            )
+        );
+    } catch (err) {
+        // Synchronous errors must not crash the SW — Chrome shows ERR_CONNECTION_RESET
         event.respondWith(fetch(event.request).catch(() =>
-            new Response(JSON.stringify({ error: 'offline' }), {
-                status: 503,
-                headers: { 'Content-Type': 'application/json' },
-            })
+            new Response('Offline', { status: 503 })
         ));
-        return;
     }
-
-    // Network-first for HTML pages, cache-first for assets
-    event.respondWith(
-        caches.match(event.request).then((cached) => {
-            if (cached) {
-                // Exact match found — serve from cache, update in background
-                const fetching = fetch(event.request).then((response) => {
-                    if (response.ok) {
-                        const clone = response.clone();
-                        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-                    }
-                    return response;
-                }).catch(() => cached);
-                return cached || fetching;
-            }
-
-            // No exact match — if URL has no trailing slash, redirect to slashed version
-            // so relative CSS/JS paths resolve correctly
-            if (!url.pathname.endsWith('/') && !url.pathname.includes('.')) {
-                return caches.match(url.pathname + '/').then((slashed) => {
-                    if (slashed) {
-                        return Response.redirect(url.pathname + '/', 302);
-                    }
-                    return fetch(event.request).then((response) => {
-                        if (response.ok) {
-                            const clone = response.clone();
-                            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-                        }
-                        return response;
-                    }).catch(() => new Response('Offline', { status: 503 }));
-                });
-            }
-
-            // No cache match — try network
-            return fetch(event.request).then((response) => {
-                if (response.ok) {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-                }
-                return response;
-            }).catch(() => new Response('Offline', { status: 503 }));
-        })
-    );
 });

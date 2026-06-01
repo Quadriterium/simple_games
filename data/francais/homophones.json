@@ -1,0 +1,1072 @@
+{
+  "easy": [
+    {
+      "sentence": "Il ___ un chat.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Elle va ___ l'école.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Mon frère ___ 8 ans.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Je vais ___ la piscine.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Papa ___ une voiture rouge.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "On joue ___ la maison.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Le chien ___ faim.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "C'est ___ toi.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Le chat ___ noir.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "J'aime les pommes ___ les bananes.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Marie ___ contente.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Un crayon ___ une gomme.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Le soleil ___ chaud.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Papa ___ maman sont là.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Mon ami ___ gentil.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Du pain ___ du beurre.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Ma sœur ___ un vélo.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Il va ___ Paris.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Lucas ___ mal au ventre.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Je suis ___ la cantine.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "La maîtresse ___ un stylo rouge.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "On va ___ la plage.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Le bébé ___ sommeil.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "C'est ___ côté de chez moi.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Maman ___ préparé le repas.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Il pense ___ ses amis.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Ce livre ___ toi.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Tom ___ Léa jouent.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Le ciel ___ bleu.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Il mange une pomme ___ une banane.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Le chat ___ sur le canapé.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Deux ___ deux font quatre.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Ce gâteau ___ délicieux.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Un garçon ___ une fille.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "La porte ___ ouverte.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Des billes ___ des cartes.",
+      "answer": "et",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Pierre ___ là.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Il ___ peur du noir.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "On joue ___ cache-cache.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Elle ___ dix ans.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Viens ___ table !",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Mon chat ___ soif.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Je joue ___ la corde ___ sauter.",
+      "answer": "à",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Léo ___ gagné la course.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "à"
+      ]
+    },
+    {
+      "sentence": "Le film ___ drôle ___ émouvant.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    },
+    {
+      "sentence": "Ma trousse ___ rouge ___ bleue.",
+      "answer": "est",
+      "choices": [
+        "et",
+        "est"
+      ]
+    }
+  ],
+  "medium": [
+    {
+      "sentence": "___ mange à midi.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Ils ___ trois chats.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ va au parc.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Elles ___ fini leurs devoirs.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ joue ensemble.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Les enfants ___ soif.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ a bien travaillé.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Mes parents ___ une maison.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "Ils ___ partis.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "C'est ___ livre.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les fleurs ___ belles.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Il a perdu ___ ballon.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les oiseaux ___ dans l'arbre.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Elle adore ___ chien.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les gâteaux ___ délicieux.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Pierre range ___ cartable.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "___ dirait qu'il va pleuvoir.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Les chats ___ mangé.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ part en vacances.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Ils ___ beaucoup de jouets.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ ne doit pas courir.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Les élèves ___ bien travaillé.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ peut jouer dehors.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Elles ___ un nouveau livre.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ mange à la cantine.",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Mes frères ___ faim.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "Les voisins ___ un jardin.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "___ a gagné !",
+      "answer": "On",
+      "choices": [
+        "On",
+        "Ont"
+      ]
+    },
+    {
+      "sentence": "Les arbres ___ perdu leurs feuilles.",
+      "answer": "ont",
+      "choices": [
+        "on",
+        "ont"
+      ]
+    },
+    {
+      "sentence": "Mes copines ___ gentilles.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Il a oublié ___ cahier.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les nuages ___ gris.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Emma cherche ___ stylo.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les vacances ___ finies.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Il range ___ cartable.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les poissons ___ dans l'eau.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Elle a perdu ___ bonnet.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Ces livres ___ intéressants.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Paul aime ___ chien.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les dinosaures ___ disparus.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Elle adore ___ papa.",
+      "answer": "son",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    },
+    {
+      "sentence": "Les enfants ___ au parc.",
+      "answer": "sont",
+      "choices": [
+        "son",
+        "sont"
+      ]
+    }
+  ],
+  "hard": [
+    {
+      "sentence": "___ livre est intéressant.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Il ___ lave les mains.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ matin, il fait beau.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Elle ___ promène dans le parc.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "Je veux ___ gâteau.",
+      "answer": "ce",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "Le chat ___ cache sous le lit.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ n'est pas grave.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Ils ___ regardent.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "Tu veux du jus ___ de l'eau ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "___ habites-tu ?",
+      "answer": "Où",
+      "choices": [
+        "Ou",
+        "Où"
+      ]
+    },
+    {
+      "sentence": "Rouge ___ bleu ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "La ville ___ je suis né.",
+      "answer": "où",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Un chat ___ un chien ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "___ vas-tu ce soir ?",
+      "answer": "Où",
+      "choices": [
+        "Ou",
+        "Où"
+      ]
+    },
+    {
+      "sentence": "Fromage ___ dessert ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "L'école ___ j'apprends.",
+      "answer": "où",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "___ garçon est grand.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Elle ___ brosse les dents.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ soir, on mange dehors.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Ils ___ disputent souvent.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "Regarde ___ beau dessin !",
+      "answer": "ce",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "Le chien ___ couche par terre.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ n'est pas possible !",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Nous ___ voyons demain.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ film est super.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Le bébé ___ réveille.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ que tu dis est vrai.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Les oiseaux ___ posent sur la branche.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "Chocolat ___ vanille ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "___ est la bibliothèque ?",
+      "answer": "Où",
+      "choices": [
+        "Ou",
+        "Où"
+      ]
+    },
+    {
+      "sentence": "Lundi ___ mardi ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Le pays ___ il fait chaud.",
+      "answer": "où",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Pizza ___ pâtes ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "___ as-tu mis mes clés ?",
+      "answer": "Où",
+      "choices": [
+        "Ou",
+        "Où"
+      ]
+    },
+    {
+      "sentence": "Thé ___ café ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "La maison ___ j'habite.",
+      "answer": "où",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Foot ___ basket ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Le jour ___ tu es né.",
+      "answer": "où",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "___ est mon sac ?",
+      "answer": "Où",
+      "choices": [
+        "Ou",
+        "Où"
+      ]
+    },
+    {
+      "sentence": "Mer ___ montagne ?",
+      "answer": "ou",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Le parc ___ on joue.",
+      "answer": "où",
+      "choices": [
+        "ou",
+        "où"
+      ]
+    },
+    {
+      "sentence": "Elle ___ lève tôt.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ chapeau est joli.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    },
+    {
+      "sentence": "Ils ___ battent pour rire.",
+      "answer": "se",
+      "choices": [
+        "ce",
+        "se"
+      ]
+    },
+    {
+      "sentence": "___ sera difficile.",
+      "answer": "Ce",
+      "choices": [
+        "Ce",
+        "Se"
+      ]
+    }
+  ]
+}

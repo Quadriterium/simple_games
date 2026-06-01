@@ -279,6 +279,7 @@
         type: 'homophone',
         title: 'homophones',
         inputMode: 'choices',
+        dataVar: 'HOMOPHONES',
         generateProblem(level) {
             const item = pickRandom(HOMOPHONES[level]);
             return {

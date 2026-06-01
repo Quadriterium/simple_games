@@ -6,6 +6,7 @@
 //     type: 'conjugaison',              // API type
 //     title: 'Conjugaison',             // display title
 //     inputMode: 'text' | 'choices',    // 'text' = free text input, 'choices' = buttons
+//     dataVar: 'VERBS',                 // name of the global data variable (for dynamic loading)
 //     generateProblem(level): { display, answer, feedbackText, choices? }
 //       - display: HTML string shown in the problem card
 //       - answer: string (correct answer)
@@ -13,6 +14,47 @@
 //       - choices: string[] (required if inputMode === 'choices')
 //   }
 // ====================================================================
+
+// ===== Public settings (challenges, announcements) =====
+(async function loadPublicSettings() {
+    try {
+        const resp = await fetch('/api/settings/public');
+        if (!resp.ok) return;
+        const settings = await resp.json();
+
+        // Hide challenge tab if this game is disabled
+        if (settings.challenges_disabled && settings.challenges_disabled.includes(EXERCISE_CONFIG.type)) {
+            const challengeTab = document.querySelector('[data-game="challenge"]');
+            if (challengeTab) challengeTab.style.display = 'none';
+            const lbTab = document.querySelector('[data-game="leaderboard"]');
+            if (lbTab) lbTab.style.display = 'none';
+        }
+
+        // Show announcement banner
+        if (settings.announcement) {
+            const banner = document.createElement('div');
+            banner.style.cssText = 'background:#e67e22;color:#fff;text-align:center;padding:8px 16px;font-size:0.9rem;position:sticky;top:0;z-index:999;';
+            banner.textContent = settings.announcement;
+            document.body.prepend(banner);
+        }
+    } catch {}
+})();
+
+// ===== Dynamic content loading (with inline fallback) =====
+(async function loadDynamicContent() {
+    if (!EXERCISE_CONFIG.type || !EXERCISE_CONFIG.dataVar) return;
+    try {
+        const resp = await fetch('/api/content/' + EXERCISE_CONFIG.type);
+        if (!resp.ok) return;
+        const data = await resp.json();
+        // Overwrite the global data variable with server data
+        if (data && typeof data === 'object') {
+            window[EXERCISE_CONFIG.dataVar] = data;
+        }
+    } catch {
+        // Offline — keep using inline data as fallback
+    }
+})();
 
 // ===== Messages =====
 const CORRECT_MESSAGES = [

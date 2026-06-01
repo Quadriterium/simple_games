@@ -281,6 +281,7 @@
         type: 'orthographe',
         title: 'orthographe',
         inputMode: 'choices',
+        dataVar: 'SPELLING',
         generateProblem(level) {
             const item = pickRandom(SPELLING[level]);
             const wrongChoice = pickRandom(item.wrong);

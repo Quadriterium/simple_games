@@ -1,0 +1,700 @@
+{
+  "easy": [
+    {
+      "singular": "chat",
+      "plural": "chats"
+    },
+    {
+      "singular": "chien",
+      "plural": "chiens"
+    },
+    {
+      "singular": "livre",
+      "plural": "livres"
+    },
+    {
+      "singular": "maison",
+      "plural": "maisons"
+    },
+    {
+      "singular": "fleur",
+      "plural": "fleurs"
+    },
+    {
+      "singular": "arbre",
+      "plural": "arbres"
+    },
+    {
+      "singular": "ami",
+      "plural": "amis"
+    },
+    {
+      "singular": "table",
+      "plural": "tables"
+    },
+    {
+      "singular": "oiseau",
+      "plural": "oiseaux"
+    },
+    {
+      "singular": "voiture",
+      "plural": "voitures"
+    },
+    {
+      "singular": "étoile",
+      "plural": "étoiles"
+    },
+    {
+      "singular": "pomme",
+      "plural": "pommes"
+    },
+    {
+      "singular": "crayon",
+      "plural": "crayons"
+    },
+    {
+      "singular": "ballon",
+      "plural": "ballons"
+    },
+    {
+      "singular": "cadeau",
+      "plural": "cadeaux"
+    },
+    {
+      "singular": "chapeau",
+      "plural": "chapeaux"
+    },
+    {
+      "singular": "gâteau",
+      "plural": "gâteaux"
+    },
+    {
+      "singular": "image",
+      "plural": "images"
+    },
+    {
+      "singular": "école",
+      "plural": "écoles"
+    },
+    {
+      "singular": "fille",
+      "plural": "filles"
+    },
+    {
+      "singular": "garçon",
+      "plural": "garçons"
+    },
+    {
+      "singular": "rue",
+      "plural": "rues"
+    },
+    {
+      "singular": "jouet",
+      "plural": "jouets"
+    },
+    {
+      "singular": "lettre",
+      "plural": "lettres"
+    },
+    {
+      "singular": "bras",
+      "plural": "bras"
+    },
+    {
+      "singular": "nez",
+      "plural": "nez"
+    },
+    {
+      "singular": "noix",
+      "plural": "noix"
+    },
+    {
+      "singular": "souris",
+      "plural": "souris"
+    },
+    {
+      "singular": "stylo",
+      "plural": "stylos"
+    },
+    {
+      "singular": "canard",
+      "plural": "canards"
+    },
+    {
+      "singular": "lapin",
+      "plural": "lapins"
+    },
+    {
+      "singular": "poule",
+      "plural": "poules"
+    },
+    {
+      "singular": "vache",
+      "plural": "vaches"
+    },
+    {
+      "singular": "mouton",
+      "plural": "moutons"
+    },
+    {
+      "singular": "cochon",
+      "plural": "cochons"
+    },
+    {
+      "singular": "main",
+      "plural": "mains"
+    },
+    {
+      "singular": "pied",
+      "plural": "pieds"
+    },
+    {
+      "singular": "doigt",
+      "plural": "doigts"
+    },
+    {
+      "singular": "cheveu",
+      "plural": "cheveux"
+    },
+    {
+      "singular": "porte",
+      "plural": "portes"
+    },
+    {
+      "singular": "fenêtre",
+      "plural": "fenêtres"
+    },
+    {
+      "singular": "mur",
+      "plural": "murs"
+    },
+    {
+      "singular": "jardin",
+      "plural": "jardins"
+    },
+    {
+      "singular": "lit",
+      "plural": "lits"
+    },
+    {
+      "singular": "chaise",
+      "plural": "chaises"
+    },
+    {
+      "singular": "classe",
+      "plural": "classes"
+    },
+    {
+      "singular": "cahier",
+      "plural": "cahiers"
+    },
+    {
+      "singular": "copain",
+      "plural": "copains"
+    },
+    {
+      "singular": "copine",
+      "plural": "copines"
+    },
+    {
+      "singular": "frère",
+      "plural": "frères"
+    },
+    {
+      "singular": "sœur",
+      "plural": "sœurs"
+    },
+    {
+      "singular": "papa",
+      "plural": "papas"
+    },
+    {
+      "singular": "enfant",
+      "plural": "enfants"
+    },
+    {
+      "singular": "bonbon",
+      "plural": "bonbons"
+    },
+    {
+      "singular": "fruit",
+      "plural": "fruits"
+    },
+    {
+      "singular": "légume",
+      "plural": "légumes"
+    },
+    {
+      "singular": "couleur",
+      "plural": "couleurs"
+    },
+    {
+      "singular": "nuage",
+      "plural": "nuages"
+    },
+    {
+      "singular": "montagne",
+      "plural": "montagnes"
+    },
+    {
+      "singular": "rivière",
+      "plural": "rivières"
+    },
+    {
+      "singular": "carte",
+      "plural": "cartes"
+    },
+    {
+      "singular": "histoire",
+      "plural": "histoires"
+    },
+    {
+      "singular": "chanson",
+      "plural": "chansons"
+    },
+    {
+      "singular": "dent",
+      "plural": "dents"
+    },
+    {
+      "singular": "ventre",
+      "plural": "ventres"
+    },
+    {
+      "singular": "robe",
+      "plural": "robes"
+    },
+    {
+      "singular": "pantalon",
+      "plural": "pantalons"
+    },
+    {
+      "singular": "chaussure",
+      "plural": "chaussures"
+    },
+    {
+      "singular": "lunette",
+      "plural": "lunettes"
+    }
+  ],
+  "medium": [
+    {
+      "singular": "bateau",
+      "plural": "bateaux"
+    },
+    {
+      "singular": "manteau",
+      "plural": "manteaux"
+    },
+    {
+      "singular": "rideau",
+      "plural": "rideaux"
+    },
+    {
+      "singular": "château",
+      "plural": "châteaux"
+    },
+    {
+      "singular": "couteau",
+      "plural": "couteaux"
+    },
+    {
+      "singular": "jeu",
+      "plural": "jeux"
+    },
+    {
+      "singular": "feu",
+      "plural": "feux"
+    },
+    {
+      "singular": "cheveu",
+      "plural": "cheveux"
+    },
+    {
+      "singular": "bijou",
+      "plural": "bijoux"
+    },
+    {
+      "singular": "caillou",
+      "plural": "cailloux"
+    },
+    {
+      "singular": "genou",
+      "plural": "genoux"
+    },
+    {
+      "singular": "chou",
+      "plural": "choux"
+    },
+    {
+      "singular": "hibou",
+      "plural": "hiboux"
+    },
+    {
+      "singular": "pou",
+      "plural": "poux"
+    },
+    {
+      "singular": "joujou",
+      "plural": "joujoux"
+    },
+    {
+      "singular": "noyau",
+      "plural": "noyaux"
+    },
+    {
+      "singular": "tuyau",
+      "plural": "tuyaux"
+    },
+    {
+      "singular": "drapeau",
+      "plural": "drapeaux"
+    },
+    {
+      "singular": "morceau",
+      "plural": "morceaux"
+    },
+    {
+      "singular": "anneau",
+      "plural": "anneaux"
+    },
+    {
+      "singular": "pinceau",
+      "plural": "pinceaux"
+    },
+    {
+      "singular": "poteau",
+      "plural": "poteaux"
+    },
+    {
+      "singular": "tonneau",
+      "plural": "tonneaux"
+    },
+    {
+      "singular": "cerveau",
+      "plural": "cerveaux"
+    },
+    {
+      "singular": "panneau",
+      "plural": "panneaux"
+    },
+    {
+      "singular": "chameau",
+      "plural": "chameaux"
+    },
+    {
+      "singular": "marteau",
+      "plural": "marteaux"
+    },
+    {
+      "singular": "traineau",
+      "plural": "traineaux"
+    },
+    {
+      "singular": "rouleau",
+      "plural": "rouleaux"
+    },
+    {
+      "singular": "jumeau",
+      "plural": "jumeaux"
+    },
+    {
+      "singular": "chapeau",
+      "plural": "chapeaux"
+    },
+    {
+      "singular": "agneau",
+      "plural": "agneaux"
+    },
+    {
+      "singular": "milieu",
+      "plural": "milieux"
+    },
+    {
+      "singular": "lieu",
+      "plural": "lieux"
+    },
+    {
+      "singular": "aveu",
+      "plural": "aveux"
+    },
+    {
+      "singular": "neveu",
+      "plural": "neveux"
+    },
+    {
+      "singular": "bleu",
+      "plural": "bleus"
+    },
+    {
+      "singular": "pneu",
+      "plural": "pneus"
+    },
+    {
+      "singular": "clou",
+      "plural": "clous"
+    },
+    {
+      "singular": "verrou",
+      "plural": "verrous"
+    },
+    {
+      "singular": "trou",
+      "plural": "trous"
+    },
+    {
+      "singular": "sou",
+      "plural": "sous"
+    },
+    {
+      "singular": "voyou",
+      "plural": "voyous"
+    },
+    {
+      "singular": "bambou",
+      "plural": "bambous"
+    },
+    {
+      "singular": "coucou",
+      "plural": "coucous"
+    },
+    {
+      "singular": "kangourou",
+      "plural": "kangourous"
+    },
+    {
+      "singular": "caribou",
+      "plural": "caribous"
+    },
+    {
+      "singular": "gâteau",
+      "plural": "gâteaux"
+    },
+    {
+      "singular": "radeau",
+      "plural": "radeaux"
+    },
+    {
+      "singular": "tableau",
+      "plural": "tableaux"
+    },
+    {
+      "singular": "bureau",
+      "plural": "bureaux"
+    },
+    {
+      "singular": "bandeau",
+      "plural": "bandeaux"
+    },
+    {
+      "singular": "réseau",
+      "plural": "réseaux"
+    },
+    {
+      "singular": "flambeau",
+      "plural": "flambeaux"
+    }
+  ],
+  "hard": [
+    {
+      "singular": "cheval",
+      "plural": "chevaux"
+    },
+    {
+      "singular": "animal",
+      "plural": "animaux"
+    },
+    {
+      "singular": "journal",
+      "plural": "journaux"
+    },
+    {
+      "singular": "hôpital",
+      "plural": "hôpitaux"
+    },
+    {
+      "singular": "œil",
+      "plural": "yeux"
+    },
+    {
+      "singular": "monsieur",
+      "plural": "messieurs"
+    },
+    {
+      "singular": "madame",
+      "plural": "mesdames"
+    },
+    {
+      "singular": "travail",
+      "plural": "travaux"
+    },
+    {
+      "singular": "vitrail",
+      "plural": "vitraux"
+    },
+    {
+      "singular": "corail",
+      "plural": "coraux"
+    },
+    {
+      "singular": "bocal",
+      "plural": "bocaux"
+    },
+    {
+      "singular": "canal",
+      "plural": "canaux"
+    },
+    {
+      "singular": "métal",
+      "plural": "métaux"
+    },
+    {
+      "singular": "signal",
+      "plural": "signaux"
+    },
+    {
+      "singular": "général",
+      "plural": "généraux"
+    },
+    {
+      "singular": "festival",
+      "plural": "festivals"
+    },
+    {
+      "singular": "carnaval",
+      "plural": "carnavals"
+    },
+    {
+      "singular": "bal",
+      "plural": "bals"
+    },
+    {
+      "singular": "récital",
+      "plural": "récitals"
+    },
+    {
+      "singular": "landau",
+      "plural": "landaus"
+    },
+    {
+      "singular": "festival",
+      "plural": "festivals"
+    },
+    {
+      "singular": "carnaval",
+      "plural": "carnavals"
+    },
+    {
+      "singular": "récital",
+      "plural": "récitals"
+    },
+    {
+      "singular": "bal",
+      "plural": "bals"
+    },
+    {
+      "singular": "régal",
+      "plural": "régals"
+    },
+    {
+      "singular": "corail",
+      "plural": "coraux"
+    },
+    {
+      "singular": "émail",
+      "plural": "émaux"
+    },
+    {
+      "singular": "vitrail",
+      "plural": "vitraux"
+    },
+    {
+      "singular": "soupirail",
+      "plural": "soupiraux"
+    },
+    {
+      "singular": "genou",
+      "plural": "genoux"
+    },
+    {
+      "singular": "caillou",
+      "plural": "cailloux"
+    },
+    {
+      "singular": "hibou",
+      "plural": "hiboux"
+    },
+    {
+      "singular": "bijou",
+      "plural": "bijoux"
+    },
+    {
+      "singular": "pou",
+      "plural": "poux"
+    },
+    {
+      "singular": "chou",
+      "plural": "choux"
+    },
+    {
+      "singular": "joujou",
+      "plural": "joujoux"
+    },
+    {
+      "singular": "bocal",
+      "plural": "bocaux"
+    },
+    {
+      "singular": "canal",
+      "plural": "canaux"
+    },
+    {
+      "singular": "capital",
+      "plural": "capitaux"
+    },
+    {
+      "singular": "général",
+      "plural": "généraux"
+    },
+    {
+      "singular": "métal",
+      "plural": "métaux"
+    },
+    {
+      "singular": "signal",
+      "plural": "signaux"
+    },
+    {
+      "singular": "rival",
+      "plural": "rivaux"
+    },
+    {
+      "singular": "amiral",
+      "plural": "amiraux"
+    },
+    {
+      "singular": "madame",
+      "plural": "mesdames"
+    },
+    {
+      "singular": "monsieur",
+      "plural": "messieurs"
+    },
+    {
+      "singular": "mademoiselle",
+      "plural": "mesdemoiselles"
+    },
+    {
+      "singular": "œil",
+      "plural": "yeux"
+    },
+    {
+      "singular": "ciel",
+      "plural": "cieux"
+    },
+    {
+      "singular": "aïeul",
+      "plural": "aïeux"
+    }
+  ]
+}

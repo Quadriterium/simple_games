@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-left">
+            <span class="topbar-title">Administration</span>
+        </div>
+        <div class="topbar-right">
+            <span id="admin-username" class="topbar-user"></span>
+            <button id="btn-logout" class="btn btn-ghost">Déconnexion</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <nav class="sidebar" id="sidebar">
+            <button class="nav-item active" data-section="dashboard">Dashboard</button>
+            <button class="nav-item" data-section="scores">Classements</button>
+            <button class="nav-item" data-section="settings">Paramètres</button>
+            <button class="nav-item" data-section="content">Contenu FR</button>
+            <button class="nav-item" data-section="banned">Noms bannis</button>
+            <button class="nav-item" data-section="users" id="nav-users">Utilisateurs</button>
+            <button class="nav-item" data-section="log">Journal</button>
+            <button class="nav-item" data-section="password">Mon compte</button>
+        </nav>
+
+        <main class="main">
+            <!-- DASHBOARD -->
+            <section id="sec-dashboard" class="panel">
+                <h2>Dashboard</h2>
+                <div class="cards" id="stat-cards"></div>
+                <div class="panel-group">
+                    <h3>Scores par jeu</h3>
+                    <div class="chart" id="chart-by-type"></div>
+                </div>
+                <div class="panel-group">
+                    <h3>Dernières soumissions</h3>
+                    <div class="table-wrap">
+                        <table><thead><tr><th>Prénom</th><th>Jeu</th><th>Mode</th><th>Niveau</th><th>Score</th><th>OK</th><th>Err</th><th>Date</th></tr></thead><tbody id="recent-scores"></tbody></table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SCORES -->
+            <section id="sec-scores" class="panel hidden">
+                <h2>Gestion des classements</h2>
+                <div class="toolbar">
+                    <select id="f-type"><option value="">Tous les types</option></select>
+                    <select id="f-mode"><option value="">Tous les modes</option><option value="100">100 exercices</option><option value="timer">1 minute</option></select>
+                    <select id="f-level"><option value="">Tous les niveaux</option><option value="easy">Facile</option><option value="medium">Moyen</option><option value="hard">Difficile</option></select>
+                    <input type="text" id="f-name" placeholder="Prénom...">
+                    <button id="btn-filter" class="btn btn-primary">Filtrer</button>
+                    <button id="btn-export" class="btn btn-ghost">Export CSV</button>
+                </div>
+                <div class="toolbar">
+                    <label class="chk-label"><input type="checkbox" id="chk-all"> Tout sélectionner</label>
+                    <button id="btn-delete-selected" class="btn btn-danger">Supprimer la sélection</button>
+                </div>
+                <div class="table-wrap">
+                    <table><thead><tr><th></th><th>ID</th><th>Prénom</th><th>Jeu</th><th>Mode</th><th>Niveau</th><th>Score</th><th>OK</th><th>Err</th><th>Date</th><th></th></tr></thead><tbody id="scores-body"></tbody></table>
+                </div>
+                <div class="pagination" id="scores-pagination"></div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="sec-settings" class="panel hidden">
+                <h2>Paramètres</h2>
+                <div class="panel-group">
+                    <h3>Challenges par jeu</h3>
+                    <p class="hint">Désactiver un jeu masque l'onglet Challenge et empêche la soumission de scores.</p>
+                    <div id="challenge-toggles" class="toggle-grid"></div>
+                </div>
+                <div class="panel-group">
+                    <h3>Blocage des soumissions</h3>
+                    <label class="switch-label">
+                        <input type="checkbox" id="toggle-submissions">
+                        <span>Bloquer toutes les soumissions de scores</span>
+                    </label>
+                </div>
+                <div class="panel-group">
+                    <h3>Bannière d'annonce</h3>
+                    <p class="hint">Texte affiché en haut de toutes les pages. Laisser vide pour désactiver.</p>
+                    <textarea id="announcement-text" rows="2" placeholder="Ex : Maintenance prévue ce soir à 21h..."></textarea>
+                    <button id="btn-save-announcement" class="btn btn-primary" style="margin-top:.5rem">Enregistrer</button>
+                </div>
+            </section>
+
+            <!-- CONTENT -->
+            <section id="sec-content" class="panel hidden">
+                <h2>Contenu Français</h2>
+                <div class="toolbar">
+                    <select id="c-type">
+                        <option value="conjugaison">Conjugaison</option>
+                        <option value="homophone">Homophones</option>
+                        <option value="pluriel">Pluriels</option>
+                        <option value="feminin-masculin">Féminin / Masculin</option>
+                        <option value="vocabulaire">Vocabulaire</option>
+                        <option value="orthographe">Orthographe</option>
+                    </select>
+                    <select id="c-level">
+                        <option value="easy">Facile</option>
+                        <option value="medium">Moyen</option>
+                        <option value="hard">Difficile</option>
+                    </select>
+                    <button id="btn-load-content" class="btn btn-primary">Charger</button>
+                </div>
+                <div id="content-stats" class="hint"></div>
+                <div id="content-add-form" class="panel-group hidden">
+                    <h3>Ajouter une entrée</h3>
+                    <div class="toolbar" id="content-add-fields"></div>
+                    <button id="btn-add-entry" class="btn btn-primary" style="margin-top:.5rem">Ajouter</button>
+                </div>
+                <input type="text" id="content-search" class="search-input hidden" placeholder="Rechercher dans le contenu...">
+                <div class="table-wrap">
+                    <table><thead><tr id="content-header"></tr></thead><tbody id="content-body"></tbody></table>
+                </div>
+            </section>
+
+            <!-- BANNED -->
+            <section id="sec-banned" class="panel hidden">
+                <h2>Noms bannis</h2>
+                <div class="toolbar">
+                    <input type="text" id="ban-name-input" placeholder="Nom à bannir...">
+                    <button id="btn-ban" class="btn btn-primary">Bannir</button>
+                </div>
+                <div class="table-wrap">
+                    <table><thead><tr><th>Nom</th><th>Ajouté le</th><th></th></tr></thead><tbody id="banned-body"></tbody></table>
+                </div>
+            </section>
+
+            <!-- USERS -->
+            <section id="sec-users" class="panel hidden">
+                <h2>Gestion des utilisateurs</h2>
+                <div class="panel-group">
+                    <h3>Créer un compte</h3>
+                    <div class="toolbar">
+                        <input type="text" id="new-user-name" placeholder="Identifiant" minlength="3" maxlength="30">
+                        <input type="password" id="new-user-pass" placeholder="Mot de passe" minlength="6">
+                        <select id="new-user-role">
+                            <option value="admin">Admin</option>
+                            <option value="superadmin">Super-admin</option>
+                        </select>
+                        <button id="btn-create-user" class="btn btn-primary">Créer</button>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table><thead><tr><th>ID</th><th>Identifiant</th><th>Rôle</th><th>Créé le</th><th></th></tr></thead><tbody id="users-body"></tbody></table>
+                </div>
+            </section>
+
+            <!-- LOG -->
+            <section id="sec-log" class="panel hidden">
+                <h2>Journal d'activité</h2>
+                <div class="table-wrap">
+                    <table><thead><tr><th>Date</th><th>Utilisateur</th><th>Action</th><th>Détails</th></tr></thead><tbody id="log-body"></tbody></table>
+                </div>
+            </section>
+
+            <!-- PASSWORD -->
+            <section id="sec-password" class="panel hidden">
+                <h2>Mon compte</h2>
+                <form id="password-form" class="form-narrow">
+                    <div class="field">
+                        <label for="pw-current">Mot de passe actuel</label>
+                        <input type="password" id="pw-current" required>
+                    </div>
+                    <div class="field">
+                        <label for="pw-new">Nouveau mot de passe</label>
+                        <input type="password" id="pw-new" required minlength="6" placeholder="6 caractères minimum">
+                    </div>
+                    <div class="field">
+                        <label for="pw-confirm">Confirmer</label>
+                        <input type="password" id="pw-confirm" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                    <p id="pw-status" class="hidden"></p>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
