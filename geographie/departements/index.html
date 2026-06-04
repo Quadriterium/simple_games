@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Departements de France</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/geographie" class="back-link">← Geographie</a>
+        <h1>🇫🇷 Departements</h1>
+        <p class="rules">Mode decouverte ou quiz: clique sur un departement pour apprendre son numero, son nom et son chef-lieu.</p>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-mode="discover">🔎 Decouverte</button>
+            <button class="game-tab" data-mode="quiz">🏁 Quiz</button>
+        </div>
+
+        <div class="geo-panel">
+            <div id="quiz-header" class="hidden">
+                <div class="quiz-bar">
+                    <span id="quiz-progress">Question 0/10</span>
+                    <span id="quiz-score">Score: 0</span>
+                </div>
+                <div id="quiz-target" class="quiz-target">Clique sur Commencer.</div>
+                <div class="quiz-controls">
+                    <button id="diff-easy" class="active">Facile</button>
+                    <button id="diff-hard">Difficile</button>
+                    <button id="quiz-start">Commencer</button>
+                </div>
+            </div>
+
+            <div class="map-shell">
+                <div class="map-controls" aria-label="Controles de zoom carte">
+                    <button id="zoom-out" type="button" title="Zoom arriere">−</button>
+                    <button id="zoom-in" type="button" title="Zoom avant">+</button>
+                    <button id="zoom-reset" type="button" title="Reinitialiser">100%</button>
+                </div>
+                <div id="map-host" class="map-host"></div>
+                <div id="map-tooltip" class="map-tooltip hidden" aria-hidden="true"></div>
+            </div>
+
+            <div id="info-card" class="info-card">
+                Clique sur un departement pour afficher ses informations.
+            </div>
+        </div>
+    </div>
+
+    <script src="/auth-header.js"></script>
+    <script src="./departements.js"></script>
+</body>
+</html>

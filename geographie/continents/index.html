@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Continents du monde</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/geographie" class="back-link">← Geographie</a>
+        <h1>🌍 Continents</h1>
+        <p class="rules">Observe la carte du monde et situe les 7 continents.</p>
+
+        <div id="game-switcher">
+            <button class="game-tab active" data-mode="discover">🔎 Decouverte</button>
+            <button class="game-tab" data-mode="quiz">🏁 Quiz</button>
+        </div>
+
+        <div class="geo-panel">
+            <div id="quiz-header" class="hidden">
+                <div class="quiz-bar">
+                    <span id="quiz-progress">Question 0/7</span>
+                    <span id="quiz-score">Score: 0</span>
+                </div>
+                <div id="quiz-target" class="quiz-target">Clique sur Commencer.</div>
+                <div class="quiz-controls">
+                    <button id="quiz-start">Commencer</button>
+                </div>
+            </div>
+
+            <div class="map-shell">
+                <img class="map-base" src="/geographie/assets/optimized/world-continents.svg" alt="Carte du monde">
+                <svg class="map-overlay" viewBox="0 0 3037 1819" aria-label="zones continents">
+                    <path class="continent-zone" data-continent="north-america" d="M170 250 L360 160 L620 170 L880 260 L980 420 L900 560 L760 650 L610 700 L470 760 L340 730 L250 620 L150 500 L120 360 Z" />
+                    <path class="continent-zone" data-continent="south-america" d="M920 760 L1040 780 L1130 920 L1180 1090 L1160 1260 L1090 1420 L1000 1540 L900 1460 L850 1300 L860 1120 L880 950 Z" />
+                    <path class="continent-zone" data-continent="europe" d="M1410 270 L1540 240 L1700 250 L1810 320 L1790 430 L1680 500 L1540 500 L1430 430 Z" />
+                    <path class="continent-zone" data-continent="africa" d="M1470 520 L1620 520 L1760 580 L1830 760 L1800 990 L1710 1180 L1580 1320 L1460 1160 L1420 910 L1430 700 Z" />
+                    <path class="continent-zone" data-continent="asia" d="M1760 220 L1990 170 L2280 160 L2580 220 L2810 350 L2890 520 L2820 720 L2630 850 L2380 890 L2140 860 L1930 760 L1810 620 Z" />
+                    <path class="continent-zone" data-continent="oceania" d="M2390 940 L2530 900 L2720 920 L2890 1000 L2940 1140 L2860 1240 L2690 1280 L2510 1230 L2390 1120 Z" />
+                    <path class="continent-zone" data-continent="antarctica" d="M180 1540 L2860 1540 L2970 1700 L80 1700 Z" />
+                </svg>
+            </div>
+
+            <div id="info-card" class="info-card">
+                Clique sur un continent pour afficher son nom.
+            </div>
+
+            <p style="margin-top:10px;font-size:.75rem;color:#718096;">
+                Carte du monde: © Gabriel Hochart, CC BY 4.0.
+            </p>
+        </div>
+    </div>
+
+    <script src="/auth-header.js"></script>
+    <script src="./continents.js"></script>
+</body>
+</html>

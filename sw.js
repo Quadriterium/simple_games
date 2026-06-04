@@ -1,4 +1,4 @@
-const CACHE_NAME = 'simple-games-v11';
+const CACHE_NAME = 'simple-games-v12';
 const ASSETS = [
     '/',
     '/index.html',
@@ -54,6 +54,18 @@ const ASSETS = [
     '/francais/feminin-masculin/',
     '/francais/vocabulaire/',
     '/francais/orthographe/',
+    // Geography landing
+    '/geographie/',
+    '/geographie/index.html',
+    '/geographie/landing.css',
+    '/geographie/shared.css',
+    // Geography games
+    '/geographie/departements/',
+    '/geographie/departements/departements.js',
+    '/geographie/continents/',
+    '/geographie/continents/continents.js',
+    '/geographie/assets/optimized/france-departements.svg',
+    '/geographie/assets/optimized/world-continents.svg',
     // French content (for offline fallback)
     '/api/content/conjugaison',
     '/api/content/homophone',

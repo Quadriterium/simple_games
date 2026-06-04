@@ -1,0 +1,231 @@
+#game-switcher {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.game-tab {
+    padding: 10px 18px;
+    border: 2px solid #cbd5e0;
+    background: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #4a5568;
+}
+
+.game-tab:first-child {
+    border-radius: 10px 0 0 10px;
+    border-right: 1px solid #cbd5e0;
+}
+
+.game-tab:last-child {
+    border-radius: 0 10px 10px 0;
+    border-left: 1px solid #cbd5e0;
+}
+
+.game-tab.active {
+    background: #2c7a7b;
+    color: #fff;
+    border-color: #2c7a7b;
+}
+
+.geo-panel {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 12px;
+}
+
+.map-shell {
+    position: relative;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto 10px;
+    border: 1px solid #cbd5e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f7fafc;
+    touch-action: none;
+}
+
+.map-controls {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 6;
+    display: flex;
+    gap: 6px;
+}
+
+.map-controls button {
+    border: 1px solid #a0aec0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.96);
+    color: #2d3748;
+    font-size: 0.85rem;
+    font-weight: 800;
+    min-width: 36px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
+.map-controls button:active {
+    transform: scale(0.97);
+}
+
+.map-host {
+    transform-origin: 0 0;
+    will-change: transform;
+}
+
+.map-host svg,
+.map-base,
+.map-overlay {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.map-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: auto;
+}
+
+.info-card {
+    text-align: left;
+    background: #edf2f7;
+    border: 1px solid #cbd5e0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    min-height: 82px;
+}
+
+.quiz-bar {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.quiz-target {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.quiz-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.quiz-controls button {
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: #fff;
+    cursor: pointer;
+}
+
+.quiz-controls button.active {
+    background: #2c7a7b;
+    color: #fff;
+    border-color: #2c7a7b;
+}
+
+.map-host .department {
+    cursor: pointer;
+    transition: fill 0.12s, opacity 0.12s;
+}
+
+.map-host .department:hover {
+    opacity: 0.85;
+}
+
+.map-host .department.selected {
+    fill: #1a202c !important;
+}
+
+.map-host .department.found {
+    fill: #1f4f5a !important;
+}
+
+.map-host .department.correct {
+    fill: #38a169 !important;
+}
+
+.map-host .department.wrong {
+    fill: #e53e3e !important;
+}
+
+.map-host .dept-label {
+    display: none;
+    fill: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: rgba(0, 0, 0, 0.35);
+    stroke-width: 2.2px;
+}
+
+.map-host .dept-label.visible {
+    display: inline;
+}
+
+.map-tooltip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, calc(-100% - 12px));
+    background: rgba(26, 32, 44, 0.95);
+    color: #f7fafc;
+    border: 1px solid rgba(226, 232, 240, 0.35);
+    border-radius: 8px;
+    padding: 6px 9px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.continent-zone {
+    fill: rgba(44, 122, 123, 0.14);
+    stroke: rgba(44, 122, 123, 0.7);
+    stroke-width: 5;
+    cursor: pointer;
+    transition: fill 0.15s;
+}
+
+.continent-zone:hover {
+    fill: rgba(44, 122, 123, 0.24);
+}
+
+.continent-zone.correct {
+    fill: rgba(56, 161, 105, 0.35);
+    stroke: #2f855a;
+}
+
+.continent-zone.wrong {
+    fill: rgba(229, 62, 62, 0.35);
+    stroke: #c53030;
+}
+
+.hidden {
+    display: none !important;
+}

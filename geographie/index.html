@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Jeux de Geographie</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./landing.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/" class="back-link">← Accueil</a>
+        <h1 class="landing-title">🗺️ Geographie</h1>
+        <p class="landing-subtitle">Explore la France et le monde avec deux mini-jeux interactifs.</p>
+
+        <div class="exercise-grid">
+            <a href="/geographie/departements" class="exercise-card">
+                <span class="card-icon">🇫🇷</span>
+                <span class="card-label">Departements</span>
+                <span class="card-desc">Nom, numero, chef-lieu</span>
+            </a>
+            <a href="/geographie/continents" class="exercise-card">
+                <span class="card-icon">🌍</span>
+                <span class="card-label">Continents</span>
+                <span class="card-desc">Situe les 7 continents</span>
+            </a>
+        </div>
+
+        <button id="force-refresh-btn" style="margin:30px auto 0;display:block;padding:8px 16px;border:1px solid #cbd5e0;border-radius:8px;background:#f7fafc;color:#718096;font-size:.8rem;cursor:pointer">🔄 Forcer la mise a jour</button>
+    </div>
+    <script src="/auth-header.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+    document.getElementById('force-refresh-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('force-refresh-btn');
+        btn.disabled = true;
+        btn.textContent = '⏳ Mise a jour...';
+        try {
+            const keys = await caches.keys();
+            await Promise.all(keys.map(k => caches.delete(k)));
+            const reg = await navigator.serviceWorker.getRegistration();
+            if (reg) await reg.unregister();
+        } catch {}
+        location.reload(true);
+    });
+    </script>
+</body>
+</html>
