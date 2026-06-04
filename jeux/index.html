@@ -33,6 +33,7 @@
         </div>
         <button id="force-refresh-btn" style="margin:30px auto 0;display:block;padding:8px 16px;border:1px solid #cbd5e0;border-radius:8px;background:#f7fafc;color:#718096;font-size:.8rem;cursor:pointer">🔄 Forcer la mise à jour</button>
     </div>
+    <script src="/auth-header.js"></script>
     <script>
     if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
     document.getElementById('force-refresh-btn').addEventListener('click', async () => {

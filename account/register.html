@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Inscription — Mini Jeux</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/account/account.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/" class="back-link">← Accueil</a>
+        <div class="account-card">
+            <h1>📝 Créer un compte</h1>
+            <form id="register-form" class="account-form">
+                <div class="field">
+                    <label for="reg-username">Pseudo <span class="field-hint">(affiché dans les classements)</span></label>
+                    <input type="text" id="reg-username" autocomplete="username" required autofocus placeholder="Ton pseudo…" minlength="2" maxlength="20">
+                </div>
+                <div class="field">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" autocomplete="email" required placeholder="ton.email@exemple.com">
+                </div>
+                <div class="field">
+                    <label for="reg-pass">Mot de passe <span class="field-hint">(6 caractères minimum)</span></label>
+                    <input type="password" id="reg-pass" autocomplete="new-password" required placeholder="••••••" minlength="6">
+                </div>
+                <div class="field">
+                    <label for="reg-pass2">Confirmer le mot de passe</label>
+                    <input type="password" id="reg-pass2" autocomplete="new-password" required placeholder="••••••" minlength="6">
+                </div>
+                <button type="submit" class="account-btn">Créer mon compte</button>
+                <div class="error-msg" id="register-error"></div>
+            </form>
+            <p class="account-link">Déjà un compte ? <a href="/account/login/">Se connecter</a></p>
+        </div>
+    </div>
+    <script src="/auth-header.js"></script>
+    <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorEl = document.getElementById('register-error');
+        errorEl.textContent = '';
+        errorEl.classList.remove('visible');
+
+        const username = document.getElementById('reg-username').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-pass').value;
+        const password2 = document.getElementById('reg-pass2').value;
+
+        if (!username || !email || !password) return;
+
+        if (password !== password2) {
+            errorEl.textContent = 'Les mots de passe ne correspondent pas.';
+            errorEl.classList.add('visible');
+            return;
+        }
+
+        if (password.length < 6) {
+            errorEl.textContent = 'Le mot de passe doit faire au moins 6 caractères.';
+            errorEl.classList.add('visible');
+            return;
+        }
+
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = '⏳ Inscription...';
+
+        try {
+            const resp = await fetch('/api/user/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ username, email, password }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                location.href = '/account/profile/';
+            } else {
+                errorEl.textContent = data.error || 'Erreur lors de l\'inscription.';
+                errorEl.classList.add('visible');
+                btn.disabled = false;
+                btn.textContent = 'Créer mon compte';
+            }
+        } catch {
+            errorEl.textContent = 'Erreur réseau. Vérifie ta connexion.';
+            errorEl.classList.add('visible');
+            btn.disabled = false;
+            btn.textContent = 'Créer mon compte';
+        }
+    });
+    </script>
+</body>
+</html>

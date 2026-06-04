@@ -5,6 +5,98 @@
     padding: 0;
 }
 
+/* ===== Auth Header Bar ===== */
+#auth-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #2d3748;
+    border-bottom: 2px solid #d69e2e;
+    padding: 0 16px;
+    height: 44px;
+}
+.auth-bar-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+.auth-home-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.auth-home-link:hover { color: #d69e2e; }
+.auth-login-link {
+    color: #d69e2e;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 5px 14px;
+    border: 1px solid #d69e2e;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+.auth-login-link:hover { background: #d69e2e; color: #2d3748; }
+.auth-user-menu { position: relative; }
+.auth-user-btn {
+    background: none;
+    border: 1px solid #4a5568;
+    border-radius: 6px;
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.auth-user-btn:hover { border-color: #d69e2e; color: #d69e2e; }
+.auth-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    background: #2d3748;
+    border: 1px solid #4a5568;
+    border-radius: 8px;
+    min-width: 180px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    overflow: hidden;
+    z-index: 1001;
+}
+.auth-dropdown a, .auth-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: left;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.85rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+.auth-dropdown a:hover, .auth-dropdown button:hover { background: #4a5568; }
+.hidden { display: none !important; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px 16px 16px;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 /* ===== Back Link ===== */
 .back-link {
     display: inline-block;
@@ -18,19 +110,6 @@
 .back-link:hover {
     color: #6b46c1;
     text-decoration: underline;
-}
-
-body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: #f0f4f8;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 16px;
-    touch-action: manipulation;
-    -webkit-user-select: none;
-    user-select: none;
 }
 
 #app {

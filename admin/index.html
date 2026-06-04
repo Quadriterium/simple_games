@@ -24,7 +24,8 @@
             <button class="nav-item" data-section="settings">Paramètres</button>
             <button class="nav-item" data-section="content">Contenu FR</button>
             <button class="nav-item" data-section="banned">Noms bannis</button>
-            <button class="nav-item" data-section="users" id="nav-users">Utilisateurs</button>
+            <button class="nav-item" data-section="users" id="nav-users">Administrateurs</button>
+            <button class="nav-item" data-section="players" id="nav-players">Joueurs</button>
             <button class="nav-item" data-section="log">Journal</button>
             <button class="nav-item" data-section="password">Mon compte</button>
         </nav>
@@ -151,6 +152,19 @@
                 <div class="table-wrap">
                     <table><thead><tr><th>ID</th><th>Identifiant</th><th>Rôle</th><th>Créé le</th><th></th></tr></thead><tbody id="users-body"></tbody></table>
                 </div>
+            </section>
+
+            <!-- PLAYERS -->
+            <section id="sec-players" class="panel hidden">
+                <h2>Gestion des joueurs</h2>
+                <div class="toolbar">
+                    <input type="text" id="player-search" placeholder="Rechercher par pseudo ou email...">
+                    <button id="btn-search-players" class="btn btn-primary">Rechercher</button>
+                </div>
+                <div class="table-wrap">
+                    <table><thead><tr><th>ID</th><th>Pseudo</th><th>Email</th><th>Scores</th><th>Inscrit le</th><th></th></tr></thead><tbody id="players-body"></tbody></table>
+                </div>
+                <div class="pagination" id="players-pagination"></div>
             </section>
 
             <!-- LOG -->

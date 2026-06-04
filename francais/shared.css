@@ -608,6 +608,15 @@
     background: #fffff0;
 }
 
+.lb-me {
+    background: #ebf8ff;
+    border-left: 3px solid #3182ce;
+}
+
+.lb-me .lb-name {
+    color: #3182ce;
+}
+
 .lb-rank {
     font-weight: 700;
     font-size: 1.1rem;
@@ -765,3 +774,43 @@ body {
     background: #f7fafc;
     margin: 0;
 }
+
+/* ===== Auth Wall for Challenges ===== */
+.challenge-auth-wall {
+    text-align: center;
+    padding: 20px 0;
+}
+.auth-wall-card {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px 20px;
+    max-width: 360px;
+    margin: 0 auto;
+}
+.auth-wall-card p {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+.auth-wall-btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background: #d69e2e;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background 0.15s;
+    margin-bottom: 10px;
+}
+.auth-wall-btn:hover { background: #b7851c; }
+.auth-wall-link {
+    display: block;
+    font-size: 0.85rem;
+    color: #805ad5;
+    text-decoration: none;
+}
+.auth-wall-link:hover { text-decoration: underline; }

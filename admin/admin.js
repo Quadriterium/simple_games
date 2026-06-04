@@ -63,6 +63,7 @@ function esc(text) {
         currentUser = user;
         document.getElementById('admin-username').textContent = `${user.username} (${user.role})`;
         document.getElementById('nav-users').classList.toggle('hidden', user.role !== 'superadmin');
+        document.getElementById('nav-players').classList.toggle('hidden', user.role !== 'superadmin');
         loadDashboard();
     } catch {
         window.location.href = '/admin/';
@@ -92,6 +93,7 @@ document.querySelectorAll('.nav-item').forEach(btn => {
         else if (section === 'settings') loadSettings();
         else if (section === 'banned') loadBanned();
         else if (section === 'users') loadUsers();
+        else if (section === 'players') loadPlayers();
         else if (section === 'log') loadLog();
     });
 });
@@ -583,4 +585,75 @@ document.getElementById('password-form').addEventListener('submit', async (e) =>
         statusEl.textContent = 'Erreur de connexion.';
         statusEl.className = 'error';
     }
+});
+
+// ====================================================================
+// PLAYERS
+// ====================================================================
+let playersPage = 1;
+
+async function loadPlayers() {
+    const search = document.getElementById('player-search').value.trim();
+    const body = document.getElementById('players-body');
+    body.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b">Chargement…</td></tr>';
+
+    try {
+        let url = `/api/admin/players?page=${playersPage}&limit=50`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
+        const resp = await api(url);
+        const data = await resp.json();
+
+        if (!data.rows.length) {
+            body.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b">Aucun joueur trouvé.</td></tr>';
+            document.getElementById('players-pagination').innerHTML = '';
+            return;
+        }
+
+        body.innerHTML = data.rows.map(u => `
+            <tr>
+                <td>${u.id}</td>
+                <td>${esc(u.username)}</td>
+                <td>${esc(u.email)}</td>
+                <td>${u.scoreCount}</td>
+                <td>${u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '—'}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="deletePlayer(${u.id}, '${esc(u.username)}')">Supprimer</button></td>
+            </tr>
+        `).join('');
+
+        // Pagination
+        const totalPages = Math.ceil(data.total / data.limit);
+        let pgHtml = '';
+        if (totalPages > 1) {
+            if (playersPage > 1) pgHtml += `<button class="btn btn-ghost btn-sm" onclick="playersPage--;loadPlayers()">← Préc.</button>`;
+            pgHtml += ` Page ${playersPage} / ${totalPages} `;
+            if (playersPage < totalPages) pgHtml += `<button class="btn btn-ghost btn-sm" onclick="playersPage++;loadPlayers()">Suiv. →</button>`;
+        }
+        document.getElementById('players-pagination').innerHTML = pgHtml;
+    } catch {
+        body.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ef4444">Erreur de chargement.</td></tr>';
+    }
+}
+
+async function deletePlayer(id, name) {
+    if (!confirm(`Supprimer le joueur "${name}" ? Ses scores seront anonymisés.`)) return;
+    try {
+        const resp = await api(`/api/admin/players/${id}`, { method: 'DELETE' });
+        if (resp.ok) {
+            loadPlayers();
+        } else {
+            const data = await resp.json();
+            alert(data.error || 'Erreur');
+        }
+    } catch {
+        alert('Erreur réseau.');
+    }
+}
+
+document.getElementById('btn-search-players').addEventListener('click', () => {
+    playersPage = 1;
+    loadPlayers();
+});
+
+document.getElementById('player-search').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { playersPage = 1; loadPlayers(); }
 });

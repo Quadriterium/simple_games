@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mon profil — Mini Jeux</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/account/account.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/" class="back-link">← Accueil</a>
+
+        <div id="profile-loading" class="account-card">
+            <p style="text-align:center;color:#718096">⏳ Chargement…</p>
+        </div>
+
+        <div id="profile-content" class="hidden">
+            <!-- Stats section -->
+            <div class="account-card">
+                <h1>📊 Mes statistiques</h1>
+                <div class="stats-toolbar">
+                    <label for="stats-profile-filter">Afficher les statistiques de</label>
+                    <select id="stats-profile-filter">
+                        <option value="">Tous les sous-utilisateurs</option>
+                    </select>
+                </div>
+                <div id="stats-summary" class="stats-grid"></div>
+                <div id="stats-by-type"></div>
+                <div id="stats-recent">
+                    <h3>Derniers challenges</h3>
+                    <div id="recent-list" class="recent-list"></div>
+                </div>
+            </div>
+
+            <!-- Profile management -->
+            <div class="account-card">
+                <h2>👤 Mon compte</h2>
+                <div class="profile-info">
+                    <p>Pseudo : <strong id="profile-username"></strong></p>
+                    <p>Email : <strong id="profile-email"></strong></p>
+                    <p>Membre depuis : <strong id="profile-since"></strong></p>
+                </div>
+
+                <!-- Change username -->
+                <details class="account-section">
+                    <summary>✏️ Modifier mon pseudo</summary>
+                    <form id="change-username-form" class="account-form">
+                        <div class="field">
+                            <label for="new-username">Nouveau pseudo</label>
+                            <input type="text" id="new-username" required minlength="2" maxlength="20" placeholder="Nouveau pseudo…">
+                        </div>
+                        <button type="submit" class="account-btn small">Enregistrer</button>
+                        <div class="form-status" id="username-status"></div>
+                    </form>
+                </details>
+
+                <!-- Change password -->
+                <details class="account-section">
+                    <summary>🔒 Changer mon mot de passe</summary>
+                    <form id="change-password-form" class="account-form">
+                        <div class="field">
+                            <label for="current-pass">Mot de passe actuel</label>
+                            <input type="password" id="current-pass" autocomplete="current-password" required>
+                        </div>
+                        <div class="field">
+                            <label for="new-pass">Nouveau mot de passe</label>
+                            <input type="password" id="new-pass" autocomplete="new-password" required minlength="6">
+                        </div>
+                        <div class="field">
+                            <label for="new-pass2">Confirmer</label>
+                            <input type="password" id="new-pass2" autocomplete="new-password" required minlength="6">
+                        </div>
+                        <button type="submit" class="account-btn small">Changer le mot de passe</button>
+                        <div class="form-status" id="password-status"></div>
+                    </form>
+                </details>
+
+                <!-- Delete account -->
+                <details class="account-section danger-section">
+                    <summary>🗑️ Supprimer mon compte</summary>
+                    <p class="danger-text">Cette action est irréversible. Tes scores resteront dans les classements mais ne seront plus liés à ton compte.</p>
+                    <form id="delete-account-form" class="account-form">
+                        <div class="field">
+                            <label for="delete-pass">Confirme avec ton mot de passe</label>
+                            <input type="password" id="delete-pass" autocomplete="current-password" required>
+                        </div>
+                        <button type="submit" class="account-btn danger small">Supprimer définitivement</button>
+                        <div class="form-status" id="delete-status"></div>
+                    </form>
+                </details>
+            </div>
+
+            <div class="account-card">
+                <h2>🧒 Sous-utilisateurs</h2>
+                <p class="section-intro">Crée un pseudo pour chaque joueur du foyer. Au moment d'enregistrer un score, tu choisiras lequel a joué.</p>
+
+                <div id="profiles-empty" class="profiles-empty hidden"></div>
+                <div id="profiles-list" class="profiles-list"></div>
+
+                <details class="account-section">
+                    <summary>➕ Ajouter un sous-utilisateur</summary>
+                    <form id="create-profile-form" class="account-form">
+                        <div class="field">
+                            <label for="new-profile-name">Pseudo du sous-utilisateur</label>
+                            <input type="text" id="new-profile-name" required minlength="2" maxlength="20" placeholder="Emma, Lucas…">
+                        </div>
+                        <button type="submit" class="account-btn small">Ajouter</button>
+                        <div class="form-status" id="create-profile-status"></div>
+                    </form>
+                </details>
+            </div>
+        </div>
+    </div>
+    <script src="/auth-header.js"></script>
+    <script>
+    const TYPE_LABELS = {
+        addition: '➕ Additions', multiplication: '✖️ Multiplications',
+        soustraction: '➖ Soustractions', division: '➗ Divisions',
+        'division-posee': '📐 Divisions posées', complement: '🔢 Compléments',
+        mixte: '🎲 Mixte', comparaison: '⚖️ Comparaisons',
+        conjugaison: '🔤 Conjugaison', homophone: '👂 Homophones',
+        pluriel: '📚 Pluriels', 'feminin-masculin': '♀♂ Féminin/Masculin',
+        vocabulaire: '📖 Vocabulaire', orthographe: '✍️ Orthographe',
+    };
+
+    const pageState = {
+        user: null,
+        profiles: [],
+        selectedStatsProfileId: '',
+    };
+
+    const PROFILE_CACHE_KEY = 'simple_games_user_profiles_cache';
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str || '';
+        return div.innerHTML;
+    }
+
+    function formatDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function formatTime(s) {
+        if (s < 60) return s.toFixed(1) + 's';
+        const m = Math.floor(s / 60);
+        const sec = (s % 60).toFixed(1);
+        return `${m}m ${sec}s`;
+    }
+
+    function updateAccountHeaderUsername(username) {
+        const authBtn = document.getElementById('auth-user-btn');
+        if (authBtn) {
+            authBtn.textContent = `👤 ${username}`;
+        }
+        if (window.__authUser) {
+            window.__authUser.username = username;
+        }
+    }
+
+    function renderStatsFilter(statsProfiles, selectedProfile) {
+        const filter = document.getElementById('stats-profile-filter');
+        const profiles = Array.isArray(statsProfiles) && statsProfiles.length ? statsProfiles : pageState.profiles;
+
+        filter.innerHTML = '<option value="">Tous les sous-utilisateurs</option>';
+        profiles.forEach(profile => {
+            const option = document.createElement('option');
+            option.value = String(profile.id);
+            option.textContent = profile.name;
+            filter.appendChild(option);
+        });
+
+        pageState.selectedStatsProfileId = selectedProfile ? String(selectedProfile.id) : '';
+        filter.value = pageState.selectedStatsProfileId;
+    }
+
+    function renderStats(stats) {
+        renderStatsFilter(stats.profiles, stats.selectedProfile);
+
+        document.getElementById('stats-summary').innerHTML = `
+            <div class="stat-card"><span class="stat-value">${stats.totalChallenges}</span><span class="stat-label">Challenges joués</span></div>
+            <div class="stat-card"><span class="stat-value">${stats.avgAccuracy}%</span><span class="stat-label">Précision moyenne</span></div>
+            <div class="stat-card"><span class="stat-value">${stats.top3Count}</span><span class="stat-label">Top 3 🏅</span></div>
+            <div class="stat-card"><span class="stat-value">${stats.top10Count}</span><span class="stat-label">Top 10</span></div>
+        `;
+
+        if (stats.byType.length) {
+            let html = '<h3>Par type d\'exercice</h3><div class="type-stats">';
+            for (const item of stats.byType) {
+                html += `<div class="type-stat-row">
+                    <span class="type-label">${TYPE_LABELS[item.type] || item.type}</span>
+                    <span class="type-count">${item.count} challenge${item.count > 1 ? 's' : ''}</span>
+                    <span class="type-accuracy">${Math.round(item.avg_accuracy)}% précision</span>
+                </div>`;
+            }
+            html += '</div>';
+            document.getElementById('stats-by-type').innerHTML = html;
+        } else {
+            document.getElementById('stats-by-type').innerHTML = '<p class="empty-message">Aucun score pour ce filtre pour le moment.</p>';
+        }
+
+        if (stats.recentScores.length) {
+            let html = '';
+            for (const score of stats.recentScores) {
+                const label = TYPE_LABELS[score.type] || score.type;
+                const modeLabel = score.mode === '100' ? '100 calculs' : '1 minute';
+                const levelLabel = score.level === 'easy' ? '🟢' : score.level === 'medium' ? '🟡' : '🔴';
+                const value = score.mode === '100' ? formatTime(score.score_value) : score.score_value + ' pts';
+                const profileLine = stats.selectedProfile ? '' : `<span class="recent-profile">${escapeHtml(score.name)}</span>`;
+                html += `<div class="recent-row">
+                    <span class="recent-main"><span class="recent-game">${label}</span>${profileLine}</span>
+                    <span>${levelLabel} ${modeLabel}</span>
+                    <span class="recent-score">${value}</span>
+                    <span class="recent-date">${formatDate(score.created_at)}</span>
+                </div>`;
+            }
+            document.getElementById('recent-list').innerHTML = html;
+        } else {
+            document.getElementById('recent-list').innerHTML = '<p class="empty-message">Aucun challenge pour le moment. Lance-toi ! 🚀</p>';
+        }
+    }
+
+    function renderProfiles() {
+        const empty = document.getElementById('profiles-empty');
+        const list = document.getElementById('profiles-list');
+
+        if (!pageState.profiles.length) {
+            empty.textContent = 'Aucun sous-utilisateur pour le moment. Crée le premier pour enregistrer des scores différents.';
+            empty.classList.remove('hidden');
+            list.innerHTML = '';
+            return;
+        }
+
+        empty.classList.add('hidden');
+        list.innerHTML = pageState.profiles.map(profile => `
+            <div class="managed-profile-card">
+                <div class="managed-profile-meta">
+                    <div class="managed-profile-name">${escapeHtml(profile.name)}</div>
+                    <div class="managed-profile-subline">${profile.scoreCount || 0} score${(profile.scoreCount || 0) > 1 ? 's' : ''} • créé le ${formatDate(profile.created_at)}</div>
+                </div>
+                <form class="managed-profile-form" data-profile-id="${profile.id}">
+                    <div class="field">
+                        <label for="profile-name-${profile.id}">Renommer</label>
+                        <input type="text" id="profile-name-${profile.id}" value="${escapeHtml(profile.name)}" required minlength="2" maxlength="20">
+                    </div>
+                    <button type="submit" class="account-btn small">Renommer</button>
+                    <div class="form-status"></div>
+                </form>
+            </div>
+        `).join('');
+    }
+
+    async function fetchCurrentUser() {
+        try {
+            const resp = await fetch('/api/user/me', { credentials: 'same-origin' });
+            if (!resp.ok) {
+                location.href = '/account/login/?redirect=/account/profile/';
+                return null;
+            }
+            return await resp.json();
+        } catch {
+            location.href = '/account/login/';
+            return null;
+        }
+    }
+
+    async function loadProfiles() {
+        const resp = await fetch('/api/user/profiles', { credentials: 'same-origin' });
+        if (!resp.ok) {
+            throw new Error('Impossible de charger les sous-utilisateurs.');
+        }
+
+        const data = await resp.json();
+        pageState.profiles = Array.isArray(data.profiles) ? data.profiles : [];
+
+        if (pageState.user) {
+            localStorage.setItem(PROFILE_CACHE_KEY, JSON.stringify({
+                userId: pageState.user.id,
+                profiles: pageState.profiles.map(profile => ({
+                    id: profile.id,
+                    name: profile.name,
+                    created_at: profile.created_at,
+                })),
+            }));
+        }
+
+        renderProfiles();
+    }
+
+    async function loadStats(profileId = '') {
+        const params = new URLSearchParams();
+        if (profileId) {
+            params.set('profileId', profileId);
+        }
+
+        const resp = await fetch(`/api/user/stats${params.toString() ? `?${params.toString()}` : ''}`, { credentials: 'same-origin' });
+        if (!resp.ok) {
+            throw new Error('Impossible de charger les statistiques.');
+        }
+
+        const stats = await resp.json();
+        renderStats(stats);
+    }
+
+    async function refreshProfileData(profileId = pageState.selectedStatsProfileId) {
+        await loadProfiles();
+        await loadStats(profileId);
+    }
+
+    async function loadProfile() {
+        const user = await fetchCurrentUser();
+        if (!user) {
+            return;
+        }
+
+        pageState.user = user;
+        document.getElementById('profile-username').textContent = user.username;
+        document.getElementById('profile-email').textContent = user.email;
+        document.getElementById('new-username').value = user.username;
+        document.getElementById('profile-since').textContent = formatDate(user.created_at);
+
+        try {
+            await refreshProfileData();
+        } catch {
+            document.getElementById('stats-summary').innerHTML = '<p class="empty-message">Impossible de charger les statistiques.</p>';
+            document.getElementById('recent-list').innerHTML = '<p class="empty-message">Impossible de charger les derniers scores.</p>';
+            document.getElementById('profiles-empty').textContent = 'Impossible de charger les sous-utilisateurs pour le moment.';
+            document.getElementById('profiles-empty').classList.remove('hidden');
+        }
+
+        document.getElementById('profile-loading').classList.add('hidden');
+        document.getElementById('profile-content').classList.remove('hidden');
+    }
+
+    // Change username
+    document.getElementById('change-username-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = document.getElementById('username-status');
+        const username = document.getElementById('new-username').value.trim();
+        if (!username) return;
+
+        try {
+            const resp = await fetch('/api/user/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ username }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                status.textContent = '✅ Pseudo modifié !';
+                status.className = 'form-status success';
+                document.getElementById('profile-username').textContent = data.username;
+                document.getElementById('new-username').value = data.username;
+                updateAccountHeaderUsername(data.username);
+                await refreshProfileData();
+            } else {
+                status.textContent = data.error || 'Erreur.';
+                status.className = 'form-status error';
+            }
+        } catch {
+            status.textContent = 'Erreur réseau.';
+            status.className = 'form-status error';
+        }
+    });
+
+    document.getElementById('stats-profile-filter').addEventListener('change', async (e) => {
+        try {
+            await loadStats(e.target.value);
+        } catch {
+            document.getElementById('stats-summary').innerHTML = '<p class="empty-message">Impossible de charger les statistiques.</p>';
+        }
+    });
+
+    document.getElementById('create-profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = document.getElementById('create-profile-status');
+        const nameInput = document.getElementById('new-profile-name');
+        const name = nameInput.value.trim();
+        if (!name) return;
+
+        try {
+            const resp = await fetch('/api/user/profiles', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ name }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                status.textContent = '✅ Sous-utilisateur ajouté !';
+                status.className = 'form-status success';
+                nameInput.value = '';
+                await refreshProfileData();
+            } else {
+                status.textContent = data.error || 'Erreur.';
+                status.className = 'form-status error';
+            }
+        } catch {
+            status.textContent = 'Erreur réseau.';
+            status.className = 'form-status error';
+        }
+    });
+
+    document.getElementById('profiles-list').addEventListener('submit', async (e) => {
+        const form = e.target.closest('.managed-profile-form');
+        if (!form) return;
+
+        e.preventDefault();
+        const profileId = form.dataset.profileId;
+        const input = form.querySelector('input');
+        const status = form.querySelector('.form-status');
+        const name = input.value.trim();
+        if (!name) return;
+
+        try {
+            const resp = await fetch(`/api/user/profiles/${profileId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ name }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                status.textContent = '✅ Sous-utilisateur renommé !';
+                status.className = 'form-status success';
+                await refreshProfileData();
+            } else {
+                status.textContent = data.error || 'Erreur.';
+                status.className = 'form-status error';
+            }
+        } catch {
+            status.textContent = 'Erreur réseau.';
+            status.className = 'form-status error';
+        }
+    });
+
+    // Change password
+    document.getElementById('change-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = document.getElementById('password-status');
+        const currentPassword = document.getElementById('current-pass').value;
+        const newPassword = document.getElementById('new-pass').value;
+        const newPassword2 = document.getElementById('new-pass2').value;
+
+        if (newPassword !== newPassword2) {
+            status.textContent = 'Les mots de passe ne correspondent pas.';
+            status.className = 'form-status error';
+            return;
+        }
+        if (newPassword.length < 6) {
+            status.textContent = 'Le mot de passe doit faire au moins 6 caractères.';
+            status.className = 'form-status error';
+            return;
+        }
+
+        try {
+            const resp = await fetch('/api/user/password', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ currentPassword, newPassword }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                status.textContent = '✅ Mot de passe modifié !';
+                status.className = 'form-status success';
+                document.getElementById('current-pass').value = '';
+                document.getElementById('new-pass').value = '';
+                document.getElementById('new-pass2').value = '';
+            } else {
+                status.textContent = data.error || 'Erreur.';
+                status.className = 'form-status error';
+            }
+        } catch {
+            status.textContent = 'Erreur réseau.';
+            status.className = 'form-status error';
+        }
+    });
+
+    // Delete account
+    document.getElementById('delete-account-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const status = document.getElementById('delete-status');
+        const password = document.getElementById('delete-pass').value;
+
+        if (!confirm('Es-tu sûr(e) de vouloir supprimer ton compte ? Cette action est irréversible.')) return;
+
+        try {
+            const resp = await fetch('/api/user/account', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ password }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                alert('Ton compte a été supprimé. À bientôt !');
+                location.href = '/';
+            } else {
+                status.textContent = data.error || 'Erreur.';
+                status.className = 'form-status error';
+            }
+        } catch {
+            status.textContent = 'Erreur réseau.';
+            status.className = 'form-status error';
+        }
+    });
+
+    loadProfile();
+    </script>
+</body>
+</html>

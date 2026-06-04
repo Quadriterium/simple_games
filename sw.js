@@ -1,13 +1,20 @@
-const CACHE_NAME = 'simple-games-v10';
+const CACHE_NAME = 'simple-games-v11';
 const ASSETS = [
     '/',
     '/index.html',
     '/landing.css',
     '/style.css',
     '/script.js',
+    '/auth-header.js',
     '/manifest.json',
     '/icon-192.png',
     '/icon-512.png',
+    // Account pages
+    '/account/',
+    '/account/login/',
+    '/account/register/',
+    '/account/profile/',
+    '/account/account.css',
     // Classic games landing
     '/jeux/',
     '/jeux/index.html',
@@ -116,8 +123,8 @@ self.addEventListener('fetch', (event) => {
     if (url.origin !== self.location.origin) return;
 
     try {
-        // Admin routes: never cache, always network (with credentials)
-        if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/api/admin')) {
+        // Admin and user auth routes: never cache, always network (with credentials)
+        if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/api/admin') || url.pathname.startsWith('/api/user')) {
             event.respondWith(
                 fetch(event.request).catch(() =>
                     new Response('Offline', { status: 503 })

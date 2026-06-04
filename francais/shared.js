@@ -374,9 +374,37 @@ function showChallengeScreen(screen) {
     challengeEls.startScreen.classList.toggle('hidden', screen !== 'start');
     challengeEls.playScreen.classList.toggle('hidden', screen !== 'play');
     challengeEls.resultScreen.classList.toggle('hidden', screen !== 'result');
+    const authWall = document.getElementById('challenge-auth-wall');
+    if (authWall) authWall.classList.toggle('hidden', screen !== 'auth');
 }
 
-function startChallenge() {
+async function startChallenge() {
+    // Check if user is logged in
+    try {
+        const resp = await fetch('/api/user/me', { credentials: 'same-origin' });
+        if (!resp.ok) {
+            let authWall = document.getElementById('challenge-auth-wall');
+            if (!authWall) {
+                authWall = document.createElement('div');
+                authWall.id = 'challenge-auth-wall';
+                authWall.className = 'challenge-auth-wall';
+                authWall.innerHTML = `
+                    <div class="auth-wall-card">
+                        <p>🔒 Connecte-toi pour participer aux challenges et apparaître dans le classement !</p>
+                        <a href="/account/login/?redirect=${encodeURIComponent(location.pathname)}" class="auth-wall-btn">Se connecter</a>
+                        <a href="/account/register/" class="auth-wall-link">Créer un compte</a>
+                    </div>
+                `;
+                const panel = document.getElementById('game-challenge');
+                panel.appendChild(authWall);
+            }
+            showChallengeScreen('auth');
+            return;
+        }
+    } catch {
+        // Offline — allow but score won't be submitted
+    }
+
     challengeState.running = true;
     challengeState.totalAnswered = 0;
     challengeState.totalCorrect = 0;
@@ -530,6 +558,10 @@ function endChallenge() {
 
 const LOCAL_SCORES_KEY = 'french_local_scores';
 const PENDING_SYNC_KEY = 'french_pending_sync';
+const PROFILE_CACHE_KEY = 'simple_games_user_profiles_cache';
+
+let cachedUserProfiles = [];
+let cachedProfilesUserId = null;
 
 function getLocalScores() {
     try { return JSON.parse(localStorage.getItem(LOCAL_SCORES_KEY) || '[]'); }
@@ -555,6 +587,52 @@ function addPendingSync(scoreObj) {
 
 function clearPendingSync() {
     localStorage.removeItem(PENDING_SYNC_KEY);
+}
+
+function readProfileCache() {
+    try {
+        return JSON.parse(localStorage.getItem(PROFILE_CACHE_KEY) || 'null');
+    } catch {
+        return null;
+    }
+}
+
+function writeProfileCache(profiles) {
+    if (!window.__authUser) return;
+    localStorage.setItem(PROFILE_CACHE_KEY, JSON.stringify({
+        userId: window.__authUser.id,
+        profiles,
+    }));
+}
+
+async function loadUserProfiles(force = false) {
+    if (!window.__authUser) {
+        cachedUserProfiles = [];
+        cachedProfilesUserId = null;
+        return [];
+    }
+
+    if (!force && cachedProfilesUserId === window.__authUser.id && cachedUserProfiles.length) {
+        return cachedUserProfiles;
+    }
+
+    const cached = readProfileCache();
+    if (!force && cached && cached.userId === window.__authUser.id && Array.isArray(cached.profiles) && cached.profiles.length) {
+        cachedProfilesUserId = cached.userId;
+        cachedUserProfiles = cached.profiles;
+        return cachedUserProfiles;
+    }
+
+    const resp = await fetch('/api/user/profiles', { credentials: 'same-origin' });
+    if (!resp.ok) {
+        throw new Error('Impossible de charger les sous-utilisateurs.');
+    }
+
+    const data = await resp.json();
+    cachedUserProfiles = Array.isArray(data.profiles) ? data.profiles : [];
+    cachedProfilesUserId = window.__authUser.id;
+    writeProfileCache(cachedUserProfiles);
+    return cachedUserProfiles;
 }
 
 function getLocalScoresForQuery(type, mode, level) {
@@ -594,22 +672,123 @@ async function syncPendingScores() {
 // ====================================================================
 
 const saveScoreForm = document.getElementById('save-score-form');
-const saveScoreName = document.getElementById('save-score-name');
+let saveScoreNameField = document.getElementById('save-score-name');
 const saveScoreBtn = document.getElementById('save-score-btn');
 const saveScoreStatus = document.getElementById('save-score-status');
+const saveScorePrompt = document.querySelector('.save-score-prompt');
 
-function resetSaveScoreForm() {
+function ensureSaveScoreField(mode) {
+    const wantsSelect = mode === 'select';
+    const isSelect = saveScoreNameField.tagName === 'SELECT';
+
+    if (wantsSelect === isSelect) {
+        return saveScoreNameField;
+    }
+
+    const replacement = document.createElement(wantsSelect ? 'select' : 'input');
+    replacement.id = saveScoreNameField.id;
+    replacement.className = saveScoreNameField.className;
+
+    if (wantsSelect) {
+        replacement.setAttribute('aria-label', 'Sous-utilisateur');
+    } else {
+        replacement.type = 'text';
+        replacement.maxLength = 30;
+        replacement.autocomplete = 'off';
+        replacement.placeholder = 'Ton prénom...';
+    }
+
+    saveScoreNameField.replaceWith(replacement);
+    saveScoreNameField = replacement;
+    return replacement;
+}
+
+function populateProfileOptions(profiles) {
+    const select = ensureSaveScoreField('select');
+    select.innerHTML = '';
+
+    profiles.forEach(profile => {
+        const option = document.createElement('option');
+        option.value = String(profile.id);
+        option.textContent = profile.name;
+        select.appendChild(option);
+    });
+
+    return select;
+}
+
+function getSelectedScoreProfile() {
+    if (!window.__authUser || saveScoreNameField.tagName !== 'SELECT') {
+        return null;
+    }
+
+    const profileId = Number.parseInt(saveScoreNameField.value, 10);
+    if (!Number.isInteger(profileId) || profileId <= 0) {
+        return null;
+    }
+
+    return cachedUserProfiles.find(profile => profile.id === profileId) || null;
+}
+
+async function resetSaveScoreForm() {
     saveScoreForm.classList.remove('hidden');
-    saveScoreName.value = '';
     saveScoreBtn.disabled = false;
     saveScoreStatus.className = 'hidden';
     saveScoreStatus.textContent = '';
+
+    if (window.__authUser) {
+        saveScoreBtn.disabled = true;
+
+        try {
+            const profiles = await loadUserProfiles();
+            if (profiles.length) {
+                populateProfileOptions(profiles);
+                if (saveScorePrompt) {
+                    saveScorePrompt.textContent = profiles.length === 1
+                        ? `Enregistrer ce score pour ${profiles[0].name} ?`
+                        : 'Choisis quel sous-utilisateur a joué.';
+                }
+            } else {
+                const input = ensureSaveScoreField('input');
+                input.value = window.__authUser.username;
+                input.type = 'hidden';
+                if (saveScorePrompt) {
+                    saveScorePrompt.textContent = 'Aucun sous-utilisateur trouvé. Le score sera enregistré sur le profil principal.';
+                }
+            }
+        } catch {
+            const input = ensureSaveScoreField('input');
+            input.value = window.__authUser.username;
+            input.type = 'hidden';
+            if (saveScorePrompt) {
+                saveScorePrompt.textContent = 'Impossible de charger les sous-utilisateurs. Le score sera enregistré sur le profil principal.';
+            }
+        }
+
+        saveScoreBtn.disabled = false;
+    } else {
+        const input = ensureSaveScoreField('input');
+        input.type = 'text';
+        input.value = '';
+        input.placeholder = 'Ton prénom...';
+        if (saveScorePrompt) {
+            saveScorePrompt.textContent = 'Enregistrer ton score dans le classement ?';
+        }
+    }
 }
 
 saveScoreForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = saveScoreName.value.trim();
-    if (!name) { saveScoreName.focus(); return; }
+
+    const selectedProfile = getSelectedScoreProfile();
+    const name = window.__authUser
+        ? (selectedProfile ? selectedProfile.name : saveScoreNameField.value.trim())
+        : saveScoreNameField.value.trim();
+
+    if (!name) {
+        saveScoreNameField.focus();
+        return;
+    }
 
     saveScoreBtn.disabled = true;
 
@@ -625,7 +804,12 @@ saveScoreForm.addEventListener('submit', async (e) => {
         score_value,
         correct: challengeState.totalCorrect,
         wrong: challengeState.totalWrong,
+        isMine: Boolean(window.__authUser),
     };
+
+    if (selectedProfile) {
+        scoreObj.profileId = selectedProfile.id;
+    }
 
     // Always save locally for offline leaderboard
     saveLocalScore(scoreObj);
@@ -770,9 +954,16 @@ async function loadLeaderboard() {
             <td class="lb-wrong">${row.wrong}</td>
         `;
         if (rank <= 3) tr.classList.add('lb-top3');
+        if (row.isMine) tr.classList.add('lb-me');
         lbBody.appendChild(tr);
     });
 }
+
+window.addEventListener('auth-ready', () => {
+    if (window.__authUser) {
+        loadUserProfiles().catch(() => {});
+    }
+});
 
 // ====================================================================
 // ===== SYNC BUTTON =====

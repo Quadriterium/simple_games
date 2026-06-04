@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Connexion — Mini Jeux</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/account/account.css">
+</head>
+<body>
+    <div id="app">
+        <a href="/" class="back-link">← Accueil</a>
+        <div class="account-card">
+            <h1>🔑 Connexion</h1>
+            <form id="login-form" class="account-form">
+                <div class="field">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" autocomplete="email" required autofocus placeholder="ton.email@exemple.com">
+                </div>
+                <div class="field">
+                    <label for="login-pass">Mot de passe</label>
+                    <input type="password" id="login-pass" autocomplete="current-password" required placeholder="••••••">
+                </div>
+                <button type="submit" class="account-btn">Se connecter</button>
+                <div class="error-msg" id="login-error"></div>
+            </form>
+            <p class="account-link">Pas encore de compte ? <a href="/account/register/">Créer un compte</a></p>
+        </div>
+    </div>
+    <script src="/auth-header.js"></script>
+    <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const errorEl = document.getElementById('login-error');
+        errorEl.textContent = '';
+        errorEl.classList.remove('visible');
+
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-pass').value;
+
+        if (!email || !password) return;
+
+        const btn = e.target.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = '⏳ Connexion...';
+
+        try {
+            const resp = await fetch('/api/user/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ email, password }),
+            });
+            const data = await resp.json();
+            if (resp.ok) {
+                // Redirect to profile or previous page
+                const params = new URLSearchParams(location.search);
+                const redirect = params.get('redirect') || '/account/profile/';
+                location.href = redirect;
+            } else {
+                errorEl.textContent = data.error || 'Erreur de connexion.';
+                errorEl.classList.add('visible');
+                btn.disabled = false;
+                btn.textContent = 'Se connecter';
+            }
+        } catch {
+            errorEl.textContent = 'Erreur réseau. Vérifie ta connexion.';
+            errorEl.classList.add('visible');
+            btn.disabled = false;
+            btn.textContent = 'Se connecter';
+        }
+    });
+    </script>
+</body>
+</html>
