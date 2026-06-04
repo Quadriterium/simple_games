@@ -395,12 +395,14 @@ async function loadMap() {
 
     shell.addEventListener('wheel', (event) => {
         event.preventDefault();
+        hideTooltip();
         const factor = event.deltaY < 0 ? 1.16 : 0.86;
         setScale(viewState.scale * factor, event.clientX, event.clientY);
     }, { passive: false });
 
     shell.addEventListener('pointerdown', (event) => {
         if (event.pointerType === 'mouse') return;
+        hideTooltip();
         activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
         shell.setPointerCapture(event.pointerId);
 
@@ -420,6 +422,7 @@ async function loadMap() {
     shell.addEventListener('pointermove', (event) => {
         if (event.pointerType === 'mouse') return;
         if (!activePointers.has(event.pointerId)) return;
+        hideTooltip();
         activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
 
         if (activePointers.size === 2) {
