@@ -204,6 +204,22 @@
     z-index: 5;
 }
 
+.map-zoom-info {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    max-width: min(360px, calc(100% - 20px));
+    background: rgba(26, 32, 44, 0.93);
+    color: #f7fafc;
+    border: 1px solid rgba(226, 232, 240, 0.4);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    line-height: 1.25;
+    z-index: 5;
+    pointer-events: none;
+}
+
 .continent-zone {
     fill: rgba(44, 122, 123, 0.14);
     stroke: rgba(44, 122, 123, 0.7);

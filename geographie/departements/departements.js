@@ -100,6 +100,7 @@ const DEPARTMENTS = {
 const tabs = document.querySelectorAll('.game-tab');
 const mapHost = document.getElementById('map-host');
 const mapTooltip = document.getElementById('map-tooltip');
+const mapZoomInfo = document.getElementById('map-zoom-info');
 const zoomInBtn = document.getElementById('zoom-in');
 const zoomOutBtn = document.getElementById('zoom-out');
 const zoomResetBtn = document.getElementById('zoom-reset');
@@ -125,6 +126,7 @@ let selectedCode = null;
 let activePointers = new Map();
 let isPanning = false;
 let panStart = { x: 0, y: 0 };
+let isMousePanning = false;
 let viewState = { scale: 1, x: 0, y: 0 };
 let pinchStartDistance = 0;
 let pinchStartScale = 1;
@@ -148,6 +150,16 @@ function clamp(value, min, max) {
 
 function applyTransform() {
     mapHost.style.transform = `translate(${viewState.x}px, ${viewState.y}px) scale(${viewState.scale})`;
+    updateMapZoomInfo();
+}
+
+function updateMapZoomInfo() {
+    if (!mapZoomInfo) return;
+    const dep = selectedCode ? DEPARTMENTS[selectedCode] : null;
+    const show = Boolean(dep);
+    mapZoomInfo.classList.toggle('hidden', !show);
+    if (!show) return;
+    mapZoomInfo.innerHTML = `<strong>${selectedCode.toUpperCase()} - ${dep.nom}</strong><br>Chef-lieu: ${dep.chefLieu}`;
 }
 
 function setScale(nextScale, focusX, focusY) {
@@ -265,6 +277,7 @@ function setMode(nextMode) {
         selectedCode = null;
         infoCard.textContent = 'Lance une serie de 10 questions puis clique sur les bons departements.';
     }
+    updateMapZoomInfo();
 }
 
 function updateTargetText(code) {
@@ -280,8 +293,10 @@ function updateTargetText(code) {
 function nextQuestion() {
     if (!quizPool.length) {
         currentCode = null;
+        selectedCode = null;
         quizTarget.textContent = `Termine ! Score final: ${score}/10.`;
         infoCard.textContent = 'Clique sur Commencer pour rejouer.';
+        updateMapZoomInfo();
         return;
     }
 
@@ -302,6 +317,7 @@ function startQuiz() {
     deptPaths.forEach(p => p.classList.remove('found'));
     labelByCode.forEach(label => label.classList.remove('visible'));
     clearTransientClasses();
+    updateMapZoomInfo();
     updateQuizUi();
     nextQuestion();
 }
@@ -324,6 +340,7 @@ function handleDepartmentGuess(code, pathEl) {
         setTimeout(() => {
             clearTransientClasses();
             selectedCode = null;
+            updateMapZoomInfo();
             nextQuestion();
         }, 650);
     } else {
@@ -341,6 +358,7 @@ function handleDepartmentClick(pathEl) {
     selectedCode = code;
     pathEl.classList.add('selected');
     renderDepartmentInfo(code);
+    updateMapZoomInfo();
 
     if (mode === 'discover') {
         return;
@@ -457,6 +475,32 @@ async function loadMap() {
 
     shell.addEventListener('pointerup', releasePointer);
     shell.addEventListener('pointercancel', releasePointer);
+
+    shell.addEventListener('mousedown', (event) => {
+        if (event.button !== 0) return;
+        if (viewState.scale <= 1) return;
+        isMousePanning = true;
+        panStart = { x: event.clientX, y: event.clientY };
+        hideTooltip();
+        shell.style.cursor = 'grabbing';
+    });
+
+    shell.addEventListener('mousemove', (event) => {
+        if (!isMousePanning) return;
+        const dx = event.clientX - panStart.x;
+        const dy = event.clientY - panStart.y;
+        panBy(dx, dy);
+        panStart = { x: event.clientX, y: event.clientY };
+    });
+
+    function stopMousePan() {
+        if (!isMousePanning) return;
+        isMousePanning = false;
+        shell.style.cursor = '';
+    }
+
+    shell.addEventListener('mouseup', stopMousePan);
+    shell.addEventListener('mouseleave', stopMousePan);
 
     zoomInBtn?.addEventListener('click', () => {
         const rect = shell.getBoundingClientRect();
